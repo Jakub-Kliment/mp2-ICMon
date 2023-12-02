@@ -18,12 +18,11 @@ public class ICMonPlayer extends ICMonActor{
      * Default MovableAreaEntity constructor
      *
      * @param area        (Area): Owner area. Not null
-     * @param orientation (Orientation): Initial orientation of the entity. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
-    public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates position, String spriteName) {
-        super(area, orientation, position);
-        animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, orientation, this);
+    public ICMonPlayer(Area area, DiscreteCoordinates position, String spriteName) {
+        super(area, Orientation.DOWN, position);
+        animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();

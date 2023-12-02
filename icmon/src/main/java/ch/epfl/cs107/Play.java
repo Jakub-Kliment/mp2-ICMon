@@ -51,7 +51,7 @@ public class Play {
 				long lastTime;
 				final float frameDuration = ONE_SEC / game.getFrameRate();
 
-				// Run until the user try to close the window
+				// Run until the user try to close the windowa
 				while (!window.isCloseRequested()) {
 
 					// Compute time interval
