@@ -47,6 +47,11 @@ public class ICMonBehavior extends AreaBehavior {
             this.type = type;
             this.walkingType = walkingType;
         }
+//PAS SUR!!!!!!
+        public AllowedWalkingType getWalkingType() {
+            return walkingType;
+        }
+
         public static ICMonCellType toType(int type){
             for (ICMonCellType ict : ICMonCellType.values()) {
                 if (ict.type == type)
@@ -81,7 +86,7 @@ public class ICMonBehavior extends AreaBehavior {
 
         @Override
         public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-            ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
+            ((ICMonInteractionVisitor)v).interactWith(this, isCellInteraction);
         }
 
         @Override
@@ -91,7 +96,6 @@ public class ICMonBehavior extends AreaBehavior {
             }
             return true;
         }
-
         @Override
         protected boolean canEnter(Interactable entity) {
             if (entity == null) {
@@ -107,6 +111,10 @@ public class ICMonBehavior extends AreaBehavior {
                 }
                 return true;
             }
+        }
+//PAS SUR !!!!!!!!!!
+        public ICMonCellType getType() {
+            return type;
         }
     }
 }

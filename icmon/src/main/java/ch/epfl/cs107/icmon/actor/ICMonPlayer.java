@@ -1,5 +1,8 @@
 package ch.epfl.cs107.icmon.actor;
 
+import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.items.ICMonItem;
+import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
@@ -20,6 +23,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private final int ANIMATION_DURATION = 8;
     private final static int MOVE_DURATION = 8;
     private OrientedAnimation animation;
+    private ICMonPlayerInteractionHandler handler;
 
     /**
      * Default MovableAreaEntity constructor
@@ -30,6 +34,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     public ICMonPlayer(Area area, DiscreteCoordinates position, String spriteName) {
         super(area, Orientation.DOWN, position);
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
+        handler = new ICMonPlayerInteractionHandler();
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
@@ -92,10 +97,24 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
+        other.acceptInteraction(handler, isCellInteraction);
     }
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
+    }
+    private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor{
+        @Override
+        public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
+            if(isCellInteraction){
+                if (cell.getType().getWalkingType()== ICMonBehavior.AllowedWalkingType.FEET){
+                    animation = new OrientedAnimation("actors/player", ANIMATION_DURATION/2, getOrientation(), ICMonPlayer.this);
+                }
+                if (cell.getType().getWalkingType()== ICMonBehavior.AllowedWalkingType.SURF){
+                    animation = new OrientedAnimation("actors/player_water", ANIMATION_DURATION/2, getOrientation(), ICMonPlayer.this);
+                }
+            }
+        }
     }
 }
