@@ -43,6 +43,5 @@ public class ICMon extends AreaGame {
         return "ICMon";
     }
     public void end() {
-
     }
 }

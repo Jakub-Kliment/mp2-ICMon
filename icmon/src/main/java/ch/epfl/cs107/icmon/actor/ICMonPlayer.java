@@ -41,8 +41,8 @@ public class ICMonPlayer extends ICMonActor{
     }
     private void moveIfPressed(Orientation orientation, Button b) {
         if (b.isDown()) {
-            animation.orientate(orientation);
             if (!isDisplacementOccurs()) {
+                animation.orientate(orientation);
                 orientate(orientation);
                 move(MOVE_DURATION);
             }
