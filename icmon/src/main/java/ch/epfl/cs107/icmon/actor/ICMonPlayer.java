@@ -16,6 +16,7 @@ import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,6 +25,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private final static int MOVE_DURATION = 8;
     private OrientedAnimation animation;
     private ICMonPlayerInteractionHandler handler;
+    private String[] animations = {"actors/player", "actors/player_water"};
+    private int animationIndex;
 
     /**
      * Default MovableAreaEntity constructor
@@ -35,6 +38,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         super(area, Orientation.DOWN, position);
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
+        animationIndex = 0;
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
@@ -108,11 +112,13 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         @Override
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
             if(isCellInteraction){
-                if (cell.getType().getWalkingType()== ICMonBehavior.AllowedWalkingType.FEET){
-                    animation = new OrientedAnimation("actors/player", ANIMATION_DURATION/2, getOrientation(), ICMonPlayer.this);
+                if (cell.getType().getWalkingType() == ICMonBehavior.AllowedWalkingType.FEET && animationIndex != 0) {
+                    animationIndex = 0;
+                    animation = new OrientedAnimation(animations[animationIndex], ANIMATION_DURATION/2, getOrientation(), ICMonPlayer.this);
                 }
-                if (cell.getType().getWalkingType()== ICMonBehavior.AllowedWalkingType.SURF){
-                    animation = new OrientedAnimation("actors/player_water", ANIMATION_DURATION/2, getOrientation(), ICMonPlayer.this);
+                if (cell.getType().getWalkingType() == ICMonBehavior.AllowedWalkingType.SURF  && animationIndex != 1) {
+                    animationIndex = 1;
+                    animation = new OrientedAnimation(animations[animationIndex], ANIMATION_DURATION/2, getOrientation(), ICMonPlayer.this);
                 }
             }
         }
