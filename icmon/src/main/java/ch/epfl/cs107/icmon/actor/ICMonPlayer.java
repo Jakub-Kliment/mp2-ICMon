@@ -27,7 +27,6 @@ public class ICMonPlayer extends ICMonActor{
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
-        //if(keyboard.get(Keyboard.DOWN).isDown()||keyboard.get(Keyboard.UP).isDown()||keyboard.get(Keyboard.LEFT).isDown()||keyboard.get(Keyboard.RIGHT).isDown()){}
         moveIfPressed(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
         moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
         moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
@@ -54,5 +53,10 @@ public class ICMonPlayer extends ICMonActor{
     }
     public void centerCamera() {
         getOwnerArea().setViewCandidate(this);
+    }
+
+    @Override
+    public boolean takeCellSpace() {
+        return true;
     }
 }

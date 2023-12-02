@@ -91,9 +91,6 @@ public class ICMonBehavior extends AreaBehavior {
             if (entity==null){
                 return false;
             }
-            if (entity.takeCellSpace()) {
-                return false;
-            }
             return !(type.walkingType == AllowedWalkingType.NONE);
         }
     }
