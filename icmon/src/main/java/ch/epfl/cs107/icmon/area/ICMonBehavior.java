@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon.area;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.engine.actor.Actor;
 import ch.epfl.cs107.play.window.Window;
 
 public class ICMonBehavior extends AreaBehavior {
@@ -55,6 +56,7 @@ public class ICMonBehavior extends AreaBehavior {
     }
     public class ICMonCell extends Cell {
         private ICMonCellType type;
+        private boolean taken;
         /**
          * Default Cell constructor
          *
@@ -83,6 +85,9 @@ public class ICMonBehavior extends AreaBehavior {
 
         @Override
         protected boolean canLeave(Interactable entity) {
+            if (entity.takeCellSpace()){
+                taken = false;
+            }
             return true;
         }
 
@@ -91,7 +96,14 @@ public class ICMonBehavior extends AreaBehavior {
             if (entity==null){
                 return false;
             }
-            return !(type.walkingType == AllowedWalkingType.NONE);
+            if (!entity.takeCellSpace()){
+                return true;
+            } else {
+                if (!taken){
+                    taken = true;
+                    return true;
+                } else return false;
+            }
         }
     }
 }
