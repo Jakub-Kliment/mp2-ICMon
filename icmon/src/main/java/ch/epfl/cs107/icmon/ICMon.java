@@ -39,7 +39,7 @@ public class ICMon extends AreaGame {
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getCurrentArea().getKeyboard();
-        if (keyboard.get(Keyboard.R).isDown()){
+        if (keyboard.get(Keyboard.R).isPressed()){
             begin(getWindow(),getFileSystem());
         }
         super.update(deltaTime);

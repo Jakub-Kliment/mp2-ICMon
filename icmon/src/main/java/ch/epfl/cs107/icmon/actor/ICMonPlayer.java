@@ -1,6 +1,10 @@
 package ch.epfl.cs107.icmon.actor;
 
+import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
+import ch.epfl.cs107.play.areagame.actor.Interactable;
+import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.Area;
+import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
 import ch.epfl.cs107.play.engine.actor.Sprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -9,7 +13,10 @@ import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
-public class ICMonPlayer extends ICMonActor{
+import java.util.Collections;
+import java.util.List;
+
+public class ICMonPlayer extends ICMonActor implements Interactor {
     private final int ANIMATION_DURATION = 8;
     private final static int MOVE_DURATION = 8;
     private OrientedAnimation animation;
@@ -57,5 +64,38 @@ public class ICMonPlayer extends ICMonActor{
     @Override
     public boolean takeCellSpace() {
         return true;
+    }
+
+    @Override
+    public List<DiscreteCoordinates> getCurrentCells() {
+        return super.getCurrentCells();
+    }
+
+    @Override
+    public List<DiscreteCoordinates> getFieldOfViewCells() {
+        return Collections.singletonList(getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
+    }
+
+    @Override
+    public boolean wantsCellInteraction() {
+        return true;
+    }
+
+    @Override
+    public boolean wantsViewInteraction() {
+        Keyboard keyboard = getOwnerArea().getKeyboard();
+        if (keyboard.get(Keyboard.L).isPressed()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void interactWith(Interactable other, boolean isCellInteraction) {
+    }
+
+    @Override
+    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 }
