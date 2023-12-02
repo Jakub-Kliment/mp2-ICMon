@@ -24,7 +24,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private final int ANIMATION_DURATION = 8;
     private final static int MOVE_DURATION = 8;
     private OrientedAnimation animation;
-    private ICMonPlayerInteractionHandler handler;
+    private final ICMonPlayerInteractionHandler handler;
     private String[] animations = {"actors/player", "actors/player_water"};
     private int animationIndex;
 
@@ -93,10 +93,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     @Override
     public boolean wantsViewInteraction() {
         Keyboard keyboard = getOwnerArea().getKeyboard();
-        if (keyboard.get(Keyboard.L).isPressed()) {
-            return true;
-        }
-        return false;
+        return keyboard.get(Keyboard.L).isPressed();
     }
 
     @Override
@@ -120,6 +117,12 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                     animationIndex = 1;
                     animation = new OrientedAnimation(animations[animationIndex], ANIMATION_DURATION/2, getOrientation(), ICMonPlayer.this);
                 }
+            }
+        }
+        @Override
+        public void interactWith(ICBall ball, boolean isCellInteraction) {
+            if (!isCellInteraction){
+                ball.collect();
             }
         }
     }
