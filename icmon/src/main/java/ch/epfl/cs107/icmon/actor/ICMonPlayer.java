@@ -1,7 +1,6 @@
 package ch.epfl.cs107.icmon.actor;
 
 import ch.epfl.cs107.icmon.actor.items.ICBall;
-import ch.epfl.cs107.icmon.actor.items.ICMonItem;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
@@ -9,14 +8,12 @@ import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
-import ch.epfl.cs107.play.engine.actor.Sprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -118,6 +115,18 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                     animation = new OrientedAnimation(animations[animationIndex], ANIMATION_DURATION/2, getOrientation(), ICMonPlayer.this);
                 }
             }
+            /*if(isCellInteraction){
+                if (cell.getType().getWalkingType() == ICMonBehavior.AllowedWalkingType.FEET) {
+                    animation.orientate(getOrientation());
+                    animation = animations[0];
+                }
+                if (cell.getType().getWalkingType() == ICMonBehavior.AllowedWalkingType.SURF) {
+                    animation.orientate(getOrientation());
+                    animation = animations[1];
+                }
+            }
+            private OrientedAnimation[] animations = {new OrientedAnimation("actors/player", ANIMATION_DURATION/2, Orientation.DOWN, this),
+                    new OrientedAnimation("actors/player_water", ANIMATION_DURATION/2, Orientation.DOWN, this)};*/
         }
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
