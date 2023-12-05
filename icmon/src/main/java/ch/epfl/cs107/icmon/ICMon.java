@@ -79,7 +79,7 @@ public class ICMon extends AreaGame {
     }
     public class ICMonGameState {
         private ICMonGameState(){}
-        void acceptInteraction(Interactable interactable , boolean isCellInteraction) {
+        public void acceptInteraction(Interactable interactable , boolean isCellInteraction) {
             for (var event : ICMon.this.eventList)
                 interactable.acceptInteraction(event, isCellInteraction);
         }
