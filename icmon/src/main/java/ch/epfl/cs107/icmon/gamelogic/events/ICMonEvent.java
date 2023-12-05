@@ -1,11 +1,13 @@
 package ch.epfl.cs107.icmon.gamelogic.events;
 
+import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.Action;
+import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.engine.Updatable;
 
 import java.util.ArrayList;
 
-public abstract class ICMonEvent implements Updatable {
+public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
     private boolean started;
     private boolean completed;
     private boolean suspended;
@@ -13,8 +15,9 @@ public abstract class ICMonEvent implements Updatable {
     private final ArrayList<Action> completedAction;
     private final ArrayList<Action> suspendedAction;
     private final ArrayList<Action> resumedAction;
+    private ICMonPlayer player;
 
-    public ICMonEvent(){
+    public ICMonEvent(ICMonPlayer player){
         started = false;
         completed = false;
         suspended = false;
@@ -23,6 +26,7 @@ public abstract class ICMonEvent implements Updatable {
         completedAction = new ArrayList<>();
         suspendedAction = new ArrayList<>();
         resumedAction = new ArrayList<>();
+        this.player = player;
     }
 
     public final void start(){

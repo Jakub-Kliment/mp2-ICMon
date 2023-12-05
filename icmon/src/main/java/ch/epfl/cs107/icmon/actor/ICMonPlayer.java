@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.actor;
 
+import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
@@ -24,6 +25,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private final ICMonPlayerInteractionHandler handler;
     private String[] animations = {"actors/player", "actors/player_water"};
     private int animationIndex;
+    private ICMon.ICMonGameState gameState;
 
     /**
      * Default MovableAreaEntity constructor
@@ -31,8 +33,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
      * @param area        (Area): Owner area. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
-    public ICMonPlayer(Area area, DiscreteCoordinates position, String spriteName) {
+    public ICMonPlayer(Area area, DiscreteCoordinates position, String spriteName, ICMon.ICMonGameState gameState) {
         super(area, Orientation.DOWN, position);
+        this.gameState=gameState;
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
         animationIndex = 0;
