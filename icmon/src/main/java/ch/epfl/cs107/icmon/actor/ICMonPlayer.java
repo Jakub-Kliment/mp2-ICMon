@@ -99,9 +99,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
-        if (other instanceof ICShopAssistant) {
-            gameState.acceptInteraction(other, isCellInteraction);
-        }
         other.acceptInteraction(handler, isCellInteraction);
     }
 
@@ -140,6 +137,11 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             if (!isCellInteraction){
                 ball.collect();
             }
+        }
+
+        @Override
+        public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
+            gameState.acceptInteraction(assistant, isCellInteraction);
         }
     }
 }
