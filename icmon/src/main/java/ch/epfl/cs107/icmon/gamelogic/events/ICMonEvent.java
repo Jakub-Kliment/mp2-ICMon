@@ -21,7 +21,6 @@ public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
         started = false;
         completed = false;
         suspended = false;
-        //A demander
         startedAction = new ArrayList<>();
         completedAction = new ArrayList<>();
         suspendedAction = new ArrayList<>();

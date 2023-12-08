@@ -24,8 +24,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private final static int MOVE_DURATION = 8;
     private OrientedAnimation animation;
     private final ICMonPlayerInteractionHandler handler;
-    private String[] animations = {"actors/player", "actors/player_water"};
-    private int animationIndex;
+    //private String[] animations = {"actors/player", "actors/player_water"};
+    private OrientedAnimation[] animations = {new OrientedAnimation("actors/player", ANIMATION_DURATION/2, Orientation.DOWN, this),
+            new OrientedAnimation("actors/player_water", ANIMATION_DURATION/2, Orientation.DOWN, this)};
+    //private int animationIndex;
     private ICMon.ICMonGameState gameState;
 
     /**
@@ -39,7 +41,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         this.gameState=gameState;
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
-        animationIndex = 0;
+        //animationIndex = 0;
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
@@ -96,7 +98,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         Keyboard keyboard = getOwnerArea().getKeyboard();
         return keyboard.get(Keyboard.L).isPressed();
     }
-
+    //NE PAS ECOUTER JEANNE !!!!!!!!!
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);
@@ -109,7 +111,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor{
         @Override
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
-            if(isCellInteraction){
+            /*if(isCellInteraction){
                 if (cell.getType().getWalkingType() == ICMonBehavior.AllowedWalkingType.FEET && animationIndex != 0) {
                     animationIndex = 0;
                     animation = new OrientedAnimation(animations[animationIndex], ANIMATION_DURATION/2, getOrientation(), ICMonPlayer.this);
@@ -118,19 +120,17 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                     animationIndex = 1;
                     animation = new OrientedAnimation(animations[animationIndex], ANIMATION_DURATION/2, getOrientation(), ICMonPlayer.this);
                 }
-            }
-            /*if(isCellInteraction){
-                if (cell.getType().getWalkingType() == ICMonBehavior.AllowedWalkingType.FEET) {
-                    animation.orientate(getOrientation());
+            }*/
+            if(isCellInteraction){
+                if (cell.getWalkingType() == ICMonBehavior.AllowedWalkingType.FEET) {
+                    animations[0].orientate(getOrientation());
                     animation = animations[0];
                 }
-                if (cell.getType().getWalkingType() == ICMonBehavior.AllowedWalkingType.SURF) {
-                    animation.orientate(getOrientation());
+                if (cell.getWalkingType() == ICMonBehavior.AllowedWalkingType.SURF) {
+                    animations[1].orientate(getOrientation());
                     animation = animations[1];
                 }
             }
-            private OrientedAnimation[] animations = {new OrientedAnimation("actors/player", ANIMATION_DURATION/2, Orientation.DOWN, this),
-                    new OrientedAnimation("actors/player_water", ANIMATION_DURATION/2, Orientation.DOWN, this)};*/
         }
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {

@@ -2,6 +2,7 @@ package ch.epfl.cs107.icmon.area;
 
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
+import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Actor;
@@ -25,6 +26,7 @@ public class ICMonBehavior extends AreaBehavior {
             }
         }
     }
+
     public enum AllowedWalkingType {
         NONE,
         SURF,
@@ -47,8 +49,8 @@ public class ICMonBehavior extends AreaBehavior {
             this.type = type;
             this.walkingType = walkingType;
         }
-//PAS SUR!!!!!!
-        public AllowedWalkingType getWalkingType() {
+
+        private AllowedWalkingType getWalkingType() {
             return walkingType;
         }
 
@@ -96,6 +98,7 @@ public class ICMonBehavior extends AreaBehavior {
             }
             return true;
         }
+
         @Override
         protected boolean canEnter(Interactable entity) {
             if (entity == null) {
@@ -112,9 +115,9 @@ public class ICMonBehavior extends AreaBehavior {
                 return true;
             }
         }
-//PAS SUR !!!!!!!!!!
-        public ICMonCellType getType() {
-            return type;
+
+        public AllowedWalkingType getWalkingType() {
+            return type.getWalkingType();
         }
     }
 }

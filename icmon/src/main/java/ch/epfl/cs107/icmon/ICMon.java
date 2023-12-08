@@ -28,6 +28,8 @@ public class ICMon extends AreaGame {
     /** ??? */
     private ICMonPlayer player;
     private List<ICMonEvent> eventList;
+    private List<ICMonEvent> startedEvent;
+    private List<ICMonEvent> finishedEvent;
     private ICMonGameState gameState;
     /** ??? */
     private int areaIndex;
