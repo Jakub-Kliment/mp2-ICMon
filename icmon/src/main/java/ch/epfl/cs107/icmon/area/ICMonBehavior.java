@@ -50,10 +50,6 @@ public class ICMonBehavior extends AreaBehavior {
             this.walkingType = walkingType;
         }
 
-        private AllowedWalkingType getWalkingType() {
-            return walkingType;
-        }
-
         public static ICMonCellType toType(int type){
             for (ICMonCellType ict : ICMonCellType.values()) {
                 if (ict.type == type)
@@ -117,7 +113,7 @@ public class ICMonBehavior extends AreaBehavior {
         }
 
         public AllowedWalkingType getWalkingType() {
-            return type.getWalkingType();
+            return type.walkingType;
         }
     }
 }

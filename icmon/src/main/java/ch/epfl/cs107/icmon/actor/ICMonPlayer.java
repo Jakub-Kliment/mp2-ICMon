@@ -111,17 +111,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor{
         @Override
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
-            /*if(isCellInteraction){
-                if (cell.getType().getWalkingType() == ICMonBehavior.AllowedWalkingType.FEET && animationIndex != 0) {
-                    animationIndex = 0;
-                    animation = new OrientedAnimation(animations[animationIndex], ANIMATION_DURATION/2, getOrientation(), ICMonPlayer.this);
-                }
-                if (cell.getType().getWalkingType() == ICMonBehavior.AllowedWalkingType.SURF  && animationIndex != 1) {
-                    animationIndex = 1;
-                    animation = new OrientedAnimation(animations[animationIndex], ANIMATION_DURATION/2, getOrientation(), ICMonPlayer.this);
-                }
-            }*/
-            if(isCellInteraction){
+            if (isCellInteraction) {
                 if (cell.getWalkingType() == ICMonBehavior.AllowedWalkingType.FEET) {
                     animations[0].orientate(getOrientation());
                     animation = animations[0];
@@ -134,7 +124,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         }
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
-            if (!isCellInteraction){
+            if (!isCellInteraction) {
                 ball.collect();
             }
         }
