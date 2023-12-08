@@ -15,7 +15,7 @@ public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
     private final ArrayList<Action> completedAction;
     private final ArrayList<Action> suspendedAction;
     private final ArrayList<Action> resumedAction;
-    private ICMonPlayer player;
+    protected ICMonPlayer player;
 
     public ICMonEvent(ICMonPlayer player){
         started = false;

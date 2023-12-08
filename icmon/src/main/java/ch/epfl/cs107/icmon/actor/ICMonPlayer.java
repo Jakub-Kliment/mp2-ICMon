@@ -9,6 +9,7 @@ import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.engine.actor.Dialog;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -18,6 +19,7 @@ import ch.epfl.cs107.play.window.Keyboard;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.locks.Condition;
 
 public class ICMonPlayer extends ICMonActor implements Interactor {
     private final int ANIMATION_DURATION = 8;
@@ -29,7 +31,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             new OrientedAnimation("actors/player_water", ANIMATION_DURATION/2, Orientation.DOWN, this)};
     //private int animationIndex;
     private ICMon.ICMonGameState gameState;
-
+    private Dialog dialog;
     /**
      * Default MovableAreaEntity constructor
      *
@@ -41,18 +43,23 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         this.gameState=gameState;
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
-        //animationIndex = 0;
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
-        moveIfPressed(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
-        moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
-        moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
-        moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
-        if (isDisplacementOccurs()){
-            animation.update(deltaTime);
+        if (dialog != null && !dialog.isCompleted()){
+            if (keyboard.get(Keyboard.SPACE).isPressed()){
+                dialog.update(deltaTime);
+            }
         } else {
-            animation.reset();
+            moveIfPressed(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
+            moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
+            moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
+            moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
+            if (isDisplacementOccurs()){
+                animation.update(deltaTime);
+            } else {
+                animation.reset();
+            }
         }
         super.update(deltaTime);
     }
@@ -68,6 +75,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     @Override
     public void draw(Canvas canvas) {
         animation.draw(canvas);
+        if (dialog != null && !dialog.isCompleted()){
+            dialog.draw(canvas);
+        }
     }
     public void centerCamera() {
         getOwnerArea().setViewCandidate(this);
@@ -96,7 +106,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     @Override
     public boolean wantsViewInteraction() {
         Keyboard keyboard = getOwnerArea().getKeyboard();
-        return keyboard.get(Keyboard.L).isPressed();
+        if (dialog == null || dialog.isCompleted()){
+            return keyboard.get(Keyboard.L).isPressed();
+        }
+        return false;
     }
     //NE PAS ECOUTER JEANNE !!!!!!!!!
     @Override
@@ -107,6 +120,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
+    }
+    public void openDialog(Dialog dialog){
+        this.dialog = dialog;
     }
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor{
         @Override
