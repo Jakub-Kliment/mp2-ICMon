@@ -6,9 +6,9 @@ import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Town;
-import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.RegisterinAreaAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.EndOfTheGameEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
@@ -29,8 +29,9 @@ public class ICMon extends AreaGame {
     private ICMonPlayer player;
     private List<ICMonEvent> eventList;
     private List<ICMonEvent> startedEvent;
-    private List<ICMonEvent> finishedEvent;
+    private List<ICMonEvent> completedEvent;
     private ICMonGameState gameState;
+    private ICMonEventManager eventManager;
     /** ??? */
     private int areaIndex;
     private void createAreas() {
@@ -43,14 +44,21 @@ public class ICMon extends AreaGame {
             areaIndex = 0;
             initArea(areas[areaIndex]);
 
-            ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(6,6));
-            CollectItemEvent event = new CollectItemEvent(ball, player);
-            event.onStart(new LogAction("CollectItemEvent started !"));
-            event.onStart(new RegisterinAreaAction(getCurrentArea(), ball));
-            event.onComplete(new LogAction("CollectItemEvent completed !"));
-            eventList.add(event);
-            event.start();
+            eventManager = new ICMonEventManager();
 
+            ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(6,6));
+            CollectItemEvent eventBall = new CollectItemEvent(ball, player);
+            eventBall.onStart(new LogAction("CollectItemEvent started !"));
+            eventBall.onStart(new RegisterinAreaAction(getCurrentArea(), ball));
+            eventBall.onComplete(new LogAction("CollectItemEvent completed !"));
+            eventBall.onComplete(new UnregisterEventAction(eventManager, eventBall));
+            eventBall.onStart(new RegisterEventAction(eventManager, eventBall));
+            eventBall.start();
+
+            EndOfTheGameEvent eventEnd = new EndOfTheGameEvent(player);
+            eventEnd.onStart(new RegisterEventAction(eventManager, eventEnd));
+            eventEnd.onComplete(new UnregisterEventAction(eventManager, eventEnd));
+            eventBall.onComplete(new StartEventAction(eventEnd));
             return true;
         }
         return false;
@@ -61,6 +69,8 @@ public class ICMon extends AreaGame {
         gameState = new ICMonGameState();
         player = new ICMonPlayer(area, coords, "actors/player", gameState);
         eventList = new ArrayList<>();
+        startedEvent = new ArrayList<>();
+        completedEvent = new ArrayList<>();
         player.enterArea(area, coords);
         player.centerCamera();
     }
@@ -69,6 +79,14 @@ public class ICMon extends AreaGame {
         if (keyboard.get(Keyboard.R).isPressed()){
             begin(getWindow(),getFileSystem());
         }
+        for(ICMonEvent event : startedEvent){
+            eventList.add(event);
+        }
+        startedEvent.clear();
+        for(ICMonEvent event : completedEvent){
+            eventList.remove(event);
+        }
+        completedEvent.clear();
         for(ICMonEvent event : eventList){
             event.update(deltaTime);
         }
@@ -84,6 +102,14 @@ public class ICMon extends AreaGame {
         public void acceptInteraction(Interactable interactable , boolean isCellInteraction) {
             for (var event : ICMon.this.eventList)
                 interactable.acceptInteraction(event, isCellInteraction);
+        }
+    }
+    public class ICMonEventManager{
+        public List<ICMonEvent> getStartedEvent(){
+            return startedEvent;
+        }
+        public List<ICMonEvent> getCompletedEvent(){
+            return completedEvent;
         }
     }
 }
