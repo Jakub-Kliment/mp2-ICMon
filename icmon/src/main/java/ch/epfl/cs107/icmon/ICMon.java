@@ -10,6 +10,7 @@ import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.EndOfTheGameEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
+import ch.epfl.cs107.icmon.message.GamePlayMessage;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.io.FileSystem;
@@ -79,6 +80,10 @@ public class ICMon extends AreaGame {
         if (keyboard.get(Keyboard.R).isPressed()){
             begin(getWindow(),getFileSystem());
         }
+        if (gameState.message != null){
+            gameState.message.process();
+            gameState.message = null;
+        }
         for(ICMonEvent event : startedEvent){
             eventList.add(event);
         }
@@ -98,10 +103,14 @@ public class ICMon extends AreaGame {
     public void end() {
     }
     public class ICMonGameState {
+        private GamePlayMessage message = null;
         private ICMonGameState(){}
         public void acceptInteraction(Interactable interactable , boolean isCellInteraction) {
             for (var event : ICMon.this.eventList)
                 interactable.acceptInteraction(event, isCellInteraction);
+        }
+        public void send(GamePlayMessage message){
+            this.message = message;
         }
     }
     public class ICMonEventManager{

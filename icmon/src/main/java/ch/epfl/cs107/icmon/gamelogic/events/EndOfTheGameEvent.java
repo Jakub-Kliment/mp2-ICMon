@@ -2,8 +2,6 @@ package ch.epfl.cs107.icmon.gamelogic.events;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
-import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.RegisterEventAction;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class EndOfTheGameEvent extends ICMonEvent{
@@ -12,9 +10,7 @@ public class EndOfTheGameEvent extends ICMonEvent{
         super(player);
     }
     @Override
-    public void update(float deltaTime) {
-
-    }
+    public void update(float deltaTime) {}
 
     @Override
     public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {

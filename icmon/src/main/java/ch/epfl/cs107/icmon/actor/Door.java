@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.actor;
 
+import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.AreaEntity;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
@@ -60,7 +61,7 @@ public class Door extends AreaEntity {
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-
+        ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
     @Override
