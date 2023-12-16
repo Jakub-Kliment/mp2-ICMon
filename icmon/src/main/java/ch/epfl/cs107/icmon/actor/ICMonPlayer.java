@@ -25,7 +25,7 @@ import java.util.concurrent.locks.Condition;
 
 public class ICMonPlayer extends ICMonActor implements Interactor {
     private final int ANIMATION_DURATION = 8;
-    private final static int MOVE_DURATION = 8;
+    private final static int MOVE_DURATION = 3;
     private OrientedAnimation animation;
     private final ICMonPlayerInteractionHandler handler;
     //private String[] animations = {"actors/player", "actors/player_water"};
@@ -154,7 +154,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
         public void interactWith(Door door, boolean isCellInteraction){
             if(isCellInteraction){
-                PassDoorMessage message = new PassDoorMessage(door);
+                PassDoorMessage message = new PassDoorMessage(door, gameState);
                 gameState.send(message);
             }
         }

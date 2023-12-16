@@ -5,6 +5,8 @@ import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.area.ICMonArea;
+import ch.epfl.cs107.icmon.area.maps.Arena;
+import ch.epfl.cs107.icmon.area.maps.Lab;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
@@ -25,7 +27,7 @@ import java.util.List;
 public class ICMon extends AreaGame {
     public final static float CAMERA_SCALE_FACTOR = 13.f;
     /** ??? */
-    private final String[] areas = {"town"};
+    //private final String[] areas = {"town","lab","arena"};
     /** ??? */
     private ICMonPlayer player;
     private List<ICMonEvent> eventList;
@@ -37,13 +39,14 @@ public class ICMon extends AreaGame {
     private int areaIndex;
     private void createAreas() {
         addArea(new Town());
-
+        addArea(new Lab());
+        addArea(new Arena());
     }
     public boolean begin(Window window, FileSystem fileSystem) {
         if (super.begin(window, fileSystem)) {
             createAreas();
             areaIndex = 0;
-            initArea(areas[areaIndex]);
+            initArea("town");
 
             eventManager = new ICMonEventManager();
 
@@ -111,6 +114,11 @@ public class ICMon extends AreaGame {
         }
         public void send(GamePlayMessage message){
             this.message = message;
+        }
+        public void switchArea(String areaName, DiscreteCoordinates coordinates) {
+            player.leaveArea();
+            ICMonArea currentArea = (ICMonArea) setCurrentArea(areaName, false);
+            player.enterArea(currentArea, coordinates);
         }
     }
     public class ICMonEventManager{

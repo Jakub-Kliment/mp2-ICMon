@@ -22,6 +22,8 @@ public class Town extends ICMonArea {
         registerActor(new Foreground(this));
         registerActor(new ICShopAssistant(this, Orientation.DOWN, new DiscreteCoordinates(8, 8)));
         registerActor(new Door(this, new DiscreteCoordinates(15,24), "lab", new DiscreteCoordinates(6,2)));
+        registerActor(new Door(this, new DiscreteCoordinates(20,16), "arena", new DiscreteCoordinates(4,2)));
+
     }
 
     @Override

@@ -66,4 +66,12 @@ public class Door extends AreaEntity {
 
     @Override
     public void draw(Canvas canvas) {}
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public DiscreteCoordinates getCoordinates() {
+        return coordinates;
+    }
 }
