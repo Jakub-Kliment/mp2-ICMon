@@ -120,7 +120,11 @@ public class ICMon extends AreaGame {
             ICMonArea currentArea = (ICMonArea) setCurrentArea(areaName, false);
             player.enterArea(currentArea, coordinates);
         }
+        public void addEvent(ICMonEvent event){
+            startedEvent.add(event);
+        }
     }
+
     public class ICMonEventManager{
         public List<ICMonEvent> getStartedEvent(){
             return startedEvent;

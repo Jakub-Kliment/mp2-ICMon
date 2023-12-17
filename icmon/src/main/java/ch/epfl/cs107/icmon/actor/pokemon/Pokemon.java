@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon.actor.pokemon;
 
 import ch.epfl.cs107.icmon.actor.ICMonActor;
+import ch.epfl.cs107.icmon.actor.ICMonFightableActor;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
@@ -17,7 +18,7 @@ import java.util.List;
  *
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */
-public abstract class Pokemon extends ICMonActor {
+public abstract class Pokemon extends ICMonActor implements ICMonFightableActor {
 
     private String name;
     private int hp;
@@ -83,9 +84,7 @@ public abstract class Pokemon extends ICMonActor {
     }
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-        if (isCellInteraction) {
-            ((ICMonInteractionVisitor)v).interactWith(this, true);
-        }
+            ((ICMonInteractionVisitor)v).interactWith(this, isCellInteraction);
     }
     @Override
     public void draw(Canvas canvas) {

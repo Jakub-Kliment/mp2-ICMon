@@ -3,7 +3,9 @@ package ch.epfl.cs107.icmon.actor;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
+import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.icmon.message.GamePlayMessage;
 import ch.epfl.cs107.icmon.message.PassDoorMessage;
@@ -64,6 +66,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             }
         }
         super.update(deltaTime);
+    }
+    public void fight(ICMonFightableActor actor){
+        PokemonFightEvent combat = new PokemonFightEvent(this);
+        gameState.addEvent(combat);
     }
     private void moveIfPressed(Orientation orientation, Button b) {
         if (b.isDown()) {
@@ -156,6 +162,13 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             if(isCellInteraction){
                 PassDoorMessage message = new PassDoorMessage(door, gameState);
                 gameState.send(message);
+            }
+        }
+
+        @Override
+        public void interactWith(Pokemon pokemon, boolean isCellInteraction) {
+            if (isCellInteraction){
+                fight(pokemon);
             }
         }
     }
