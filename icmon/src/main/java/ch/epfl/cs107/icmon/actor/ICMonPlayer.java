@@ -3,6 +3,9 @@ package ch.epfl.cs107.icmon.actor;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
+import ch.epfl.cs107.icmon.actor.pokemon.Latios;
+import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
@@ -22,6 +25,7 @@ import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.locks.Condition;
@@ -37,6 +41,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     //private int animationIndex;
     private ICMon.ICMonGameState gameState;
     private Dialog dialog;
+    private List<Pokemon> pokemonList;
     /**
      * Default MovableAreaEntity constructor
      *
@@ -48,6 +53,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         this.gameState=gameState;
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
+        pokemonList = new ArrayList<>();
+        addPokemon(new Bulbizarre(area, Orientation.DOWN, position));
+        addPokemon(new Latios(area, Orientation.DOWN, position));
+        addPokemon(new Nidoqueen(area, Orientation.DOWN, position));
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
@@ -133,6 +142,12 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     }
     public void openDialog(Dialog dialog){
         this.dialog = dialog;
+    }
+    public void addPokemon(Pokemon pokemon){
+        pokemonList.add(pokemon);
+    }
+    public Pokemon choosenPokemon(){
+        return pokemonList.get(0);
     }
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor{
         @Override

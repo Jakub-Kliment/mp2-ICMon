@@ -25,6 +25,7 @@ public class ICMonFight extends PauseMenu {
     @Override
     public void drawMenu(Canvas c) {
         arena.setInteractionGraphics(new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR , "hello world"));
+        arena.draw(c);
     }
     public boolean isRunning(){
         return compteur>0;

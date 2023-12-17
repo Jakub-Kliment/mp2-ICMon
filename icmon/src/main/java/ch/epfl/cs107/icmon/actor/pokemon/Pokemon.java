@@ -23,7 +23,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     private String name;
     private int hp;
     private final int hpMax;
-    private final int attackDamage;
+    private final int damage;
     private Sprite pokemon;
     /**
      * Default MovableAreaEntity constructor
@@ -32,10 +32,10 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
      * @param orientation (Orientation): Initial orientation of the entity. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
-    public Pokemon(Area area, Orientation orientation, DiscreteCoordinates position, String name, int attackDamage, int hpMax) {
+    public Pokemon(Area area, Orientation orientation, DiscreteCoordinates position, String name, int damage, int hpMax) {
         super(area, orientation, position);
         this.name = name;
-        this.attackDamage = attackDamage;
+        this.damage = damage;
         this.hpMax = hpMax;
         hp = hpMax;
         pokemon = new RPGSprite("pokemon/" + name, 1, 1, this);
@@ -47,19 +47,19 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     public final class PokemonProperties {
 
         public String name(){
-            return null;
+            return name;
         }
 
         public float hp(){
-            return 0f;
+            return hp;
         }
 
         public float maxHp(){
-            return 0f;
+            return hpMax;
         }
 
         public int damage(){
-            return 0;
+            return damage;
         }
 
     }
@@ -92,6 +92,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     public boolean isAlive() {
         return hp > 0;
     }
+    //PAS SUR !!!!!!!
     public void receiveAttack(int damage) {
         if (isAlive()) {
             hp -= damage;
@@ -100,7 +101,5 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
             }
         }
     }
-    public PokemonProperties properties(){
-        return new PokemonProperties();
-    }
+    public PokemonProperties properties(){return new PokemonProperties();}
 }
