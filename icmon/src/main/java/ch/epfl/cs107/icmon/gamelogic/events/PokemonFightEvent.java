@@ -20,7 +20,7 @@ public class PokemonFightEvent extends ICMonEvent {
 
     @Override
     public void update(float deltaTime) {
-        if(!menu.isRunning()){
+        if(menu.isOver()){
             complete();
         }
     }
