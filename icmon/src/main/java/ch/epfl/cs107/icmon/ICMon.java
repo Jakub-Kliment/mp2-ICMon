@@ -1,9 +1,7 @@
 package ch.epfl.cs107.icmon;
 
-import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
-import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Arena;
 import ch.epfl.cs107.icmon.area.maps.Lab;
@@ -12,12 +10,14 @@ import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.EndOfTheGameEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
 import ch.epfl.cs107.icmon.message.GamePlayMessage;
+import ch.epfl.cs107.icmon.message.SuspendWithEventMessage;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
+import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 
@@ -114,6 +114,18 @@ public class ICMon extends AreaGame {
         }
         public void send(GamePlayMessage message){
             this.message = message;
+            if (message instanceof SuspendWithEventMessage){
+                ICMonEvent event = ((SuspendWithEventMessage)message).getEvent();
+                if (event.isMenuPause()){
+                    event.onStart(new setPauseAction(this, ((PokemonFightEvent)event).getMenu()));
+                    event.onComplete(new ResumeMenu(this));
+                    for(ICMonEvent event1 : eventList){
+                        event.onStart(new SuspendedEventAction(event1));
+                        event.onComplete(new ResumeEventAction(event1));
+                    }
+                    event.start();
+                }
+            }
         }
         public void switchArea(String areaName, DiscreteCoordinates coordinates) {
             player.leaveArea();
@@ -122,6 +134,13 @@ public class ICMon extends AreaGame {
         }
         public void addEvent(ICMonEvent event){
             startedEvent.add(event);
+        }
+        public void setMenuPause(PauseMenu menu){
+            setPauseMenu(menu);
+            requestPause();
+        }
+        public void stopMenuPause(){
+            requestResume();
         }
     }
 

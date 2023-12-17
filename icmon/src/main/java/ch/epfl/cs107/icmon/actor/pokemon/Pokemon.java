@@ -63,7 +63,6 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         }
 
     }
-
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return super.getCurrentCells();
@@ -100,5 +99,8 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
                 hp = 0;
             }
         }
+    }
+    public PokemonProperties properties(){
+        return new PokemonProperties();
     }
 }

@@ -91,4 +91,5 @@ public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
     public boolean isSuspended() {
         return suspended;
     }
+    public boolean isMenuPause(){return false;}
 }

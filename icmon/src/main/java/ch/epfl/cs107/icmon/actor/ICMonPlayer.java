@@ -9,6 +9,7 @@ import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.icmon.message.GamePlayMessage;
 import ch.epfl.cs107.icmon.message.PassDoorMessage;
+import ch.epfl.cs107.icmon.message.SuspendWithEventMessage;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.Area;
@@ -68,8 +69,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         super.update(deltaTime);
     }
     public void fight(ICMonFightableActor actor){
-        PokemonFightEvent combat = new PokemonFightEvent(this);
+        PokemonFightEvent combat = new PokemonFightEvent(this,(ICMonActor) actor);
         gameState.addEvent(combat);
+        gameState.send(new SuspendWithEventMessage(combat));
     }
     private void moveIfPressed(Orientation orientation, Button b) {
         if (b.isDown()) {
