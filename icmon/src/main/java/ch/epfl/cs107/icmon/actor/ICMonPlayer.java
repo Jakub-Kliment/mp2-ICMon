@@ -10,7 +10,6 @@ import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
-import ch.epfl.cs107.icmon.message.GamePlayMessage;
 import ch.epfl.cs107.icmon.message.PassDoorMessage;
 import ch.epfl.cs107.icmon.message.SuspendWithEventMessage;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
@@ -28,7 +27,6 @@ import ch.epfl.cs107.play.window.Keyboard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.locks.Condition;
 
 public class ICMonPlayer extends ICMonActor implements Interactor {
     private final int ANIMATION_DURATION = 8;

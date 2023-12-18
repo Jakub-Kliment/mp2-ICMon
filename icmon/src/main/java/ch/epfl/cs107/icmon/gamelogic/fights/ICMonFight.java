@@ -17,6 +17,7 @@ public class ICMonFight extends PauseMenu {
     private ICMonFightAction fightAction;
     private ICMonFightArenaGraphics arena;
     private String message;
+    private ICMonFightActionSelectionGraphics selectionGraphics;
     public ICMonFight(Pokemon player, Pokemon opponent){
         this.player = player;
         this.opponent = opponent;
@@ -36,12 +37,15 @@ public class ICMonFight extends PauseMenu {
                 }
             }
             case ACTION_SELECTION -> {
-                ICMonFightActionSelectionGraphics selectionGraphics = new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, keyboard, player.getFightAction());
+                if (selectionGraphics == null){
+                    selectionGraphics = new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, keyboard, player.getFightAction());
+                }
                 arena.setInteractionGraphics(selectionGraphics);
                 selectionGraphics.update(deltaTime);
                 if (selectionGraphics.choice() != null) {
                     fightAction = selectionGraphics.choice();
                     state = State.ACTION_EXECUTION;
+                    selectionGraphics = null;
                 }
                 //fightAction = player.getFightAction().get(0);
             }
