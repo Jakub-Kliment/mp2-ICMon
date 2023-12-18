@@ -80,7 +80,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         super.update(deltaTime);
     }
     public void fight(ICMonFightableActor actor){
-        PokemonSelectionEvent selectionEvent = new PokemonSelectionEvent(this,(ICMonActor) actor);
+        PokemonSelectionEvent selectionEvent = new PokemonSelectionEvent(this,(ICMonActor) actor, gameState);
         gameState.send(new SuspendWithEventMessage(selectionEvent));
     }
     private void moveIfPressed(Orientation orientation, Button b) {
@@ -149,10 +149,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     }
     public ICMon.ICMonEventManager getEventManager() {
         return eventManager;
-    }
-
-    public ICMon.ICMonGameState getGameState() {
-        return gameState;
     }
 
     public List<Pokemon> getPokemonList() {

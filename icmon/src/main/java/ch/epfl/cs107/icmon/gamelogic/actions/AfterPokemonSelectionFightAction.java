@@ -11,14 +11,16 @@ public class AfterPokemonSelectionFightAction implements Action{
     private ICMonActor opponent;
     private ICMonPlayer player;
     private Pokemon playerPokemon;
-    public AfterPokemonSelectionFightAction(ICMonPlayer player, Pokemon playerPokemon ,ICMonActor opponent){
+    private ICMon.ICMonGameState gameState;
+    public AfterPokemonSelectionFightAction(ICMonPlayer player, Pokemon playerPokemon , ICMonActor opponent, ICMon.ICMonGameState gameState){
         this.player = player;
         this.opponent = opponent;
         this.playerPokemon = playerPokemon;
+        this.gameState = gameState;
     }
     @Override
     public void perform() {
         PokemonFightEvent combat = new PokemonFightEvent(player, playerPokemon, opponent);
-        player.getGameState().send(new SuspendWithEventMessage(combat));
+        gameState.send(new SuspendWithEventMessage(combat));
     }
 }
