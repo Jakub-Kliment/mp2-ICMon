@@ -9,6 +9,7 @@ import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.PokemonSelectionEvent;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.icmon.message.PassDoorMessage;
 import ch.epfl.cs107.icmon.message.SuspendWithEventMessage;
@@ -40,21 +41,24 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private ICMon.ICMonGameState gameState;
     private Dialog dialog;
     private List<Pokemon> pokemonList;
+    private ICMon.ICMonEventManager eventManager;
     /**
      * Default MovableAreaEntity constructor
      *
      * @param area        (Area): Owner area. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
-    public ICMonPlayer(Area area, DiscreteCoordinates position, String spriteName, ICMon.ICMonGameState gameState) {
+    public ICMonPlayer(Area area, DiscreteCoordinates position, String spriteName, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager) {
         super(area, Orientation.DOWN, position);
-        this.gameState=gameState;
+        this.gameState = gameState;
+        this.eventManager = eventManager;
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
         pokemonList = new ArrayList<>();
         addPokemon(new Bulbizarre(area, Orientation.DOWN, position));
         addPokemon(new Latios(area, Orientation.DOWN, position));
         addPokemon(new Nidoqueen(area, Orientation.DOWN, position));
+        addPokemon(new Latios(area, Orientation.DOWN, position));
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
@@ -76,9 +80,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         super.update(deltaTime);
     }
     public void fight(ICMonFightableActor actor){
-        PokemonFightEvent combat = new PokemonFightEvent(this,(ICMonActor) actor);
-        gameState.addEvent(combat);
-        gameState.send(new SuspendWithEventMessage(combat));
+        PokemonSelectionEvent selectionEvent = new PokemonSelectionEvent(this,(ICMonActor) actor);
+        gameState.send(new SuspendWithEventMessage(selectionEvent));
     }
     private void moveIfPressed(Orientation orientation, Button b) {
         if (b.isDown()) {
@@ -144,9 +147,18 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     public void addPokemon(Pokemon pokemon){
         pokemonList.add(pokemon);
     }
-    public Pokemon choosenPokemon(){
-        return pokemonList.get(0);
+    public ICMon.ICMonEventManager getEventManager() {
+        return eventManager;
     }
+
+    public ICMon.ICMonGameState getGameState() {
+        return gameState;
+    }
+
+    public List<Pokemon> getPokemonList() {
+        return pokemonList;
+    }
+
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor{
         @Override
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {

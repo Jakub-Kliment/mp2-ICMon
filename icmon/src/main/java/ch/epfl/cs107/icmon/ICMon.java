@@ -20,6 +20,8 @@ import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
+import com.sun.security.jgss.GSSUtil;
+import org.w3c.dom.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,7 @@ public class ICMon extends AreaGame {
     private ICMonGameState gameState;
     private ICMonEventManager eventManager;
     /** ??? */
-    private int areaIndex;
+    //private int areaIndex;
     private void createAreas() {
         addArea(new Town());
         addArea(new Lab());
@@ -44,24 +46,17 @@ public class ICMon extends AreaGame {
     }
     public boolean begin(Window window, FileSystem fileSystem) {
         if (super.begin(window, fileSystem)) {
-            createAreas();
-            areaIndex = 0;
-            initArea("town");
-
             eventManager = new ICMonEventManager();
-
+            createAreas();
+            initArea("town");
             ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(6,6));
             CollectItemEvent eventBall = new CollectItemEvent(ball, player);
             eventBall.onStart(new LogAction("CollectItemEvent started !"));
             eventBall.onStart(new RegisterinAreaAction(getCurrentArea(), ball));
             eventBall.onComplete(new LogAction("CollectItemEvent completed !"));
-            eventBall.onComplete(new UnregisterEventAction(eventManager, eventBall));
-            eventBall.onStart(new RegisterEventAction(eventManager, eventBall));
             eventBall.start();
 
             EndOfTheGameEvent eventEnd = new EndOfTheGameEvent(player);
-            eventEnd.onStart(new RegisterEventAction(eventManager, eventEnd));
-            eventEnd.onComplete(new UnregisterEventAction(eventManager, eventEnd));
             eventBall.onComplete(new StartEventAction(eventEnd));
             return true;
         }
@@ -71,7 +66,7 @@ public class ICMon extends AreaGame {
         ICMonArea area = (ICMonArea) setCurrentArea(areaKey, true);
         DiscreteCoordinates coords = area.getPlayerSpawnPosition();
         gameState = new ICMonGameState();
-        player = new ICMonPlayer(area, coords, "actors/player", gameState);
+        player = new ICMonPlayer(area, coords, "actors/player", gameState, eventManager);
         eventList = new ArrayList<>();
         startedEvent = new ArrayList<>();
         completedEvent = new ArrayList<>();
@@ -117,7 +112,7 @@ public class ICMon extends AreaGame {
             if (message instanceof SuspendWithEventMessage){
                 ICMonEvent event = ((SuspendWithEventMessage)message).getEvent();
                 if (event.isMenuPause()){
-                    event.onStart(new setPauseAction(this, ((PokemonFightEvent)event).getMenu()));
+                    event.onStart(new setPauseAction(this, (event).getMenu()));
                     event.onComplete(new ResumeMenu(this));
                     for(ICMonEvent event1 : eventList){
                         event.onStart(new SuspendedEventAction(event1));
@@ -132,9 +127,6 @@ public class ICMon extends AreaGame {
             ICMonArea currentArea = (ICMonArea) setCurrentArea(areaName, false);
             player.enterArea(currentArea, coordinates);
         }
-        public void addEvent(ICMonEvent event){
-            startedEvent.add(event);
-        }
         public void setMenuPause(PauseMenu menu){
             setPauseMenu(menu);
             requestPause();
@@ -145,11 +137,11 @@ public class ICMon extends AreaGame {
     }
 
     public class ICMonEventManager{
-        public List<ICMonEvent> getStartedEvent(){
-            return startedEvent;
+        public void addStartedEvent(ICMonEvent event){
+            startedEvent.add(event);
         }
-        public List<ICMonEvent> getCompletedEvent(){
-            return completedEvent;
+        public void addCompletedEvent(ICMonEvent event){
+            completedEvent.remove(event);
         }
     }
 }

@@ -8,9 +8,9 @@ import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 
 public class PokemonFightEvent extends ICMonEvent {
     private ICMonFight menu;
-    public PokemonFightEvent(ICMonPlayer player, ICMonActor actor) {
+    public PokemonFightEvent(ICMonPlayer player, Pokemon playerPokemon, ICMonActor actor) {
         super(player);
-        menu = new ICMonFight(player.choosenPokemon(), (Pokemon)actor);
+        menu = new ICMonFight(playerPokemon, (Pokemon)actor);
         onComplete(new LeaveAreaAction(actor));
     }
 //ATTENTION GETTER

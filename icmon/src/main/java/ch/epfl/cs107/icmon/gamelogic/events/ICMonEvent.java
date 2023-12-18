@@ -3,7 +3,9 @@ package ch.epfl.cs107.icmon.gamelogic.events;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.Action;
 import ch.epfl.cs107.icmon.gamelogic.actions.RegisterEventAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.UnregisterEventAction;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
+import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.engine.Updatable;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
         suspendedAction = new ArrayList<>();
         resumedAction = new ArrayList<>();
         this.player = player;
+        onStart(new RegisterEventAction(player.getEventManager(), this));
+        onComplete(new UnregisterEventAction(player.getEventManager(), this));
     }
 
     public final void start(){
@@ -93,4 +97,7 @@ public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
         return suspended;
     }
     public boolean isMenuPause(){return false;}
+    public PauseMenu getMenu(){
+        return null;
+    }
 }
