@@ -20,7 +20,7 @@ public class Arena extends ICMonArea {
     protected void createArea() {
         registerActor(new Background(this));
         registerActor(new Foreground((this)));
-        registerActor(new Bulbizarre(this, Orientation.DOWN, new DiscreteCoordinates(6, 6)));
+        registerActor(new Latios(this, Orientation.DOWN, new DiscreteCoordinates(6, 6)));
         registerActor(new Door(this, new DiscreteCoordinates(4,1), "town", new DiscreteCoordinates(20, 15), new DiscreteCoordinates(5, 1)));
     }
 

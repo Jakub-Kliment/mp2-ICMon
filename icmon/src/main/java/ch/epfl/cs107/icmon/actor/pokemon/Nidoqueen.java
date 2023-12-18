@@ -1,5 +1,7 @@
 package ch.epfl.cs107.icmon.actor.pokemon;
 
+import ch.epfl.cs107.icmon.actor.pokemon.actions.Attack;
+import ch.epfl.cs107.icmon.actor.pokemon.actions.RunAway;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -15,5 +17,6 @@ public class Nidoqueen extends Pokemon {
      */
     public Nidoqueen(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, "nidoqueen", 1, 10);
+        addFightAction(new Attack(), new RunAway());
     }
 }
