@@ -4,13 +4,13 @@ import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Arena;
+import ch.epfl.cs107.icmon.area.maps.House;
 import ch.epfl.cs107.icmon.area.maps.Lab;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.EndOfTheGameEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
-import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
 import ch.epfl.cs107.icmon.message.GamePlayMessage;
 import ch.epfl.cs107.icmon.message.SuspendWithEventMessage;
 import ch.epfl.cs107.play.areagame.AreaGame;
@@ -20,8 +20,6 @@ import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
-import com.sun.security.jgss.GSSUtil;
-import org.w3c.dom.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +41,13 @@ public class ICMon extends AreaGame {
         addArea(new Town());
         addArea(new Lab());
         addArea(new Arena());
+        addArea(new House());
     }
     public boolean begin(Window window, FileSystem fileSystem) {
         if (super.begin(window, fileSystem)) {
             eventManager = new ICMonEventManager();
             createAreas();
-            initArea("town");
+            initArea("house");
             ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(6,6));
             CollectItemEvent eventBall = new CollectItemEvent(ball, player);
             eventBall.onStart(new LogAction("CollectItemEvent started !"));
