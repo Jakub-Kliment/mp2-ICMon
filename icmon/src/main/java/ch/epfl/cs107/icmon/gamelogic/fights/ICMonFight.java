@@ -54,7 +54,7 @@ public class ICMonFight extends PauseMenu {
                 //if (fightAction.doAction(opponent)) {
                 //}
                 if (fightAction instanceof Attack) {
-                    opponent.receiveAttack(player.getDamage());
+                    opponent.receiveAttack(player.properties().damage());
                     if (!opponent.isAlive()) {
                         message = "The player has won the fight";
                         state = State.CONCLUSION;
@@ -70,7 +70,7 @@ public class ICMonFight extends PauseMenu {
             case COUNTER -> {
                 for (ICMonFightAction opponentAction : opponent.getFightAction()) {
                     if (opponentAction instanceof Attack) { // && opponentAction.doAction(player)
-                        player.receiveAttack(opponent.getDamage());
+                        player.receiveAttack(opponent.properties().damage());
                     }
                 }
                 //message = "The player has decided not to continue the fight";

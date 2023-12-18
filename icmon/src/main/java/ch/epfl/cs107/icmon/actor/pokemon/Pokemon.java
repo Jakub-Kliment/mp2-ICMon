@@ -113,7 +113,4 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     public List<ICMonFightAction> getFightAction() {
         return fightActions;
     }
-    public int getDamage() {
-        return damage;
-    }
 }
