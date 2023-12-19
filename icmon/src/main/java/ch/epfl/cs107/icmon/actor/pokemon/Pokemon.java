@@ -75,16 +75,16 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
     @Override
     public boolean isViewInteractable() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCellInteractable() {
-        return true;
+        return false;
     }
     @Override
     public boolean takeCellSpace() {
-        return false;
+        return true;
     }
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {

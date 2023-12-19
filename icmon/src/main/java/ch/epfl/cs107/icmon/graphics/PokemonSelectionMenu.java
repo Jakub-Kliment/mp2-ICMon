@@ -28,19 +28,20 @@ public class PokemonSelectionMenu extends PauseMenu {
     private final float scaleFactor;
     private final GraphicsEntity[] selectors;
     private final List<Pokemon> pokemonList;
-    private final Graphics header;
+    private Graphics header;
 
     private Pokemon choice;
 
     private int currentChoice;
+    private boolean hasPokemon;
 
     public PokemonSelectionMenu(List<Pokemon> pokemonList) {
         assert !pokemonList.isEmpty();
         this.scaleFactor = ICMon.CAMERA_SCALE_FACTOR;
         this.pokemonList = pokemonList;
         selectors = new GraphicsEntity[3];
-        header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 + 5.5f), new TextGraphics("Please, select a Pokemon", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
-        currentChoice = 0;
+        currentChoice = 1;
+        hasPokemon = true;
     }
 
     @Override
@@ -48,35 +49,43 @@ public class PokemonSelectionMenu extends PauseMenu {
         super.update(deltaTime);
         Keyboard keyboard = getKeyboard();
         // HR : Keyboard management
-        if (keyboard.get(Keyboard.LEFT).isPressed()){
-            currentChoice = max(0, currentChoice - 1);
-        } else if (keyboard.get(Keyboard.RIGHT).isPressed())
-            currentChoice = min(currentChoice + 1, pokemonList.size() - 1);
-        else if (keyboard.get(Keyboard.ENTER).isPressed())
-            choice = pokemonList.get(currentChoice);
-        // HR : Prepare the left selector
-        if (currentChoice == 0){
-            selectors[0] = null;
+        if (pokemonList.isEmpty()) {
+            header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 + 5.5f), new TextGraphics("You do not have a Pokemon yet!", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
+            if (keyboard.get(Keyboard.SPACE).isPressed()) {
+                hasPokemon = false;
+            }
         } else {
-            var spriteName = "pokemon/" + pokemonList.get(currentChoice-1).properties().name();
-            var image = new ImageGraphics(ResourcePath.getSprite(spriteName), scaleFactor / 2.5f, scaleFactor / 2.5f);
-            image.setAlpha(.6f);
-            selectors[0] = new GraphicsEntity(new Vector(scaleFactor / 3 - 4f, scaleFactor / 2 - 4f), image);
-        }
-        // HR : Prepare the middle selector
-        {
-            var spriteName = "pokemon/" + pokemonList.get(currentChoice).properties().name();
-            var image = new ImageGraphics(ResourcePath.getSprite(spriteName), scaleFactor / 2.5f, scaleFactor / 2.5f);
-            selectors[1] = new GraphicsEntity(new Vector(scaleFactor / 3, scaleFactor / 2 - 4f), image);
-        }
-        // HR : Prepare the Right selector
-        if (currentChoice == pokemonList.size() - 1 ){
-            selectors[2] = null;
-        } else {
-            var spriteName = "pokemon/"+ pokemonList.get(currentChoice + 1).properties().name();
-            var image = new ImageGraphics(ResourcePath.getSprite(spriteName), scaleFactor / 2.5f, scaleFactor / 2.5f);
-            image.setAlpha(.6f);
-            selectors[2] = new GraphicsEntity(new Vector(scaleFactor / 3 + 4f, scaleFactor / 2 - 4f), image);
+            header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 + 5.5f), new TextGraphics("Please, select a Pokemon", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
+            if (keyboard.get(Keyboard.LEFT).isPressed()){
+                currentChoice = max(0, currentChoice - 1);
+            } else if (keyboard.get(Keyboard.RIGHT).isPressed())
+                currentChoice = min(currentChoice + 1, pokemonList.size() - 1);
+            else if (keyboard.get(Keyboard.ENTER).isPressed())
+                choice = pokemonList.get(currentChoice);
+            // HR : Prepare the left selector
+            if (currentChoice == 0){
+                selectors[0] = null;
+            } else {
+                var spriteName = "pokemon/" + pokemonList.get(currentChoice-1).properties().name();
+                var image = new ImageGraphics(ResourcePath.getSprite(spriteName), scaleFactor / 2.5f, scaleFactor / 2.5f);
+                image.setAlpha(.6f);
+                selectors[0] = new GraphicsEntity(new Vector(scaleFactor / 3 - 4f, scaleFactor / 2 - 4f), image);
+            }
+            // HR : Prepare the middle selector
+            {
+                var spriteName = "pokemon/" + pokemonList.get(currentChoice).properties().name();
+                var image = new ImageGraphics(ResourcePath.getSprite(spriteName), scaleFactor / 2.5f, scaleFactor / 2.5f);
+                selectors[1] = new GraphicsEntity(new Vector(scaleFactor / 3, scaleFactor / 2 - 4f), image);
+            }
+            // HR : Prepare the Right selector
+            if (currentChoice == pokemonList.size() - 1 ){
+                selectors[2] = null;
+            } else {
+                var spriteName = "pokemon/"+ pokemonList.get(currentChoice + 1).properties().name();
+                var image = new ImageGraphics(ResourcePath.getSprite(spriteName), scaleFactor / 2.5f, scaleFactor / 2.5f);
+                image.setAlpha(.6f);
+                selectors[2] = new GraphicsEntity(new Vector(scaleFactor / 3 + 4f, scaleFactor / 2 - 4f), image);
+            }
         }
     }
 
@@ -84,11 +93,16 @@ public class PokemonSelectionMenu extends PauseMenu {
         return choice;
     }
 
+    public boolean hasPokemon() {
+        return hasPokemon;
+    }
 
     @Override
     protected void drawMenu(Canvas c) {
         // HR : Draw the header
-        header.draw(c);
+        if (header != null) {
+            header.draw(c);
+        }
         // HR : Draw the selectors that are visible (not null)
         for (var selector : selectors)
             if(nonNull(selector)) {

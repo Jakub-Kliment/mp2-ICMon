@@ -201,7 +201,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
         @Override
         public void interactWith(Pokemon pokemon, boolean isCellInteraction) {
-            if (isCellInteraction){
+            if (!isCellInteraction){
                 fight(pokemon);
             }
         }

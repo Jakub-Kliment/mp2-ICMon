@@ -4,6 +4,8 @@ import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.AfterPokemonSelectionFightAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.CompleteEventAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
 import ch.epfl.cs107.icmon.graphics.PokemonSelectionMenu;
 import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.window.Canvas;
@@ -21,8 +23,11 @@ public class PokemonSelectionEvent extends ICMonEvent{
     }
     @Override
     public void update(float deltaTime) {
-        if(selectionMenu.choice() != null){
-            onComplete( new AfterPokemonSelectionFightAction(player, selectionMenu.choice(), opponent, gameState));
+        if(selectionMenu.choice() != null) {
+            onComplete(new AfterPokemonSelectionFightAction(player, selectionMenu.choice(), opponent, gameState));
+            complete();
+        }
+        if (!selectionMenu.hasPokemon()) {
             complete();
         }
     }
