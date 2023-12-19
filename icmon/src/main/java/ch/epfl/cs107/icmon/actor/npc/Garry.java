@@ -1,7 +1,6 @@
 package ch.epfl.cs107.icmon.actor.npc;
 
 import ch.epfl.cs107.icmon.actor.ICMonFightableActor;
-import ch.epfl.cs107.icmon.actor.pokemon.Latios;
 import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Garry extends NPCActor implements ICMonFightableActor {
-    private List<Pokemon> pokemonList;
+    private final List<Pokemon> pokemonList;
     /**
      * Default MovableAreaEntity constructor
      *
@@ -31,10 +30,6 @@ public class Garry extends NPCActor implements ICMonFightableActor {
         return pokemonList.get(0);
     }
 
-    @Override
-    public boolean retire() {
-        return false;
-    }
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {

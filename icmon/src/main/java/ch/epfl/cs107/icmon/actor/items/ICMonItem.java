@@ -21,6 +21,7 @@ abstract public class ICMonItem extends CollectableAreaEntity {
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
+
     @Override
     public boolean takeCellSpace() {
         return true;

@@ -15,6 +15,7 @@ public class ProfOak extends NPCActor {
     public ProfOak(Area area) {
         super(area, Orientation.DOWN, new DiscreteCoordinates(11,7), "actors/prof-oak");
     }
+
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);

@@ -12,7 +12,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.List;
 
 public class NPCActor extends ICMonActor {
-    private Sprite sprite;
+    private final Sprite sprite;
 
     /**
      * Default MovableAreaEntity constructor

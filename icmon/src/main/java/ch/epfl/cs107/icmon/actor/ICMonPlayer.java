@@ -30,16 +30,16 @@ import java.util.List;
 public class ICMonPlayer extends ICMonActor implements Interactor {
     private final int ANIMATION_DURATION = 8;
     private final static int MOVE_DURATION = 2;
-    private OrientedAnimation animation;
     private final ICMonPlayerInteractionHandler handler;
-    //private String[] animations = {"actors/player", "actors/player_water"};
-    private OrientedAnimation[] animations = {new OrientedAnimation("actors/player", ANIMATION_DURATION/2, Orientation.DOWN, this),
-            new OrientedAnimation("actors/player_water", ANIMATION_DURATION/2, Orientation.DOWN, this)};
-    //private int animationIndex;
-    private ICMon.ICMonGameState gameState;
+    private final ICMon.ICMonEventManager eventManager;
+    private final ICMon.ICMonGameState gameState;
+    private final List<Pokemon> pokemonList;
+    private OrientedAnimation animation;
     private Dialog dialog;
-    private List<Pokemon> pokemonList;
-    private ICMon.ICMonEventManager eventManager;
+    private final OrientedAnimation[] animations = {
+            new OrientedAnimation("actors/player", ANIMATION_DURATION/2, Orientation.DOWN, this),
+            new OrientedAnimation("actors/player_water", ANIMATION_DURATION/2, Orientation.DOWN, this)
+    };
     /**
      * Default MovableAreaEntity constructor
      *
@@ -48,24 +48,27 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
      */
     public ICMonPlayer(Area area, DiscreteCoordinates position, String spriteName, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager) {
         super(area, Orientation.DOWN, position);
-        this.gameState = gameState;
         this.eventManager = eventManager;
+        this.gameState = gameState;
+
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
         pokemonList = new ArrayList<>();
     }
+
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
-        if (dialog != null && !dialog.isCompleted()){
-            if (keyboard.get(Keyboard.SPACE).isPressed()){
+        if (dialog != null && !dialog.isCompleted()) {
+            if (keyboard.get(Keyboard.SPACE).isPressed()) {
                 dialog.update(deltaTime);
             }
         } else {
-            moveIfPressed(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
             moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
-            moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
             moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
-            if (isDisplacementOccurs()){
+            moveIfPressed(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
+            moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
+
+            if (isDisplacementOccurs()) {
                 animation.update(deltaTime);
             } else {
                 animation.reset();
@@ -73,6 +76,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         }
         super.update(deltaTime);
     }
+
     public void fight(ICMonFightableActor actor){
             PokemonSelectionEvent selectionEvent = new PokemonSelectionEvent(this, actor, gameState);
             gameState.send(new SuspendWithEventMessage(selectionEvent));
@@ -86,6 +90,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             }
         }
     }
+
     @Override
     public void draw(Canvas canvas) {
         animation.draw(canvas);
@@ -120,12 +125,12 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     @Override
     public boolean wantsViewInteraction() {
         Keyboard keyboard = getOwnerArea().getKeyboard();
-        if (dialog == null || dialog.isCompleted()){
+        if (dialog == null || dialog.isCompleted()) {
             return keyboard.get(Keyboard.L).isPressed();
         }
         return false;
     }
-    //NE PAS ECOUTER JEANNE !!!!!!!!!
+
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);
@@ -151,14 +156,15 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     public List<Pokemon> getPokemonList() {
         return pokemonList;
     }
-    public boolean isDialogCompled(){
+    public boolean isDialogCompleted(){
         return dialog.isCompleted();
     }
     public Area getCurrentArea(){
         return super.getOwnerArea();
     }
 
-    private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor{
+    private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
+
         @Override
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
             if (isCellInteraction) {
@@ -172,6 +178,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                 }
             }
         }
+
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
             if (!isCellInteraction) {
@@ -183,9 +190,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
             gameState.acceptInteraction(assistant, isCellInteraction);
         }
+
         @Override
-        public void interactWith(Door door, boolean isCellInteraction){
-            if(isCellInteraction){
+        public void interactWith(Door door, boolean isCellInteraction) {
+            if(isCellInteraction) {
                 PassDoorMessage message = new PassDoorMessage(door, gameState);
                 gameState.send(message);
             }

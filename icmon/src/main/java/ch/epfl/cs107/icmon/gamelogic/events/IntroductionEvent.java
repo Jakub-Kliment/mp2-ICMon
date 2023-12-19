@@ -12,7 +12,7 @@ public class IntroductionEvent extends ICMonEvent{
 
     @Override
     public void update(float deltaTime) {
-        if (player.isDialogCompled())
+        if (player.isDialogCompleted())
             complete();
     }
 }

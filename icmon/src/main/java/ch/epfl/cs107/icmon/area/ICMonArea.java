@@ -9,10 +9,6 @@ import ch.epfl.cs107.play.window.Window;
 abstract public class ICMonArea extends Area {
     protected abstract void createArea();
 
-    /**
-     * ???
-     * @return ???
-     */
     public abstract DiscreteCoordinates getPlayerSpawnPosition();
 
     /**
@@ -31,10 +27,6 @@ abstract public class ICMonArea extends Area {
         return false;
     }
 
-    /**
-     * ???
-     * @return ???
-     */
     @Override
     public final float getCameraScaleFactor() {
         return ICMon.CAMERA_SCALE_FACTOR;

@@ -13,9 +13,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Door extends AreaEntity {
-    private String areaName;
-    private DiscreteCoordinates coordinates;
-    private List<DiscreteCoordinates> occupiedCoordinates;
+    private final List<DiscreteCoordinates> occupiedCoordinates;
+    private final DiscreteCoordinates coordinates;
+    private final String areaName;
 
     /**
      * Default AreaEntity constructor
@@ -25,16 +25,18 @@ public class Door extends AreaEntity {
      */
     public Door(Area area, DiscreteCoordinates position, String areaName, DiscreteCoordinates coordinates) {
         super(area, Orientation.UP, position);
-        occupiedCoordinates = new ArrayList<>();
-        this.areaName = areaName;
         this.coordinates = coordinates;
+        this.areaName = areaName;
+
+        occupiedCoordinates = new ArrayList<>();
         occupiedCoordinates.add(position);
     }
     public Door(Area area, DiscreteCoordinates position, String areaName, DiscreteCoordinates coordinates, DiscreteCoordinates... occupiedCoordinates){
         super(area, Orientation.UP, position);
-        this.occupiedCoordinates = new ArrayList<>();
         this.areaName = areaName;
         this.coordinates = coordinates;
+
+        this.occupiedCoordinates = new ArrayList<>();
         this.occupiedCoordinates.add(position);
         Collections.addAll(this.occupiedCoordinates, occupiedCoordinates);
     }

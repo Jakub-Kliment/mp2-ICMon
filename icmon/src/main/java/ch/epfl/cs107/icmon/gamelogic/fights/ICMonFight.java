@@ -13,8 +13,8 @@ import ch.epfl.cs107.play.window.Keyboard;
 public class ICMonFight extends PauseMenu {
     private final Pokemon player;
     private final Pokemon opponent;
-    private ICMonFightActionSelectionGraphics selectionGraphics;
     private final ICMonFightArenaGraphics arena;
+    private ICMonFightActionSelectionGraphics selectionGraphics;
     private ICMonFightAction fightAction;
     private String message;
     private boolean winner;
@@ -23,6 +23,7 @@ public class ICMonFight extends PauseMenu {
     public ICMonFight(Pokemon player, Pokemon opponent){
         this.player = player;
         this.opponent = opponent;
+
         arena = new ICMonFightArenaGraphics(CAMERA_SCALE_FACTOR, player.properties(), opponent.properties());
         state = State.INTRODUCTION;
         over = false;
@@ -33,6 +34,7 @@ public class ICMonFight extends PauseMenu {
     public void update(float deltaTime) {
         super.update(deltaTime);
         Keyboard keyboard = getKeyboard();
+
         switch (state) {
             case INTRODUCTION -> {
                 setGraphic("Welcome to the arena");
@@ -40,6 +42,7 @@ public class ICMonFight extends PauseMenu {
                     state = State.ACTION_SELECTION;
                 }
             }
+
             case ACTION_SELECTION -> {
                 if (selectionGraphics == null) {
                     selectionGraphics = new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, keyboard, player.getFightActions());
@@ -54,6 +57,7 @@ public class ICMonFight extends PauseMenu {
                     selectionGraphics = null;
                 }
             }
+
             case ACTION_EXECUTION -> {
                 if (fightAction instanceof Attack) {
                     fightAction.makeAction(player, opponent);
@@ -70,6 +74,7 @@ public class ICMonFight extends PauseMenu {
                     state = State.CONCLUSION;
                 }
             }
+
             case COUNTER -> {
                 for (ICMonFightAction opponentAction : opponent.getFightActions()) {
                     if (opponentAction instanceof Attack) {
@@ -85,6 +90,7 @@ public class ICMonFight extends PauseMenu {
                     state = State.ACTION_SELECTION;
                 }
             }
+
             case CONCLUSION -> {
                 setGraphic(message);
                 if (keyboard.get(Keyboard.SPACE).isPressed()) {
@@ -94,6 +100,7 @@ public class ICMonFight extends PauseMenu {
 
         }
     }
+
     private void setGraphic(String message) {
         arena.setInteractionGraphics(new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, message));
     }
@@ -102,15 +109,19 @@ public class ICMonFight extends PauseMenu {
     public void drawMenu(Canvas c) {
         arena.draw(c);
     }
+
     public boolean isOver(){
         return over;
     }
+
     public void end() {
         over = true;
     }
+
     public boolean playerWin(){
         return winner;
     }
+
     private enum State {
         INTRODUCTION,
         COUNTER,
@@ -119,5 +130,4 @@ public class ICMonFight extends PauseMenu {
         ACTION_EXECUTION
         ;
     }
-
 }

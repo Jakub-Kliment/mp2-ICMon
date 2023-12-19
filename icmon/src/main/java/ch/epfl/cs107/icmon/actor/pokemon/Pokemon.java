@@ -8,7 +8,6 @@ import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.RPGSprite;
 import ch.epfl.cs107.play.engine.actor.Sprite;
-import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Canvas;
@@ -23,12 +22,13 @@ import java.util.List;
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */
 public abstract class Pokemon extends ICMonActor implements ICMonFightableActor {
+    private final List<ICMonFightAction> fightActions;
+    private final Sprite pokemon;
     private final String name;
-    private float hp;
     private final float hpMax;
     private final int damage;
-    private final Sprite pokemon;
-    private final List<ICMonFightAction> fightActions;
+    private float hp;
+
     /**
      * Default MovableAreaEntity constructor
      *
@@ -38,10 +38,11 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
      */
     public Pokemon(Area area, Orientation orientation, DiscreteCoordinates position, String name, int damage, float hpMax) {
         super(area, orientation, position);
-        this.name = name;
         this.damage = damage;
         this.hpMax = hpMax;
+        this.name = name;
         hp = hpMax;
+
         pokemon = new RPGSprite("pokemon/" + name, 1, 1, this);
         fightActions = new ArrayList<ICMonFightAction>();
     }
@@ -68,7 +69,11 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         }
 
     }
-    public PokemonProperties properties() { return new PokemonProperties(); }
+
+    public PokemonProperties properties() {
+        return new PokemonProperties();
+    }
+
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return super.getCurrentCells();
@@ -98,15 +103,24 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     public void draw(Canvas canvas) {
         pokemon.draw(canvas);
     }
+
+    @Override
+    public Pokemon choosenPokemon() {
+        return this;
+    }
+
     public void addFightActions(ICMonFightAction ... actions) {
         Collections.addAll(fightActions, actions);
     }
+
     public List<ICMonFightAction> getFightActions() {
         return fightActions;
     }
+
     public boolean isAlive() {
         return hp > 0;
     }
+
     public void receiveAttack(int damage) {
         if (isAlive()) {
             hp -= damage;
@@ -114,15 +128,5 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
                 hp = 0;
             }
         }
-    }
-
-    @Override
-    public Pokemon choosenPokemon() {
-        return this;
-    }
-
-    @Override
-    public boolean retire() {
-        return true;
     }
 }

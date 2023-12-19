@@ -2,10 +2,8 @@ package ch.epfl.cs107.icmon.area;
 
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
-import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
-import ch.epfl.cs107.play.engine.actor.Actor;
 import ch.epfl.cs107.play.window.Window;
 
 public class ICMonBehavior extends AreaBehavior {
@@ -31,9 +29,11 @@ public class ICMonBehavior extends AreaBehavior {
         NONE,
         SURF,
         FEET,
-        ALL;
+        ALL
+        ;
     }
-    public enum ICMonCellType{
+
+    public enum ICMonCellType {
         NULL(0, AllowedWalkingType.NONE),
         WALL(-16777216, AllowedWalkingType.NONE),
         BUILDING(-8750470, AllowedWalkingType.NONE),
@@ -42,15 +42,16 @@ public class ICMonBehavior extends AreaBehavior {
         INDOOR_WALKABLE(-1, AllowedWalkingType.FEET),
         OUTDOOR_WALKABLE(-14112955, AllowedWalkingType.FEET),
         WATER(-16776961, AllowedWalkingType.SURF),
-        GRASS(-16743680, AllowedWalkingType.FEET);
-        private final int type;
+        GRASS(-16743680, AllowedWalkingType.FEET)
+        ;
         private final AllowedWalkingType walkingType;
-        ICMonCellType(int type, AllowedWalkingType walkingType){
+        private final int type;
+        ICMonCellType(int type, AllowedWalkingType walkingType) {
             this.type = type;
             this.walkingType = walkingType;
         }
 
-        public static ICMonCellType toType(int type){
+        public static ICMonCellType toType(int type) {
             for (ICMonCellType ict : ICMonCellType.values()) {
                 if (ict.type == type)
                     return ict;
@@ -59,7 +60,7 @@ public class ICMonBehavior extends AreaBehavior {
         }
     }
     public class ICMonCell extends Cell {
-        private ICMonCellType type;
+        private final ICMonCellType type;
         private boolean taken;
         /**
          * Default Cell constructor
@@ -89,7 +90,7 @@ public class ICMonBehavior extends AreaBehavior {
 
         @Override
         protected boolean canLeave(Interactable entity) {
-            if (entity.takeCellSpace()){
+            if (entity.takeCellSpace()) {
                 taken = false;
             }
             return true;

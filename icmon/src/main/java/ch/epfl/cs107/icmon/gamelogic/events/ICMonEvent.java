@@ -11,58 +11,62 @@ import ch.epfl.cs107.play.engine.Updatable;
 import java.util.ArrayList;
 
 public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
+    private final ArrayList<Action> completedAction;
+    private final ArrayList<Action> suspendedAction;
+    private final ArrayList<Action> startedAction;
+    private final ArrayList<Action> resumedAction;
+
+    protected ICMonPlayer player;
     private boolean started;
     private boolean completed;
     private boolean suspended;
-    private final ArrayList<Action> startedAction;
-    private final ArrayList<Action> completedAction;
-    private final ArrayList<Action> suspendedAction;
-    private final ArrayList<Action> resumedAction;
-    protected ICMonPlayer player;
 
     public ICMonEvent(ICMonPlayer player){
         started = false;
         completed = false;
         suspended = false;
+
         startedAction = new ArrayList<>();
         completedAction = new ArrayList<>();
         suspendedAction = new ArrayList<>();
         resumedAction = new ArrayList<>();
+
         this.player = player;
+
         onStart(new RegisterEventAction(player.getEventManager(), this));
         onComplete(new UnregisterEventAction(player.getEventManager(), this));
     }
 
-    public final void start(){
-        if (!started){
-            for (Action action : startedAction){
+    public final void start() {
+        if(!started) {
+            for (Action action : startedAction) {
                 action.perform();
             }
             started = true;
         }
     }
 
-    public final void complete(){
-        if(started && !completed){
-            for (Action action : completedAction){
+    public final void complete() {
+        if(started && !completed) {
+            for(Action action : completedAction) {
                 action.perform();
             }
             completed = true;
         }
     }
 
-    public final void suspend(){
-        if(started && !completed && !suspended){
-            for (Action action : suspendedAction){
+    public final void suspend() {
+        if(started && !completed && !suspended) {
+            for (Action action : suspendedAction) {
                 action.perform();
             }
             suspended = true;
         }
     }
 
-    public final void resume(){
-        if(started && !completed && suspended){
-            for (Action action : resumedAction){
+    public final void resume() {
+        if(started && !completed && suspended) {
+            for (Action action : resumedAction) {
                 action.perform();
             }
             suspended = false;
@@ -96,7 +100,9 @@ public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
     public boolean isSuspended() {
         return suspended;
     }
+
     public boolean isMenuPause(){return false;}
+
     public PauseMenu getMenu(){
         return null;
     }

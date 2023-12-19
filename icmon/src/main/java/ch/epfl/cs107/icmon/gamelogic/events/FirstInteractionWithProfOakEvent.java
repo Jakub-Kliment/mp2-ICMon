@@ -12,15 +12,14 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent{
 
     public FirstInteractionWithProfOakEvent(ICMonPlayer player) {
         super(player);
-        //onComplete(new OpenDialogAction(player, "first_interaction_with_prof_oak"));
     }
 
     @Override
-    public void update(float deltaTime) {
-    }
+    public void update(float deltaTime) {}
+
     @Override
     public void interactWith(ProfOak profOak, boolean isCellInteraction) {
-        if (!isCellInteraction){
+        if (!isCellInteraction) {
             onComplete(new AddPokemonAction(player, new Latios(player.getCurrentArea(), Orientation.DOWN, player.getCurrentCells().get(0))));
             player.openDialog(new Dialog("first_interaction_with_prof_oak"));
             complete();

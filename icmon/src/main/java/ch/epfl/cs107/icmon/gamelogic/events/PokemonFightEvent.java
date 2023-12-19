@@ -8,8 +8,8 @@ import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 
 public class PokemonFightEvent extends ICMonEvent {
-    private ICMonFight menu;
-    private ICMonFightableActor opponent;
+    private final ICMonFightableActor opponent;
+    private final ICMonFight menu;
     public PokemonFightEvent(ICMonPlayer player, Pokemon playerPokemon, ICMonFightableActor opponent) {
         super(player);
         menu = new ICMonFight(playerPokemon, opponent.choosenPokemon());
