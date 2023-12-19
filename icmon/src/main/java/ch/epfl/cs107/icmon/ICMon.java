@@ -59,6 +59,7 @@ public class ICMon extends AreaGame {
         player.centerCamera();
     }
     public void update(float deltaTime) {
+        System.out.println(eventList.size());
         Keyboard keyboard = getCurrentArea().getKeyboard();
         if (keyboard.get(Keyboard.R).isPressed()){
             begin(getWindow(),getFileSystem());
@@ -148,7 +149,7 @@ public class ICMon extends AreaGame {
             startedEvent.add(event);
         }
         public void addCompletedEvent(ICMonEvent event){
-            completedEvent.remove(event);
+            completedEvent.add(event);
         }
     }
 }
