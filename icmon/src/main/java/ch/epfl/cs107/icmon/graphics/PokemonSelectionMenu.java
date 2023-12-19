@@ -40,7 +40,10 @@ public class PokemonSelectionMenu extends PauseMenu {
         this.scaleFactor = ICMon.CAMERA_SCALE_FACTOR;
         this.pokemonList = pokemonList;
         selectors = new GraphicsEntity[3];
-        currentChoice = 1;
+        currentChoice = pokemonList.size() / 2;
+        if (pokemonList.size() % 2 == 0) {
+            currentChoice -= 1;
+        }
         hasPokemon = true;
     }
 
