@@ -10,6 +10,11 @@ public class SetPauseAction implements Action{
         this.gameState = gameState;
         this.menu = menu;
     }
+    public boolean jeSuisFun() {
+        return false;
+    }
+
+
     @Override
     public void perform() {
         gameState.setMenuPause(menu);
