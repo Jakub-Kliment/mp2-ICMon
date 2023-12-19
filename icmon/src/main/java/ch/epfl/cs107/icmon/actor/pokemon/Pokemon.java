@@ -30,11 +30,14 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     private float hp;
 
     /**
-     * Default MovableAreaEntity constructor
+     * Default Pokemon constructor
      *
      * @param area        (Area): Owner area. Not null
      * @param orientation (Orientation): Initial orientation of the entity. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
+     * @param name        (String) : Name of the pokémon. Not null
+     * @param damage      (int) : Dégâts infligés par le pokémon. Not null
+     * @param hpMax       (float) : Nombre de pv maximum du pokémon
      */
     public Pokemon(Area area, Orientation orientation, DiscreteCoordinates position, String name, int damage, float hpMax) {
         super(area, orientation, position);
@@ -69,11 +72,19 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         }
 
     }
+    /**
+    * Allows access to the property of the pokémon
+    *
+    * @return (PokemonProperties) : The property of the pokémon
 
-    public PokemonProperties properties() {
-        return new PokemonProperties();
-    }
+     */
+    public PokemonProperties properties() { return new PokemonProperties(); }
 
+    /**
+     * Getter for the cells occupied by the pokémon
+     *
+     * @return (List<DiscreteCoordinates>) : The list of the cells occupied by the pokémon
+     */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return super.getCurrentCells();
@@ -121,6 +132,10 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         return hp > 0;
     }
 
+    /**
+     * The pokémon receives an attack
+     * @param damage : The damage received
+     */
     public void receiveAttack(int damage) {
         if (isAlive()) {
             hp -= damage;
