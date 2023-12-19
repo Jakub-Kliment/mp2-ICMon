@@ -40,7 +40,7 @@ public class PokemonSelectionMenu extends PauseMenu {
         this.pokemonList = pokemonList;
         selectors = new GraphicsEntity[3];
         header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 + 5.5f), new TextGraphics("Please, select a Pokemon", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
-        currentChoice = 1;
+        currentChoice = 0;
     }
 
     @Override

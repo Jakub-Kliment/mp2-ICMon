@@ -13,7 +13,7 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent{
 
     public FirstInteractionWithProfOakEvent(ICMonPlayer player) {
         super(player);
-        onComplete(new OpenDialogAction(player, "first_interaction_with_prof_oak"));
+        //onComplete(new OpenDialogAction(player, "first_interaction_with_prof_oak"));
     }
 
     @Override
@@ -23,7 +23,15 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent{
     public void interactWith(ProfOak profOak, boolean isCellInteraction) {
         if (!isCellInteraction){
             onComplete(new AddPokemonAction(player, new Latios(player.getCurrentArea(), Orientation.DOWN, player.getCurrentCells().get(0))));
+            player.openDialog(new Dialog("first_interaction_with_prof_oak"));
             complete();
+        }
+    }
+
+    @Override
+    public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
+        if (!isCellInteraction){
+            player.openDialog(new Dialog("first_interaction_with_oak_event_icshopassistant"));
         }
     }
 }
