@@ -2,22 +2,23 @@ package ch.epfl.cs107.icmon;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.pokemon.Latios;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Arena;
 import ch.epfl.cs107.icmon.area.maps.House;
 import ch.epfl.cs107.icmon.area.maps.Lab;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
-import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
-import ch.epfl.cs107.icmon.gamelogic.events.EndOfTheGameEvent;
-import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.*;
 import ch.epfl.cs107.icmon.message.GamePlayMessage;
 import ch.epfl.cs107.icmon.message.SuspendWithEventMessage;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
+import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 
@@ -35,28 +36,22 @@ public class ICMon extends AreaGame {
     private List<ICMonEvent> completedEvent;
     private ICMonGameState gameState;
     private ICMonEventManager eventManager;
+    private List<Area> areaList;
     /** ??? */
     //private int areaIndex;
     private void createAreas() {
-        addArea(new Town());
-        addArea(new Lab());
-        addArea(new Arena());
-        addArea(new House());
+        addAreaToGame(new Town());
+        addAreaToGame(new Lab());
+        addAreaToGame(new Arena());
+        addAreaToGame(new House());
     }
     public boolean begin(Window window, FileSystem fileSystem) {
         if (super.begin(window, fileSystem)) {
             eventManager = new ICMonEventManager();
+            areaList = new ArrayList<>();
             createAreas();
             initArea("house");
-            ICBall ball = new ICBall(getCurrentArea(), new DiscreteCoordinates(6,6));
-            CollectItemEvent eventBall = new CollectItemEvent(ball, player);
-            eventBall.onStart(new LogAction("CollectItemEvent started !"));
-            eventBall.onStart(new RegisterinAreaAction(getCurrentArea(), ball));
-            eventBall.onComplete(new LogAction("CollectItemEvent completed !"));
-            eventBall.start();
-
-            EndOfTheGameEvent eventEnd = new EndOfTheGameEvent(player);
-            eventBall.onComplete(new StartEventAction(eventEnd));
+            event();
             return true;
         }
         return false;
@@ -97,7 +92,24 @@ public class ICMon extends AreaGame {
     public String getTitle() {
         return "ICMon";
     }
-    public void end() {
+    public void end() {}
+    public void event(){
+        ICBall ball = new ICBall(areaList.get(0), new DiscreteCoordinates(6,6));
+        CollectItemEvent collectBall = new CollectItemEvent(ball, player);
+        collectBall.onStart(new RegisterinAreaAction(player.getCurrentArea(), ball));
+        FirstInteractionWithProfOakEvent oakEvent = new FirstInteractionWithProfOakEvent(player);
+        ICMonChainedEvent icMonChainedEvent = new ICMonChainedEvent(
+                player,
+                new IntroductionEvent(player),
+                oakEvent,
+                collectBall,
+                new EndOfTheGameEvent(player));
+        icMonChainedEvent.start();
+    }
+
+    public void addAreaToGame(Area area){
+        addArea(area);
+        areaList.add(area);
     }
     public class ICMonGameState {
         private GamePlayMessage message = null;

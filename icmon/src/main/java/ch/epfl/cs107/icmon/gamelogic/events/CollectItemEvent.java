@@ -3,6 +3,8 @@ package ch.epfl.cs107.icmon.gamelogic.events;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICMonItem;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.RegisterinAreaAction;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class CollectItemEvent extends ICMonEvent {
@@ -10,6 +12,7 @@ public class CollectItemEvent extends ICMonEvent {
     public CollectItemEvent(ICMonItem item, ICMonPlayer player) {
         super(player);
         this.item = item;
+        onStart(new RegisterinAreaAction(player.getCurrentArea(), item));
     }
     @Override
     public void update(float deltaTime) {

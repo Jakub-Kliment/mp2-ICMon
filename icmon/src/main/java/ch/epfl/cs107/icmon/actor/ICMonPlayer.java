@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon.actor;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.actor.npc.ProfOak;
 import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
 import ch.epfl.cs107.icmon.actor.pokemon.Latios;
 import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
@@ -55,10 +56,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
         pokemonList = new ArrayList<>();
-        addPokemon(new Bulbizarre(area, Orientation.DOWN, position));
+        /*addPokemon(new Bulbizarre(area, Orientation.DOWN, position));
         addPokemon(new Latios(area, Orientation.DOWN, position));
         addPokemon(new Nidoqueen(area, Orientation.DOWN, position));
-        addPokemon(new Latios(area, Orientation.DOWN, position));
+        addPokemon(new Latios(area, Orientation.DOWN, position));*/
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
@@ -141,18 +142,28 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
+
     public void openDialog(Dialog dialog){
         this.dialog = dialog;
     }
+
     public void addPokemon(Pokemon pokemon){
+        System.out.println("bite");
         pokemonList.add(pokemon);
     }
+
     public ICMon.ICMonEventManager getEventManager() {
         return eventManager;
     }
 
     public List<Pokemon> getPokemonList() {
         return pokemonList;
+    }
+    public boolean isDialogCompled(){
+        return dialog.isCompleted();
+    }
+    public Area getCurrentArea(){
+        return super.getOwnerArea();
     }
 
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor{
@@ -180,7 +191,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
             gameState.acceptInteraction(assistant, isCellInteraction);
         }
-
+        @Override
         public void interactWith(Door door, boolean isCellInteraction){
             if(isCellInteraction){
                 PassDoorMessage message = new PassDoorMessage(door, gameState);
@@ -193,6 +204,11 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             if (isCellInteraction){
                 fight(pokemon);
             }
+        }
+
+        @Override
+        public void interactWith(ProfOak profOak, boolean isCellInteraction) {
+            gameState.acceptInteraction(profOak, isCellInteraction);
         }
     }
 }
