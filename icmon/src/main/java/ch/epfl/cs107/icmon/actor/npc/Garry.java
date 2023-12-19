@@ -13,11 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Garry extends NPCActor implements ICMonFightableActor {
+    /** The list of pokemons of Garry */
     private final List<Pokemon> pokemonList;
+
     /**
-     * Default MovableAreaEntity constructor
+     * Default Garry constructor
+     * Add a Nidoqueen to the list of pokemons
      *
-     * @param area        (Area): Owner area. Not null
+     * @param area     (Area): Owner area. Not null
+     * @param position (Coordinate): Initial position of the entity. Not null
      */
     public Garry(Area area, DiscreteCoordinates position) {
         super(area, Orientation.DOWN, position, "actors/garry");
@@ -25,12 +29,22 @@ public class Garry extends NPCActor implements ICMonFightableActor {
         pokemonList.add(new Nidoqueen(area, Orientation.DOWN, position));
     }
 
+    /**
+     * Garry will use is only pokemon
+     *
+     * @return (Pokemon) : The pokemon Garry will use in the fight
+     */
     @Override
     public Pokemon choosenPokemon() {
         return pokemonList.get(0);
     }
 
-
+    /**
+     * Delegate interactions to the interaction handler
+     *
+     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param isCellInteraction : @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);

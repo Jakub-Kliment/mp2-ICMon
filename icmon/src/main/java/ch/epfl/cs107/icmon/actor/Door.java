@@ -13,15 +13,22 @@ import java.util.Collections;
 import java.util.List;
 
 public class Door extends AreaEntity {
+    /** List of coordinates occupied by the door */
     private final List<DiscreteCoordinates> occupiedCoordinates;
+
+    /** Coordinates of the area to which the door leads */
     private final DiscreteCoordinates coordinates;
+
+    /** Name of the area to which the door leads */
     private final String areaName;
 
     /**
-     * Default AreaEntity constructor
+     * Default Door constructor
      *
-     * @param area        (Area): Owner area. Not null
-     * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
+     * @param area     (Area): Owner area. Not null
+     * @param position (Coordinate): Position of the door. Not null
+     * @param areaName (String) : Name of the area to which the door leads. Not null
+     * @param coordinates (DiscreteCoordinates) : Coordinates in the area to which the door leads. Not null
      */
     public Door(Area area, DiscreteCoordinates position, String areaName, DiscreteCoordinates coordinates) {
         super(area, Orientation.UP, position);
@@ -31,6 +38,16 @@ public class Door extends AreaEntity {
         occupiedCoordinates = new ArrayList<>();
         occupiedCoordinates.add(position);
     }
+
+    /**
+     * Default Door constructor
+     *
+     * @param area     (Area): Owner area. Not null
+     * @param position (Coordinate): Position of the door. Not null
+     * @param areaName (String) : Name of the area to which the door leads. Not null
+     * @param coordinates (DiscreteCoordinates) : Coordinates in the area to which the door leads. Not null
+     * @param occupiedCoordinates (DiscreteCoordinates...) : Coordinates occupied by the door. Not null
+     */
     public Door(Area area, DiscreteCoordinates position, String areaName, DiscreteCoordinates coordinates, DiscreteCoordinates... occupiedCoordinates){
         super(area, Orientation.UP, position);
         this.areaName = areaName;
@@ -41,6 +58,11 @@ public class Door extends AreaEntity {
         Collections.addAll(this.occupiedCoordinates, occupiedCoordinates);
     }
 
+    /**
+     * Getter for the coordinates occupied by the door
+     *
+     * @return (List<DiscreteCoordinates>) : List of coordinates occupied by the door
+     */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return occupiedCoordinates;
@@ -61,18 +83,39 @@ public class Door extends AreaEntity {
         return false;
     }
 
+    /**
+     * Delegate interactions to the interaction handler
+     *
+     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
+    /**
+     * Draw the door
+     *
+     * @param canvas (Canvas): canvas, not null
+     */
     @Override
     public void draw(Canvas canvas) {}
 
+    /**
+     * Getter for the name of the area to which the door leads
+     *
+     * @return (String) : Name of the area to which the door leads
+     */
     public String getAreaName() {
         return areaName;
     }
 
+    /**
+     * Getter for the coordinates in the area to which the door leads
+     *
+     * @return (DiscreteCoordinates) : Coordinates in the area to which the door leads
+     */
     public DiscreteCoordinates getCoordinates() {
         return coordinates;
     }

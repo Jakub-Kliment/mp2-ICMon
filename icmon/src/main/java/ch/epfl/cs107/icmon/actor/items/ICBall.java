@@ -6,6 +6,12 @@ import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class ICBall extends ICMonItem{
+    /**
+     * Default ICBall constructor
+     *
+     * @param area     (Area): Owner area. Not null
+     * @param position (Coordinate): Initial position of the entity. Not null
+     */
     public ICBall(Area area, DiscreteCoordinates position) {
         super(area, position, "items/icball");
     }
@@ -15,6 +21,12 @@ public class ICBall extends ICMonItem{
         return true;
     }
 
+    /**
+     * Delegate interactions to the interaction handler
+     *
+     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param isCellInteraction : @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);

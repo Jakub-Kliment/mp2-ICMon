@@ -12,12 +12,28 @@ import java.util.Collections;
 import java.util.List;
 
 abstract public class ICMonItem extends CollectableAreaEntity {
+
+    /** The sprite of the item */
     private final Sprite sprite;
+
+    /**
+     * Default ICMonItem constructor
+     *
+     * @param area     (Area): Owner area. Not null
+     * @param position (Coordinate): Initial position of the entity. Not null
+     * @param spriteName (String) : Name of the sprite. Not null
+     */
     public ICMonItem(Area area, DiscreteCoordinates position, String spriteName) {
         super(area, Orientation.DOWN, position);
         sprite = new RPGSprite(spriteName, 1f, 1f, this);
 
     }
+
+    /**
+     * Getter for the current cells of the entity
+     *
+     * @return (List<DiscreteCoordinates>) : List of the coordinates of the cells occupied by the entity
+     */
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
@@ -32,6 +48,11 @@ abstract public class ICMonItem extends CollectableAreaEntity {
         return true;
     }
 
+    /**
+     * Draw the item
+     *
+     * @param canvas (Canvas) : The canvas on which the item is drawn
+     */
     @Override
     public void draw(Canvas canvas) {
         sprite.draw(canvas);

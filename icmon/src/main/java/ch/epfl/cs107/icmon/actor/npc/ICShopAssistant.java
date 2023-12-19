@@ -7,17 +7,23 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
 public class ICShopAssistant extends NPCActor {
+
     /**
-     * Default MovableAreaEntity constructor
+     * Default ICShopAssistant constructor
      *
-     * @param area        (Area): Owner area. Not null
-     * @param orientation (Orientation): Initial orientation of the entity. Not null
-     * @param position    (Coordinate): Initial position of the entity. Not null
+     * @param area     (Area): Owner area. Not null
+     * @param position (Coordinate): Initial position of the entity. Not null
      */
     public ICShopAssistant(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, "actors/assistant");
     }
 
+    /**
+     * Delegate interactions to the interaction handler
+     *
+     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);

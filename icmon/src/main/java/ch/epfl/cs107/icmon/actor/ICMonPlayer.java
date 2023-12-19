@@ -50,7 +50,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         super(area, Orientation.DOWN, position);
         this.eventManager = eventManager;
         this.gameState = gameState;
-
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
         pokemonList = new ArrayList<>();
@@ -77,10 +76,23 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         super.update(deltaTime);
     }
 
+    /**
+     * Fight with an ICMonFightableActor
+     * Can fight an NPCActor or a Pokemon
+     *
+     * @param actor : the actor to fight with
+     */
     public void fight(ICMonFightableActor actor){
             PokemonSelectionEvent selectionEvent = new PokemonSelectionEvent(this, actor, gameState);
             gameState.send(new SuspendWithEventMessage(selectionEvent));
     }
+
+    /**
+     * Move the player
+     *
+     * @param orientation : the orientation of the player
+     * @param b : the button pressed
+     */
     private void moveIfPressed(Orientation orientation, Button b) {
         if (b.isDown()) {
             if (!isDisplacementOccurs()) {
@@ -91,6 +103,11 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         }
     }
 
+    /**
+     * Draw the player
+     *
+     * @param canvas : the canvas on which the player is drawn
+     */
     @Override
     public void draw(Canvas canvas) {
         animation.draw(canvas);
@@ -98,15 +115,25 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             dialog.draw(canvas);
         }
     }
+
+    /**
+     * Center the camera on the player
+     */
     public void centerCamera() {
         getOwnerArea().setViewCandidate(this);
     }
+
 
     @Override
     public boolean takeCellSpace() {
         return true;
     }
 
+    /**
+     * Getter for the current cells of the entity
+     *
+     * @return (List<DiscreteCoordinates>) : List of the coordinates of the cells occupied by the entity
+     */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return super.getCurrentCells();
@@ -136,35 +163,79 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         other.acceptInteraction(handler, isCellInteraction);
     }
 
+    /**
+     * Delegate interactions to the interaction handler
+     *
+     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
+    /**
+     * Open a dialog
+     *
+     * @param dialog : the dialog to open
+     */
     public void openDialog(Dialog dialog){
         this.dialog = dialog;
     }
 
+    /**
+     * Add a pokemon to the player's pokemon list
+     *
+     * @param pokemon : the pokemon to add
+     */
     public void addPokemon(Pokemon pokemon){
         pokemonList.add(pokemon);
     }
 
+    /**
+     * Getter for the event manager
+     *
+     * @return (ICMonEventManager) : the event manager
+     */
     public ICMon.ICMonEventManager getEventManager() {
         return eventManager;
     }
 
+    /**
+     * Getter for the pokemon list
+     *
+     * @return List<Pokemon> : the pokemon list
+     */
     public List<Pokemon> getPokemonList() {
         return pokemonList;
     }
+
+    /**
+     * Allow to know if the dialog is completed
+     *
+     * @return (boolean) : true if the dialog is completed
+     */
     public boolean isDialogCompleted(){
         return dialog.isCompleted();
     }
+
+    /**
+     * Getter for the current area
+     *
+     * @return (Area) : the current area
+     */
     public Area getCurrentArea(){
         return super.getOwnerArea();
     }
 
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
-
+        /**
+         * Manage interactions between the player and a cell
+         * Change the animation of the player
+         *
+         * @param cell (ICMonCell) : the cell with which the player interacts
+         * @param isCellInteraction : true cause the interaction comes from a cell
+         */
         @Override
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
             if (isCellInteraction) {
@@ -179,6 +250,13 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             }
         }
 
+        /**
+         * Manage interactions between the player and a ball
+         * Collect the ball
+         *
+         * @param ball : the ball with which the player interacts
+         * @param isCellInteraction : false cause the interaction is a view interaction
+         */
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
             if (!isCellInteraction) {
@@ -186,11 +264,27 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             }
         }
 
+        /**
+         * Manage interactions between the player and an assistant
+         * Delegate the interaction to the game state<
+         *
+         * @param assistant : the assistant with which the player interacts
+         * @param isCellInteraction : false cause the interaction is a view interaction
+         */
         @Override
         public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
-            gameState.acceptInteraction(assistant, isCellInteraction);
+            if (!isCellInteraction){
+                gameState.acceptInteraction(assistant, isCellInteraction);
+            }
         }
 
+        /**
+         * Manage interactions between the player and a door
+         * Go through the door
+         *
+         * @param door : the door with which the player interacts
+         * @param isCellInteraction : true cause the interaction is a cell interaction
+         */
         @Override
         public void interactWith(Door door, boolean isCellInteraction) {
             if(isCellInteraction) {
@@ -199,6 +293,13 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             }
         }
 
+        /**
+         * Manage interactions between the player and a pokemon
+         * Fight the pokemon
+         *
+         * @param pokemon : the pokemon with which the player interacts
+         * @param isCellInteraction : false cause the interaction is a view interaction
+         */
         @Override
         public void interactWith(Pokemon pokemon, boolean isCellInteraction) {
             if (!isCellInteraction){
@@ -206,11 +307,25 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             }
         }
 
+        /**
+         * Manage interactions between the player and ProfOak
+         * Delegate the interaction to the game state
+         *
+         * @param profOak : ProfOak with which the player interacts
+         * @param isCellInteraction : false cause the interaction is a view interaction
+         */
         @Override
         public void interactWith(ProfOak profOak, boolean isCellInteraction) {
             gameState.acceptInteraction(profOak, isCellInteraction);
         }
 
+        /**
+         * Manage interactions between the player and Garry
+         * Delegate the interaction to the game state
+         *
+         * @param garry : Garry with which the player interacts
+         * @param isCellInteraction : false cause the interaction is a view interaction
+         */
         @Override
         public void interactWith(Garry garry, boolean isCellInteraction) {
             gameState.acceptInteraction(garry, isCellInteraction);

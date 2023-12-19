@@ -55,9 +55,9 @@ public class ICMon extends AreaGame {
         ICMonArea area = (ICMonArea) setCurrentArea(areaKey, true);
         DiscreteCoordinates coords = area.getPlayerSpawnPosition();
 
-        player = new ICMonPlayer(area, coords, "actors/player", gameState, eventManager);
         gameState = new ICMonGameState();
         eventManager = new ICMonEventManager();
+        player = new ICMonPlayer(area, coords, "actors/player", gameState, eventManager);
 
         eventList = new ArrayList<>();
         startedEvent = new ArrayList<>();

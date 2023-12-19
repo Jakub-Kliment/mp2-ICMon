@@ -9,11 +9,12 @@ import ch.epfl.cs107.play.math.Orientation;
 public class Latios extends Pokemon {
 
     /**
-     * Default MovableAreaEntity constructor
+     * Default Latios constructor
+     * A Latios is a Pokemon that can attack and run away
      *
-     * @param area         (Area): Owner area. Not null
-     * @param orientation  (Orientation): Initial orientation of the entity. Not null
-     * @param position     (Coordinate): Initial position of the entity. Not null
+     * @param area     (Area): Owner area. Not null
+     * @param orientation (Orientation): Initial orientation of the entity. Not null
+     * @param position (Coordinate): Initial position of the entity. Not null
      */
     public Latios(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, "latios", 2, 10);

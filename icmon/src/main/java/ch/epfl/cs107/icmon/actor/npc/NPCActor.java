@@ -15,11 +15,11 @@ public class NPCActor extends ICMonActor {
     private final Sprite sprite;
 
     /**
-     * Default MovableAreaEntity constructor
+     * Default NPCActor constructor
+     * Create the sprite associated to the NPCActor
      *
-     * @param area        (Area): Owner area. Not null
-     * @param orientation (Orientation): Initial orientation of the entity. Not null
-     * @param position    (Coordinate): Initial position of the entity. Not null
+     * @param area     (Area): Owner area. Not null
+     * @param position (Coordinate): Initial position of the entity. Not null
      */
     public NPCActor(Area area, Orientation orientation, DiscreteCoordinates position, String sprite_name) {
         super(area, orientation, position);
@@ -41,11 +41,21 @@ public class NPCActor extends ICMonActor {
         return true;
     }
 
+    /**
+     * Getter for the current cells of the entity
+     *
+     * @return (List<DiscreteCoordinates>) : List of the coordinates of the cells occupied by the entity
+     */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return super.getCurrentCells();
     }
 
+    /**
+     * Draw the NPCActor
+     *
+     * @param canvas (Canvas) : The canvas on which the NPCActor is drawn
+     */
     @Override
     public void draw(Canvas canvas) {
         sprite.draw(canvas);

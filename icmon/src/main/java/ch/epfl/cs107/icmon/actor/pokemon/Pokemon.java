@@ -76,8 +76,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     * Allows access to the property of the pokémon
     *
     * @return (PokemonProperties) : The property of the pokémon
-
-     */
+    */
     public PokemonProperties properties() { return new PokemonProperties(); }
 
     /**
@@ -89,6 +88,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     public List<DiscreteCoordinates> getCurrentCells() {
         return super.getCurrentCells();
     }
+
 
     @Override
     public boolean isViewInteractable() {
@@ -105,35 +105,67 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         return true;
     }
 
+    /**
+     * Delegate interactions to the interaction handler
+     *
+     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
             ((ICMonInteractionVisitor)v).interactWith(this, isCellInteraction);
     }
 
+    /**
+     * Draws the pokemon
+     *
+     * @param canvas (Canvas) : The canvas on which the pokemon is drawn
+     */
     @Override
     public void draw(Canvas canvas) {
         pokemon.draw(canvas);
     }
 
+    /**
+     * Return itself, allow polymorphisme for the fight methode of the ICMonPlayer
+     *
+     * @return (Pokemon) : The pokemon chosen
+     */
     @Override
     public Pokemon choosenPokemon() {
         return this;
     }
 
+    /**
+     * Add a fight action to the pokemon
+     *
+     * @param actions (ICMonFightAction) : The fight action to add
+     */
     public void addFightActions(ICMonFightAction ... actions) {
         Collections.addAll(fightActions, actions);
     }
 
+    /**
+     * Getter for the fight actions of the pokemon
+     *
+     * @return (List<ICMonFightAction>) : The list of the fight actions of the pokemon
+     */
     public List<ICMonFightAction> getFightActions() {
         return fightActions;
     }
 
+    /**
+     * Getter to know if the pokemon is alive
+     *
+     * @return (boolean) : True if the pokemon is alive, false otherwise
+     */
     public boolean isAlive() {
         return hp > 0;
     }
 
     /**
-     * The pokémon receives an attack
+     * The pokemon receives an attack
+     *
      * @param damage : The damage received
      */
     public void receiveAttack(int damage) {

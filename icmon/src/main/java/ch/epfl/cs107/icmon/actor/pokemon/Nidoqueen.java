@@ -9,11 +9,12 @@ import ch.epfl.cs107.play.math.Orientation;
 public class Nidoqueen extends Pokemon {
 
     /**
-     * Default MovableAreaEntity constructor
+     * Default Nidoqueen constructor
+     * A Nidoqueen is a Pokemon that can attack and run away
      *
-     * @param area         (Area): Owner area. Not null
-     * @param orientation  (Orientation): Initial orientation of the entity. Not null
-     * @param position     (Coordinate): Initial position of the entity. Not null
+     * @param area     (Area): Owner area. Not null
+     * @param orientation (Orientation): Initial orientation of the entity. Not null
+     * @param position (Coordinate): Initial position of the entity. Not null
      */
     public Nidoqueen(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, "nidoqueen", 1, 10);
