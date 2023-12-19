@@ -21,7 +21,6 @@ public class Lab extends ICMonArea {
         registerActor(new Foreground((this)));
         registerActor(new ProfOak(this));
         registerActor(new Door(this, new DiscreteCoordinates(7,1), "town", new DiscreteCoordinates(15, 23), new DiscreteCoordinates(6, 1)));
-        registerActor(new Nidoqueen(this, Orientation.DOWN, new DiscreteCoordinates(7,5)));
     }
 
     @Override

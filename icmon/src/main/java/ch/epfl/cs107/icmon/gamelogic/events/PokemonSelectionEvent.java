@@ -1,21 +1,18 @@
 package ch.epfl.cs107.icmon.gamelogic.events;
 
 import ch.epfl.cs107.icmon.ICMon;
-import ch.epfl.cs107.icmon.actor.ICMonActor;
+import ch.epfl.cs107.icmon.actor.ICMonFightableActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
+import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.gamelogic.actions.AfterPokemonSelectionFightAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.CompleteEventAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
-import ch.epfl.cs107.icmon.graphics.PokemonSelectionMenu;
+import ch.epfl.cs107.icmon.gamelogic.fights.PokemonSelectionMenu;
 import ch.epfl.cs107.play.engine.PauseMenu;
-import ch.epfl.cs107.play.window.Canvas;
-import ch.epfl.cs107.play.window.Keyboard;
 
 public class PokemonSelectionEvent extends ICMonEvent{
     private PokemonSelectionMenu selectionMenu;
-    private ICMonActor opponent;
+    private ICMonFightableActor opponent;
     private ICMon.ICMonGameState gameState;
-    public PokemonSelectionEvent(ICMonPlayer player, ICMonActor opponent, ICMon.ICMonGameState gameState) {
+    public PokemonSelectionEvent(ICMonPlayer player, ICMonFightableActor opponent, ICMon.ICMonGameState gameState) {
         super(player);
         selectionMenu = new PokemonSelectionMenu(player.getPokemonList());
         this.opponent = opponent;

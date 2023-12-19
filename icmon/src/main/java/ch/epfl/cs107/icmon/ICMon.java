@@ -94,6 +94,7 @@ public class ICMon extends AreaGame {
                 new IntroductionEvent(player),
                 oakEvent,
                 collectBall,
+                new FirstInteractionWithGarryEvent(player),
                 new EndOfTheGameEvent(player));
         icMonChainedEvent.start();
     }

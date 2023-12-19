@@ -35,8 +35,8 @@ abstract public class ICMonActor extends MovableAreaEntity {
         setCurrentPosition(position.toVector());
         resetMotion();
     }
-    public void leaveArea() {
-        getOwnerArea().unregisterActor(this);
+    public boolean leaveArea() {
+        return getOwnerArea().unregisterActor(this);
     }
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {

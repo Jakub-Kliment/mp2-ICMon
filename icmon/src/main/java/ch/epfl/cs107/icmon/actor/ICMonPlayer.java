@@ -2,14 +2,11 @@ package ch.epfl.cs107.icmon.actor;
 
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
-import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
-import ch.epfl.cs107.icmon.actor.pokemon.Latios;
-import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
-import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.PokemonSelectionEvent;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.icmon.message.PassDoorMessage;
@@ -32,7 +29,7 @@ import java.util.List;
 
 public class ICMonPlayer extends ICMonActor implements Interactor {
     private final int ANIMATION_DURATION = 8;
-    private final static int MOVE_DURATION = 3;
+    private final static int MOVE_DURATION = 2;
     private OrientedAnimation animation;
     private final ICMonPlayerInteractionHandler handler;
     //private String[] animations = {"actors/player", "actors/player_water"};
@@ -46,8 +43,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     /**
      * Default MovableAreaEntity constructor
      *
-     * @param area        (Area): Owner area. Not null
-     * @param position    (Coordinate): Initial position of the entity. Not null
+     * @param area            (Area): Owner area. Not null
+     * @param position        (Coordinate): Initial position of the entity. Not null
      */
     public ICMonPlayer(Area area, DiscreteCoordinates position, String spriteName, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager) {
         super(area, Orientation.DOWN, position);
@@ -56,10 +53,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
         pokemonList = new ArrayList<>();
-        /*addPokemon(new Bulbizarre(area, Orientation.DOWN, position));
-        addPokemon(new Latios(area, Orientation.DOWN, position));
-        addPokemon(new Nidoqueen(area, Orientation.DOWN, position));
-        addPokemon(new Latios(area, Orientation.DOWN, position));*/
     }
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
@@ -81,8 +74,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         super.update(deltaTime);
     }
     public void fight(ICMonFightableActor actor){
-        PokemonSelectionEvent selectionEvent = new PokemonSelectionEvent(this,(ICMonActor) actor, gameState);
-        gameState.send(new SuspendWithEventMessage(selectionEvent));
+            PokemonSelectionEvent selectionEvent = new PokemonSelectionEvent(this, actor, gameState);
+            gameState.send(new SuspendWithEventMessage(selectionEvent));
     }
     private void moveIfPressed(Orientation orientation, Button b) {
         if (b.isDown()) {
@@ -148,7 +141,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     }
 
     public void addPokemon(Pokemon pokemon){
-        System.out.println("bite");
         pokemonList.add(pokemon);
     }
 
@@ -209,6 +201,11 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         @Override
         public void interactWith(ProfOak profOak, boolean isCellInteraction) {
             gameState.acceptInteraction(profOak, isCellInteraction);
+        }
+
+        @Override
+        public void interactWith(Garry garry, boolean isCellInteraction) {
+            gameState.acceptInteraction(garry, isCellInteraction);
         }
     }
 }

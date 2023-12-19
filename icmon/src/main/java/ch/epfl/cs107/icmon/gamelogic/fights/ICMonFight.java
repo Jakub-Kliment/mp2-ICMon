@@ -17,6 +17,7 @@ public class ICMonFight extends PauseMenu {
     private final ICMonFightArenaGraphics arena;
     private ICMonFightAction fightAction;
     private String message;
+    private boolean winner;
     private State state;
     private boolean over;
     public ICMonFight(Pokemon player, Pokemon opponent){
@@ -25,6 +26,7 @@ public class ICMonFight extends PauseMenu {
         arena = new ICMonFightArenaGraphics(CAMERA_SCALE_FACTOR, player.properties(), opponent.properties());
         state = State.INTRODUCTION;
         over = false;
+        winner = true;
     }
 
     @Override
@@ -58,6 +60,7 @@ public class ICMonFight extends PauseMenu {
 
                     if (!opponent.isAlive()) {
                         message = "The player has won the fight";
+                        winner = true;
                         state = State.CONCLUSION;
                     } else {
                         state = State.COUNTER;
@@ -76,6 +79,7 @@ public class ICMonFight extends PauseMenu {
                 }
                 if (!player.isAlive()) {
                     message = "The opponent has won the fight";
+                    winner = false;
                     state = State.CONCLUSION;
                 } else {
                     state = State.ACTION_SELECTION;
@@ -103,6 +107,9 @@ public class ICMonFight extends PauseMenu {
     }
     public void end() {
         over = true;
+    }
+    public boolean playerWin(){
+        return winner;
     }
     private enum State {
         INTRODUCTION,

@@ -115,4 +115,14 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
             }
         }
     }
+
+    @Override
+    public Pokemon choosenPokemon() {
+        return this;
+    }
+
+    @Override
+    public boolean retire() {
+        return true;
+    }
 }
