@@ -17,6 +17,6 @@ public class Latios extends Pokemon {
      */
     public Latios(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, "latios", 2, 10);
-        addFightAction(new Attack(), new RunAway());
+        addFightActions(new Attack(), new RunAway());
     }
 }

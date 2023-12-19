@@ -8,9 +8,4 @@ public class RunAway implements ICMonFightAction {
     public String name() {
         return "Run Away";
     }
-
-    @Override
-    public boolean doAction(Pokemon target) {
-        return false;
-    }
 }

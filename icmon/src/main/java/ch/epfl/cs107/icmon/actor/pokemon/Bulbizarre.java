@@ -17,6 +17,6 @@ public class Bulbizarre extends Pokemon {
      */
     public Bulbizarre(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, "bulbizarre", 1, 10);
-        addFightAction(new Attack(), new RunAway());
+        addFightActions(new Attack(), new RunAway());
     }
 }

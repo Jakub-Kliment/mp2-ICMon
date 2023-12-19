@@ -3,7 +3,6 @@ package ch.epfl.cs107.icmon.gamelogic.fights;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.actor.pokemon.actions.Attack;
 import ch.epfl.cs107.icmon.actor.pokemon.actions.RunAway;
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 import ch.epfl.cs107.icmon.graphics.ICMonFightActionSelectionGraphics;
 import ch.epfl.cs107.icmon.graphics.ICMonFightArenaGraphics;
 import ch.epfl.cs107.icmon.graphics.ICMonFightTextGraphics;
@@ -12,14 +11,14 @@ import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
 public class ICMonFight extends PauseMenu {
-    private Pokemon player;
-    private Pokemon opponent;
+    private final Pokemon player;
+    private final Pokemon opponent;
+    private ICMonFightActionSelectionGraphics selectionGraphics;
+    private final ICMonFightArenaGraphics arena;
+    private ICMonFightAction fightAction;
+    private String message;
     private State state;
     private boolean over;
-    private ICMonFightAction fightAction;
-    private ICMonFightArenaGraphics arena;
-    private String message;
-    private ICMonFightActionSelectionGraphics selectionGraphics;
     public ICMonFight(Pokemon player, Pokemon opponent){
         this.player = player;
         this.opponent = opponent;
@@ -27,6 +26,7 @@ public class ICMonFight extends PauseMenu {
         state = State.INTRODUCTION;
         over = false;
     }
+
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
@@ -39,28 +39,27 @@ public class ICMonFight extends PauseMenu {
                 }
             }
             case ACTION_SELECTION -> {
-                if (selectionGraphics == null){
-                    selectionGraphics = new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, keyboard, player.getFightAction());
+                if (selectionGraphics == null) {
+                    selectionGraphics = new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, keyboard, player.getFightActions());
                 }
+
                 arena.setInteractionGraphics(selectionGraphics);
                 selectionGraphics.update(deltaTime);
+
                 if (selectionGraphics.choice() != null) {
                     fightAction = selectionGraphics.choice();
                     state = State.ACTION_EXECUTION;
                     selectionGraphics = null;
                 }
-                //fightAction = player.getFightAction().get(0);
             }
             case ACTION_EXECUTION -> {
-                //if (fightAction.doAction(opponent)) {
-                //}
                 if (fightAction instanceof Attack) {
-                    opponent.receiveAttack(player.properties().damage());
+                    fightAction.makeAction(player, opponent);
+
                     if (!opponent.isAlive()) {
                         message = "The player has won the fight";
                         state = State.CONCLUSION;
                     } else {
-                        //message = "The player has decided not to continue the fight";
                         state = State.COUNTER;
                     }
                 } else if (fightAction instanceof RunAway) {
@@ -69,12 +68,12 @@ public class ICMonFight extends PauseMenu {
                 }
             }
             case COUNTER -> {
-                for (ICMonFightAction opponentAction : opponent.getFightAction()) {
-                    if (opponentAction instanceof Attack) { // && opponentAction.doAction(player)
-                        player.receiveAttack(opponent.properties().damage());
+                for (ICMonFightAction opponentAction : opponent.getFightActions()) {
+                    if (opponentAction instanceof Attack) {
+                        fightAction = opponentAction;
+                        fightAction.makeAction(opponent, player);
                     }
                 }
-                //message = "The player has decided not to continue the fight";
                 if (!player.isAlive()) {
                     message = "The opponent has won the fight";
                     state = State.CONCLUSION;
@@ -92,7 +91,7 @@ public class ICMonFight extends PauseMenu {
         }
     }
     private void setGraphic(String message) {
-        arena.setInteractionGraphics(new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR , message));
+        arena.setInteractionGraphics(new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, message));
     }
 
     @Override

@@ -23,12 +23,12 @@ import java.util.List;
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */
 public abstract class Pokemon extends ICMonActor implements ICMonFightableActor {
-    private String name;
-    private int hp;
-    private final int hpMax;
+    private final String name;
+    private float hp;
+    private final float hpMax;
     private final int damage;
-    private Sprite pokemon;
-    private List<ICMonFightAction> fightActions;
+    private final Sprite pokemon;
+    private final List<ICMonFightAction> fightActions;
     /**
      * Default MovableAreaEntity constructor
      *
@@ -36,7 +36,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
      * @param orientation (Orientation): Initial orientation of the entity. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
-    public Pokemon(Area area, Orientation orientation, DiscreteCoordinates position, String name, int damage, int hpMax) {
+    public Pokemon(Area area, Orientation orientation, DiscreteCoordinates position, String name, int damage, float hpMax) {
         super(area, orientation, position);
         this.name = name;
         this.damage = damage;
@@ -68,6 +68,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         }
 
     }
+    public PokemonProperties properties() { return new PokemonProperties(); }
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return super.getCurrentCells();
@@ -82,22 +83,30 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     public boolean isCellInteractable() {
         return false;
     }
+
     @Override
     public boolean takeCellSpace() {
         return true;
     }
+
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
             ((ICMonInteractionVisitor)v).interactWith(this, isCellInteraction);
     }
+
     @Override
     public void draw(Canvas canvas) {
         pokemon.draw(canvas);
     }
+    public void addFightActions(ICMonFightAction ... actions) {
+        Collections.addAll(fightActions, actions);
+    }
+    public List<ICMonFightAction> getFightActions() {
+        return fightActions;
+    }
     public boolean isAlive() {
         return hp > 0;
     }
-    //PAS SUR !!!!!!!
     public void receiveAttack(int damage) {
         if (isAlive()) {
             hp -= damage;
@@ -105,12 +114,5 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
                 hp = 0;
             }
         }
-    }
-    public PokemonProperties properties(){return new PokemonProperties();}
-    public void addFightAction(ICMonFightAction ... actions) {
-        Collections.addAll(fightActions, actions);
-    }
-    public List<ICMonFightAction> getFightAction() {
-        return fightActions;
     }
 }

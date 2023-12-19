@@ -2,7 +2,6 @@ package ch.epfl.cs107.icmon;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
-import ch.epfl.cs107.icmon.actor.pokemon.Latios;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.*;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
@@ -15,7 +14,6 @@ import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 
@@ -24,9 +22,6 @@ import java.util.List;
 
 public class ICMon extends AreaGame {
     public final static float CAMERA_SCALE_FACTOR = 13.f;
-    /** ??? */
-    //private final String[] areas = {"town","lab","arena"};
-    /** ??? */
     private ICMonPlayer player;
     private List<ICMonEvent> eventList;
     private List<ICMonEvent> startedEvent;
@@ -34,8 +29,6 @@ public class ICMon extends AreaGame {
     private ICMonGameState gameState;
     private ICMonEventManager eventManager;
     private List<Area> areaList;
-    /** ??? */
-    //private int areaIndex;
     private void createAreas() {
         areaList = new ArrayList<>();
         addAreaToGame(new Town());
@@ -74,14 +67,14 @@ public class ICMon extends AreaGame {
             gameState.message.process();
             gameState.message = null;
         }
-        for(ICMonEvent event : startedEvent){
-            eventList.add(event);
-        }
+        eventList.addAll(startedEvent);
         startedEvent.clear();
+
         for(ICMonEvent event : completedEvent){
             eventList.remove(event);
         }
         completedEvent.clear();
+
         for(ICMonEvent event : eventList){
             event.update(deltaTime);
         }
@@ -118,17 +111,21 @@ public class ICMon extends AreaGame {
         }
         public void send(GamePlayMessage message){
             this.message = message;
-            if (message instanceof SuspendWithEventMessage){
-                ICMonEvent event = ((SuspendWithEventMessage)message).getEvent();
-                if (event.isMenuPause()){
-                    event.onStart(new setPauseAction(this, (event).getMenu()));
-                    event.onComplete(new ResumeMenu(this));
-                    for(ICMonEvent event1 : eventList){
-                        event.onStart(new SuspendedEventAction(event1));
-                        event.onComplete(new ResumeEventAction(event1));
-                    }
-                    event.start();
+            if (message instanceof SuspendWithEventMessage) {
+                treatMessage(message);
+            }
+        }
+        public void treatMessage(GamePlayMessage message) {
+            ICMonEvent event = ((SuspendWithEventMessage)message).getEvent();
+            if (event.isMenuPause()) {
+                event.onStart(new setPauseAction(this, (event).getMenu()));
+                event.onComplete(new ResumeMenu(this));
+
+                for(ICMonEvent anEvent : eventList) {
+                    event.onStart(new SuspendedEventAction(anEvent));
+                    event.onComplete(new ResumeEventAction(anEvent));
                 }
+                event.start();
             }
         }
         public void switchArea(String areaName, DiscreteCoordinates coordinates) {

@@ -11,6 +11,8 @@ public interface ICMonFightAction {
 
     String name();
 
-    boolean doAction(Pokemon target);
-
+    default boolean doAction(Pokemon target) {
+        return target != null && target.isAlive();
+    }
+    default void makeAction(Pokemon attacker, Pokemon target) {}
 }

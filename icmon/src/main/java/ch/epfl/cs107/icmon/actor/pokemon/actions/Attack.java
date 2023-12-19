@@ -8,8 +8,11 @@ public class Attack implements ICMonFightAction {
     public String name() {
         return "Attack";
     }
+
     @Override
-    public boolean doAction(Pokemon target) {
-        return false;
+    public void makeAction(Pokemon attacker, Pokemon target) {
+        if (doAction(target)) {
+            target.receiveAttack(attacker.properties().damage());
+        }
     }
 }

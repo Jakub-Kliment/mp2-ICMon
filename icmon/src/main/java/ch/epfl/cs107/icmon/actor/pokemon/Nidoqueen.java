@@ -17,6 +17,6 @@ public class Nidoqueen extends Pokemon {
      */
     public Nidoqueen(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, "nidoqueen", 1, 10);
-        addFightAction(new Attack(), new RunAway());
+        addFightActions(new Attack(), new RunAway());
     }
 }
