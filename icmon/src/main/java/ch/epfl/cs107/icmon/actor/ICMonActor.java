@@ -24,11 +24,22 @@ abstract public class ICMonActor extends MovableAreaEntity {
         resetMotion();
     }
 
+    /**
+     * Updates the ICMonActor
+     *
+     * @param deltaTime elapsed time since last update, in seconds, non-negative
+     */
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
     }
 
+    /**
+     * Enters the area at the position given
+     *
+     * @param area (Area): Owner area. Not null
+     * @param position (Coordinate): Initial position of the entity. Not null
+     */
     public void enterArea(Area area, DiscreteCoordinates position) {
         area.registerActor(this);
         area.setViewCandidate(this);
@@ -36,9 +47,17 @@ abstract public class ICMonActor extends MovableAreaEntity {
         setCurrentPosition(position.toVector());
         resetMotion();
     }
+
+    /** Make the player leave the area */
     public void leaveArea() {
         getOwnerArea().unregisterActor(this);
     }
+
+    /**
+     * Getter for the cells occupied by the pokémon
+     *
+     * @return (List<DiscreteCoordinates>) : The list of the cells occupied by the pokémon
+     */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
@@ -59,10 +78,20 @@ abstract public class ICMonActor extends MovableAreaEntity {
         return false;
     }
 
+    /**
+     * Delegate interactions to the interaction handler
+     *
+     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     */
     @Override
-    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+    public abstract void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction);
 
-    }
+    /**
+     * Draws the ICMonActor
+     *
+     * @param canvas (Canvas): Canvas onto which the ICMonActor is drawn. Not null
+     */
     @Override
     abstract public void draw(Canvas canvas);
 }

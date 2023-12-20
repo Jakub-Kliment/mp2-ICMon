@@ -11,6 +11,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
 public class ICMonFight extends PauseMenu {
+
     /** Pokemon of the player */
     private final Pokemon player;
 
@@ -24,6 +25,7 @@ public class ICMonFight extends PauseMenu {
     private ICMonFightActionSelectionGraphics selectionGraphics;
 
     /** Action performed by the player */
+    //!!!!!!!!!!!!!!!!!!!!!!!!!
     private ICMonFightAction fightAction;
 
     /** Message to display */
@@ -40,6 +42,7 @@ public class ICMonFight extends PauseMenu {
 
     /**
      * Constructor for the ICMonFight
+     * Create the arena with the pokemon of the player and the opponent
      *
      * @param player (Pokemon) : The pokemon of the player
      * @param opponent (Pokemon) : The pokemon of the opponent
@@ -51,11 +54,12 @@ public class ICMonFight extends PauseMenu {
         arena = new ICMonFightArenaGraphics(CAMERA_SCALE_FACTOR, player.properties(), opponent.properties());
         state = State.INTRODUCTION;
         over = false;
-        winner = true;
+        winner = false;
     }
 
     /**
      * update the fight
+     * Alternate between the different states of the fight depending on the action of the player
      *
      * @param deltaTime (float) : The time between two updates
      */
@@ -131,33 +135,61 @@ public class ICMonFight extends PauseMenu {
         }
     }
 
+    /**
+     * Set the graphic message of the arena
+     *
+     * @param message (String) : The message to display
+     */
     private void setGraphic(String message) {
         arena.setInteractionGraphics(new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, message));
     }
 
+    /**
+     * Draw the arena
+     *
+     * @param c (Canvas) : The canvas where the arena is drawn
+     */
     @Override
     public void drawMenu(Canvas c) {
         arena.draw(c);
     }
 
+    /**
+     * Getter for the boolean over
+     * Allow to know if the fight is over
+     *
+     * @return (boolean) : True if the fight is over, false otherwise
+     */
     public boolean isOver(){
         return over;
     }
 
+    /**
+     * End the fight !!!!!!!!!!!!!!!!
+     * Set the boolean over to true
+     */
     public void end() {
         over = true;
     }
 
+    /**
+     * Getter for the boolean winner
+     * Allow to know if the player has won the fight
+     *
+     * @return (boolean) : True if the player has won the fight, false otherwise
+     */
     public boolean playerWin(){
         return winner;
     }
 
+    /**
+     * Enumerate the different states of the fight
+     */
     private enum State {
         INTRODUCTION,
         COUNTER,
         CONCLUSION,
         ACTION_SELECTION,
-        ACTION_EXECUTION
-        ;
+        ACTION_EXECUTION;
     }
 }

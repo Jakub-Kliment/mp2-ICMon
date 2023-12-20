@@ -9,11 +9,20 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
 public class Shop extends ICMonArea {
+
+    /**
+     * Getter for the title of the area
+     *
+     * @return (String) : The title of the area
+     */
     @Override
     public String getTitle() {
         return "shop";
     }
 
+    /**
+     * Create the area and register the actors
+     */
     @Override
     protected void createArea() {
         registerActor(new Background(this));
@@ -23,6 +32,11 @@ public class Shop extends ICMonArea {
 
     }
 
+    /**
+     * Getter for the spawn position of the player
+     *
+     * @return (DiscreteCoordinates): the spawn position of the player
+     */
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
         return null;

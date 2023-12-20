@@ -5,6 +5,11 @@ import ch.epfl.cs107.icmon.actor.npc.Garry;
 
 public class FirstInteractionWithGarryEvent extends ICMonEvent {
 
+    /**
+     * Default FirstInteractionWithGarryEvent constructor
+     *
+     * @param player (ICMonPlayer): the player who interact in the event
+     */
     public FirstInteractionWithGarryEvent(ICMonPlayer player) {
         super(player);
     }

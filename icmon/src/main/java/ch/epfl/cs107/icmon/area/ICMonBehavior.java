@@ -7,11 +7,12 @@ import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.window.Window;
 
 public class ICMonBehavior extends AreaBehavior {
+
     /**
-     * Default AreaBehavior Constructor
+     * Default ICMonBehavior constructor
      *
-     * @param window (Window): graphic context, not null
-     * @param name   (String): name of the behavior image, not null
+     * @param window (Window): Graphic context, not null
+     * @param name (String): Name of the behavior image, not null
      */
     public ICMonBehavior(Window window, String name) {
         super(window, name);
@@ -25,14 +26,19 @@ public class ICMonBehavior extends AreaBehavior {
         }
     }
 
+    /**
+     * Enumerate the different walking type allowed on a cell
+     */
     public enum AllowedWalkingType {
         NONE,
         SURF,
         FEET,
-        ALL
-        ;
+        ALL;
     }
 
+    /**
+     * Enumerate the different types of cells
+     */
     public enum ICMonCellType {
         NULL(0, AllowedWalkingType.NONE),
         WALL(-16777216, AllowedWalkingType.NONE),
@@ -44,13 +50,28 @@ public class ICMonBehavior extends AreaBehavior {
         WATER(-16776961, AllowedWalkingType.SURF),
         GRASS(-16743680, AllowedWalkingType.FEET)
         ;
+        /**
+         * The walking type of the cell
+         */
         private final AllowedWalkingType walkingType;
+
+        /**
+         * The type of the cell
+         */
         private final int type;
+
+        /**
+         * Default ICMonCellType constructor
+         *
+         * @param type (int): The type of the cell
+         * @param walkingType (AllowedWalkingType): The walking type of the cell
+         */
         ICMonCellType(int type, AllowedWalkingType walkingType) {
             this.type = type;
             this.walkingType = walkingType;
         }
 
+        //JACUB!!!!!!!!!!!!!!!
         public static ICMonCellType toType(int type) {
             for (ICMonCellType ict : ICMonCellType.values()) {
                 if (ict.type == type)
@@ -59,43 +80,88 @@ public class ICMonBehavior extends AreaBehavior {
             return NULL;
         }
     }
+
+    /**
+     * Cell of the ICMonBehavior
+     */
     public class ICMonCell extends Cell {
+
+        /** The type of the cell */
         private final ICMonCellType type;
-        private boolean taken;
+
         /**
-         * Default Cell constructor
+         * True if the cell is taken by an actor !!!!!!!!!!!!!!!!!!!!!!!!
+         */
+        private boolean taken;
+
+        /**
+         * Default ICMonCell constructor
          *
-         * @param x (int): x-coordinate of this cell
-         * @param y (int): y-coordinate of this cell
+         * @param x (int): The x coordinate of the cell
+         * @param y (int): The y coordinate of the cell
+         * @param type (ICMonCellType): The type of the cell
          */
         public ICMonCell(int x, int y, ICMonCellType type) {
             super(x, y);
             this.type = type;
         }
 
+        /**
+         * Allowed the cell to be cell interacted  with
+         *
+         * @return (boolean) : True if the cell can be cell interacted with
+         */
         @Override
         public boolean isCellInteractable() {
             return true;
         }
 
+/**
+         * Allowed the cell to be view interacted with
+         *
+         * @return (boolean) : True if the cell can be view interacted with
+         */
         @Override
         public boolean isViewInteractable() {
             return false;
         }
 
+        /**
+         * Delegate interactions to the interaction handler
+         *
+         * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+         * @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+         */
         @Override
         public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
             ((ICMonInteractionVisitor)v).interactWith(this, isCellInteraction);
         }
 
+        /**
+         * Liberate the cell if the actor was taking it
+         *
+         * @param entity (Interactable) : The entity that wants to leave the cell
+         * @return (boolean) : True if the cell can be left
+         */
         @Override
         protected boolean canLeave(Interactable entity) {
-            if (entity.takeCellSpace()) {
-                taken = false;
+            if (entity != null) {
+                if (entity.takeCellSpace()) {
+                    taken = false;
+                }
+                return true;
+            } else {
+                return false;
             }
-            return true;
         }
 
+        /**
+         * Take the cell if it is not taken
+         * !!!!!!!!!!!!!!!!
+         *
+         * @param entity (Interactable) : The entity that wants to enter the cell
+         * @return (boolean) : True if entity can enter the cell
+         */
         @Override
         protected boolean canEnter(Interactable entity) {
             if ((type.walkingType == AllowedWalkingType.NONE) || taken || (entity == null)) {
@@ -108,6 +174,11 @@ public class ICMonBehavior extends AreaBehavior {
             }
         }
 
+        /**
+         * Getter for the walking type of the cell
+         *
+         * @return (AllowedWalkingType) : The walking type of the cell
+         */
         public AllowedWalkingType getWalkingType() {
             return type.walkingType;
         }

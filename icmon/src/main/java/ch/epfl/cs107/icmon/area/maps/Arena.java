@@ -10,11 +10,19 @@ import ch.epfl.cs107.play.math.Orientation;
 
 public class Arena extends ICMonArea {
 
+    /**
+     * Getter for the title of the area
+     *
+     * @return (String) : The title of the area
+     */
     @Override
     public String getTitle() {
         return "arena";
     }
 
+    /**
+     * Create the area and register the actors
+     */
     @Override
     protected void createArea() {
         registerActor(new Background(this));
@@ -23,6 +31,11 @@ public class Arena extends ICMonArea {
         registerActor(new Door(this, new DiscreteCoordinates(4,1), "town", new DiscreteCoordinates(20, 15), new DiscreteCoordinates(5, 1)));
     }
 
+    /**
+     * Getter for the spawn position of the player
+     *
+     * @return (DiscreteCoordinates): the spawn position of the player
+     */
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
         return null;

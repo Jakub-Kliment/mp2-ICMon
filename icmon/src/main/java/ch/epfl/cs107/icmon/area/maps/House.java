@@ -9,11 +9,19 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class House extends ICMonArea {
 
+    /**
+     * Getter for the title of the area
+     *
+     * @return (String) : The title of the area
+     */
     @Override
     public String getTitle() {
         return "house";
     }
 
+    /**
+     * Create the area and register the actors
+     */
     @Override
     protected void createArea() {
         registerActor(new Background(this));
@@ -22,11 +30,11 @@ public class House extends ICMonArea {
         registerActor(new Garry(this, new DiscreteCoordinates(1,3)));
     }
 
-    @Override
-    public void update(float deltaTime) {
-        super.update(deltaTime);
-    }
-
+    /**
+     * Getter for the spawn position of the player
+     *
+     * @return (DiscreteCoordinates): the spawn position of the player
+     */
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
         return new DiscreteCoordinates(3, 4);

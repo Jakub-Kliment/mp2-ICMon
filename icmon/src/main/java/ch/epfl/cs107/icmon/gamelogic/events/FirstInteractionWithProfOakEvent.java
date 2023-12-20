@@ -10,13 +10,26 @@ import ch.epfl.cs107.play.math.Orientation;
 
 public class FirstInteractionWithProfOakEvent extends ICMonEvent{
 
+    /**
+     * Default FirstInteractionWithProfOakEvent constructor
+     *
+     * @param player (ICMonPlayer): the player who interact in the event
+     */
     public FirstInteractionWithProfOakEvent(ICMonPlayer player) {
         super(player);
     }
 
+    /**
+     * Update the event, does nothing
+     */
     @Override
     public void update(float deltaTime) {}
 
+    /**
+     * Handle the interaction with the ProfOak during the event
+     * Show a dialog when the player interact with the ProfOak and Complete the event by adding a Latios to the player pokemon list
+     *
+     */
     @Override
     public void interactWith(ProfOak profOak, boolean isCellInteraction) {
         if (!isCellInteraction) {
@@ -26,6 +39,10 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent{
         }
     }
 
+    /**
+     * Handle the interaction with the ICShopAssistant during the event
+     * Show a dialog when the player interact with the ICShopAssistant
+     */
     @Override
     public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
         if (!isCellInteraction){

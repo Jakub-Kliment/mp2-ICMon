@@ -28,23 +28,42 @@ import java.util.Collections;
 import java.util.List;
 
 public class ICMonPlayer extends ICMonActor implements Interactor {
+
+    /** Duration of the animation of the sprite*/
     private final int ANIMATION_DURATION = 8;
+
+    /** Duration of the movement of the sprite*/
     private final static int MOVE_DURATION = 2;
+
+    /** Handler for the interactions with the player */
     private final ICMonPlayerInteractionHandler handler;
+    /** Event manager of the game */
     private final ICMon.ICMonEventManager eventManager;
+
+    /** Game state of the game */
     private final ICMon.ICMonGameState gameState;
+
+    /** List of the pokemons of the player */
     private final List<Pokemon> pokemonList;
+
+    /** Animation of the player */
     private OrientedAnimation animation;
+
+    /** Dialog of the player */
     private Dialog dialog;
+    /** List of the animations of the player */
     private final OrientedAnimation[] animations = {
             new OrientedAnimation("actors/player", ANIMATION_DURATION/2, Orientation.DOWN, this),
             new OrientedAnimation("actors/player_water", ANIMATION_DURATION/2, Orientation.DOWN, this)
     };
     /**
-     * Default MovableAreaEntity constructor
+     * Default ICMonPlayer constructor
      *
-     * @param area            (Area): Owner area. Not null
-     * @param position        (Coordinate): Initial position of the entity. Not null
+     * @param area (Area): Owner area. Not null
+     * @param position (Coordinate): Initial position of the entity. Not null
+     * @param spriteName (String) : Name of the sprite of the player. Not null
+     * @param gameState (ICMon.ICMonGameState) : Game state of the game. Not null
+     * @param eventManager (ICMon.ICMonEventManager) : Manager of the event of the game. Not null
      */
     public ICMonPlayer(Area area, DiscreteCoordinates position, String spriteName, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager) {
         super(area, Orientation.DOWN, position);
@@ -55,6 +74,12 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         pokemonList = new ArrayList<>();
     }
 
+    /**
+     * Updates the ICMonPlayer
+     * Manage the movement, dialog and animation of the player
+     *
+     * @param deltaTime elapsed time since last update, in seconds, non-negative
+     */
     public void update(float deltaTime) {
         Keyboard keyboard = getOwnerArea().getKeyboard();
         if (dialog != null && !dialog.isCompleted()) {
@@ -139,6 +164,11 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         return super.getCurrentCells();
     }
 
+    /**
+     * Getter for the field of view cells of the entity
+     *
+     * @return (List<DiscreteCoordinates>) : List of the coordinates of the cells in the field of view of the entity
+     */
     @Override
     public List<DiscreteCoordinates> getFieldOfViewCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
@@ -158,6 +188,12 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         return false;
     }
 
+    /**
+     * Delegate interactions wnated by the player to the interaction handler
+     *
+     * @param other : the interactable with which the player interacts
+     * @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     */
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);
@@ -167,7 +203,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
      * Delegate interactions to the interaction handler
      *
      * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
-     * @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     * @param isCellInteraction : c
      */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {

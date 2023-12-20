@@ -7,10 +7,19 @@ import ch.epfl.cs107.play.engine.actor.Foreground;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class Town extends ICMonArea {
+
+    /**
+     * Getter for the spawn position of the player
+     *
+     * @return (DiscreteCoordinates): the spawn position of the player
+     */
     public DiscreteCoordinates getPlayerSpawnPosition() {
         return new DiscreteCoordinates(5, 5);
     }
 
+    /**
+     * Create the area and register the actors
+     */
     @Override
     protected void createArea() {
         registerActor(new Background(this));
@@ -21,11 +30,11 @@ public class Town extends ICMonArea {
         registerActor(new Door(this, new DiscreteCoordinates(25,20), "shop", new DiscreteCoordinates(3,2)));
     }
 
-    @Override
-    public void update(float deltaTime) {
-        super.update(deltaTime);
-    }
-
+    /**
+     * Getter for the title of the area
+     *
+     * @return (String) : The title of the area
+     */
     @Override
     public String getTitle() {
         return "town";

@@ -22,17 +22,37 @@ import static java.util.Objects.nonNull;
 
 public class PokemonSelectionMenu extends PauseMenu {
 
-    private static final float FONT_SIZE = .6f;
+    /** The front size of the text !!!!!!!!!!!!!!!!! */
+    private static final float FRONT_SIZE = .6f;
+
+    /** List of the pokemon display on the screen*/
     private final GraphicsEntity[] selectors;
+
+    /** List of the pokemon of the player */
     private final List<Pokemon> pokemonList;
+
+    /** The scale factor of the camera */
     private final float scaleFactor;
+
+    /** The header of the menu */
     private Graphics header;
+
+    /** The pokemon selected by the player */
     private Pokemon choice;
+
+    /** The current choice of the player */
     private int currentChoice;
+
+    /** Boolean to know if the player has a pokemon */
     private boolean hasPokemon;
 
+    /**
+     * Constructor for the PokemonSelectionMenu
+     * Initialize the current choice in the middle of the list
+     *
+     * @param pokemonList (List<Pokemon>) : The list of the pokemon of the player
+     */
     public PokemonSelectionMenu(List<Pokemon> pokemonList) {
-        assert !pokemonList.isEmpty();
         this.scaleFactor = ICMon.CAMERA_SCALE_FACTOR;
         this.pokemonList = pokemonList;
 
@@ -45,18 +65,25 @@ public class PokemonSelectionMenu extends PauseMenu {
         hasPokemon = true;
     }
 
+    /**
+     * Update the menu
+     * Update the current choice of the player and the list of the pokemon display on the screen
+     *
+     *
+     * @param deltaTime (float) : The time between two updates
+     */
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
         Keyboard keyboard = getKeyboard();
 
         if (pokemonList.isEmpty()) {
-            header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 + 5.5f), new TextGraphics("You do not have a Pokemon yet!", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
+            header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 + 5.5f), new TextGraphics("You do not have a Pokemon yet!", FRONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
             if (keyboard.get(Keyboard.SPACE).isPressed()) {
                 hasPokemon = false;
             }
         } else {
-            header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 + 5.5f), new TextGraphics("Please, select a Pokemon", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE, 1f, 1003));
+            header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 + 5.5f), new TextGraphics("Please, select a Pokemon", FRONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE, 1f, 1003));
 
             if (keyboard.get(Keyboard.LEFT).isPressed()) {
                 currentChoice = max(0, currentChoice - 1);
@@ -90,14 +117,30 @@ public class PokemonSelectionMenu extends PauseMenu {
         }
     }
 
+    /**
+     * Getter for the pokemon selected by the player
+     *
+     * @return (Pokemon) : The pokemon selected by the player
+     */
     public Pokemon choice() {
         return choice;
     }
 
+    /**
+     * Getter to know if the player has a pokemon
+     *
+     * @return (boolean) : True if the player has a pokemon, false otherwise
+     */
     public boolean hasPokemon() {
         return hasPokemon;
     }
 
+    /**
+     * Draw the menu
+     * Draw the header and the list of the pokemon display on the screen
+     *
+     * @param c (Canvas) : The canvas where the menu is drawn
+     */
     @Override
     protected void drawMenu(Canvas c) {
         if (header != null) {

@@ -7,15 +7,21 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
 abstract public class ICMonArea extends Area {
+
+    /**
+     * Creates the area
+     */
     protected abstract void createArea();
 
+    /**
+     * Getter for the spawn position of the player
+     * @return (DiscreteCoordinates): the spawn position of the player
+     */
     public abstract DiscreteCoordinates getPlayerSpawnPosition();
 
     /**
-     * ???
-     * @param window (Window): display context. Not null
-     * @param fileSystem (FileSystem): given file system. Not null
-     * @return ???
+     * Link the area to the window and the file system
+     * Create the behavior linked to the area
      */
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
@@ -27,6 +33,11 @@ abstract public class ICMonArea extends Area {
         return false;
     }
 
+    /**
+     * Getter for the camera scale factor
+     *
+     * @return (float): the camera scale factor
+     */
     @Override
     public final float getCameraScaleFactor() {
         return ICMon.CAMERA_SCALE_FACTOR;

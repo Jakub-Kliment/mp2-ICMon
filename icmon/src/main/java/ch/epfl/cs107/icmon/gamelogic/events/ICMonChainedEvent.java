@@ -9,6 +9,15 @@ import java.util.Collections;
 import java.util.List;
 
 public class ICMonChainedEvent extends ICMonEvent {
+
+    /**
+     * Default ICMonChainedEvent constructor
+     * Create a chain of events that will be executed one after the other
+     *
+     * @param player (ICMonPlayer): the player who interact in the event
+     * @param initial (ICMonEvent): the first event of the chain
+     * @param chain (ICMonEvent): the other events of the chain
+     */
     public ICMonChainedEvent(ICMonPlayer player, ICMonEvent initial, ICMonEvent ... chain) {
         super(player);
         List<ICMonEvent> eventList = new ArrayList<ICMonEvent>();
@@ -22,6 +31,9 @@ public class ICMonChainedEvent extends ICMonEvent {
         eventList.get(eventList.size() - 1).onComplete(new CompleteEventAction(this));
     }
 
+    /**
+     * Update the event, does nothing
+     */
     @Override
     public void update(float deltaTime) {}
 }
