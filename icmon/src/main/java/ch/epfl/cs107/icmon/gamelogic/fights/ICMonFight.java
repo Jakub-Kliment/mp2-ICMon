@@ -24,8 +24,7 @@ public class ICMonFight extends PauseMenu {
     /** The selector for the pokemon */
     private ICMonFightActionSelectionGraphics selectionGraphics;
 
-    /** Action performed by the player */
-    //!!!!!!!!!!!!!!!!!!!!!!!!!
+    /** Action performed by the player's or the opponent's pokemon */
     private ICMonFightAction fightAction;
 
     /** Message to display */
@@ -165,7 +164,7 @@ public class ICMonFight extends PauseMenu {
     }
 
     /**
-     * End the fight !!!!!!!!!!!!!!!!
+     * End the fight !!!!!!!!!!!!!!!! -> enlever et mettre dans la conception
      * Set the boolean over to true
      */
     public void end() {

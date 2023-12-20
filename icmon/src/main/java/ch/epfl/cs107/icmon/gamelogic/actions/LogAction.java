@@ -1,6 +1,6 @@
 package ch.epfl.cs107.icmon.gamelogic.actions;
-// A enlever !!!!!!!!!!!!!!!!!
-public class LogAction implements Action{
+
+public class LogAction implements Action {
 
     /** The message to log */
     private final String message;

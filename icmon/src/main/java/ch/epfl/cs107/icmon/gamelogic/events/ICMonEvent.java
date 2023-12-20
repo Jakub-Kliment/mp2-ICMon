@@ -170,11 +170,11 @@ public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
     }
 
     /**
-     * Getter to know if the event has a pause menu!!!!!!!!!!!!
+     * Getter to know if the event has a pause menu
      *
      * @return (boolean): true if the event has a pause menu, false otherwise
      */
-    public boolean isMenuPause(){return false;}
+    public boolean isMenuPause() { return false; }
 
     /**
      * Get the pause menu of the event if it has one, null otherwise

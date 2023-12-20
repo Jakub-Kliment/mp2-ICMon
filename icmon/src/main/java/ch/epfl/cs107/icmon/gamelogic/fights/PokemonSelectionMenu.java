@@ -22,10 +22,10 @@ import static java.util.Objects.nonNull;
 
 public class PokemonSelectionMenu extends PauseMenu {
 
-    /** The front size of the text !!!!!!!!!!!!!!!!! */
-    private static final float FRONT_SIZE = .6f;
+    /** The font size of the text */
+    private static final float FONT_SIZE = .6f;
 
-    /** List of the pokemon display on the screen*/
+    /** List of the pokemon display on the screen */
     private final GraphicsEntity[] selectors;
 
     /** List of the pokemon of the player */
@@ -78,12 +78,12 @@ public class PokemonSelectionMenu extends PauseMenu {
         Keyboard keyboard = getKeyboard();
 
         if (pokemonList.isEmpty()) {
-            header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 + 5.5f), new TextGraphics("You do not have a Pokemon yet!", FRONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
+            header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 + 5.5f), new TextGraphics("You do not have a Pokemon yet!", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
             if (keyboard.get(Keyboard.SPACE).isPressed()) {
                 hasPokemon = false;
             }
         } else {
-            header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 + 5.5f), new TextGraphics("Please, select a Pokemon", FRONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE, 1f, 1003));
+            header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 + 5.5f), new TextGraphics("Please, select a Pokemon", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE, 1f, 1003));
 
             if (keyboard.get(Keyboard.LEFT).isPressed()) {
                 currentChoice = max(0, currentChoice - 1);

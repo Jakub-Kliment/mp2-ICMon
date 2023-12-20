@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon.gamelogic.events;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
+import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.OpenDialogAction;
 
 public class IntroductionEvent extends ICMonEvent{
@@ -14,6 +15,7 @@ public class IntroductionEvent extends ICMonEvent{
     public IntroductionEvent(ICMonPlayer player) {
         super(player);
         onStart(new OpenDialogAction(player, "welcome_to_icmon"));
+        new LogAction("Welcom to ICMon!");
     }
 
     /**

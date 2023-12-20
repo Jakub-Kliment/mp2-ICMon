@@ -71,7 +71,11 @@ public class ICMonBehavior extends AreaBehavior {
             this.walkingType = walkingType;
         }
 
-        //JACUB!!!!!!!!!!!!!!!
+        /**
+         * Associates type to cell
+         *
+         * @param type (int): The type of the cell
+         */
         public static ICMonCellType toType(int type) {
             for (ICMonCellType ict : ICMonCellType.values()) {
                 if (ict.type == type)
@@ -90,7 +94,7 @@ public class ICMonBehavior extends AreaBehavior {
         private final ICMonCellType type;
 
         /**
-         * True if the cell is taken by an actor !!!!!!!!!!!!!!!!!!!!!!!!
+         * True if the cell is occupied
          */
         private boolean taken;
 
@@ -156,8 +160,8 @@ public class ICMonBehavior extends AreaBehavior {
         }
 
         /**
-         * Take the cell if it is not taken
-         * !!!!!!!!!!!!!!!!
+         * Looks whether the player can enter onto a cell
+         *
          *
          * @param entity (Interactable) : The entity that wants to enter the cell
          * @return (boolean) : True if entity can enter the cell

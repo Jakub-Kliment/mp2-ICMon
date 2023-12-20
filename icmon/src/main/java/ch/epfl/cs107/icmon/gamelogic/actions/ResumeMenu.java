@@ -21,6 +21,6 @@ public class ResumeMenu implements Action{
      */
     @Override
     public void perform() {
-        gameState.stopMenuPause();
+        gameState.stopPauseMenu();
     }
 }

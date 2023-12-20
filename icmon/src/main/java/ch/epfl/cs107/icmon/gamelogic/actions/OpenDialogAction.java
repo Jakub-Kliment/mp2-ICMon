@@ -2,8 +2,8 @@ package ch.epfl.cs107.icmon.gamelogic.actions;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.play.engine.actor.Dialog;
-// A revoir !!!!!!!!!!!!!!!!
-public class OpenDialogAction implements Action{
+
+public class OpenDialogAction implements Action {
 
     /** The player to open the dialog to */
     private final ICMonPlayer player;

@@ -23,7 +23,7 @@ public class SetPauseAction implements Action{
     }
 
     /**
-     * Perform the action, set the pause menu!!!!!!!!!!!!!!!!!!!!
+     * Pause the game and show pause menu
      */
     @Override
     public void perform() {

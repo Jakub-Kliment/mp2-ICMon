@@ -25,9 +25,6 @@ public class ICMon extends AreaGame {
     /** The scale factor of the camera */
     public final static float CAMERA_SCALE_FACTOR = 13.f;
 
-    /** The event manager of ICMon */
-    private ICMonEventManager eventManager;
-
     /** The player of the game */
     private ICMonPlayer player;
 
@@ -60,9 +57,8 @@ public class ICMon extends AreaGame {
         addAreaToGame(new Shop());
     }
 
-    // A REVOIR !!!!!!!!!!
     /**
-     * Create the game by lunching the diffrent element of the game such as
+     * Create the game by lunching the different element of the game such as
      * the arena
      * the player
      * the event
@@ -91,8 +87,7 @@ public class ICMon extends AreaGame {
         DiscreteCoordinates coords = area.getPlayerSpawnPosition();
 
         gameState = new ICMonGameState();
-        eventManager = new ICMonEventManager();
-        player = new ICMonPlayer(area, coords, "actors/player", gameState, eventManager);
+        player = new ICMonPlayer(area, coords, "actors/player", gameState, new ICMonEventManager());
 
         eventList = new ArrayList<>();
         startedEvent = new ArrayList<>();
@@ -112,7 +107,7 @@ public class ICMon extends AreaGame {
         Keyboard keyboard = getCurrentArea().getKeyboard();
 
         if (keyboard.get(Keyboard.R).isPressed()) {
-            begin(getWindow(),getFileSystem());
+            begin(getWindow(), getFileSystem());
         }
 
         if (gameState.message != null) {
@@ -120,21 +115,19 @@ public class ICMon extends AreaGame {
             gameState.message = null;
         }
 
-        //MODULARISER!!!!!!!!!!!!!!!!!!!!
         eventList.addAll(startedEvent);
         startedEvent.clear();
 
-        for(ICMonEvent event : completedEvent) {
+        for (ICMonEvent event : completedEvent) {
             eventList.remove(event);
         }
         completedEvent.clear();
 
-        for(ICMonEvent event : eventList) {
+        for (ICMonEvent event : eventList) {
             event.update(deltaTime);
         }
         super.update(deltaTime);
     }
-
     /**
      * Getter for the title of the game
      *
@@ -150,7 +143,7 @@ public class ICMon extends AreaGame {
     public void end() {}
 
     /**
-     * Create the event and the whole plot of the game!!!!!!!!!!!!
+     * Create events and the whole plot of the game
      */
     private void event() {
         ICBall ball = new ICBall(areaList.get(0), new DiscreteCoordinates(6,6));
@@ -258,9 +251,9 @@ public class ICMon extends AreaGame {
         }
 
         /**
-         * Resume the game!!!!!!!!!!!!!!!!!!!!!
+         * Resume the game
          */
-        public void stopMenuPause() {
+        public void stopPauseMenu() {
             requestResume();
         }
     }
