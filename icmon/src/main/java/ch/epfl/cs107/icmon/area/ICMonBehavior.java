@@ -43,7 +43,7 @@ public class ICMonBehavior extends AreaBehavior {
         NULL(0, AllowedWalkingType.NONE),
         WALL(-16777216, AllowedWalkingType.NONE),
         BUILDING(-8750470, AllowedWalkingType.NONE),
-        INTERACT(-256, AllowedWalkingType.NONE),
+        INTERACT(-256, AllowedWalkingType.ALL),
         DOOR(-195580, AllowedWalkingType.ALL),
         INDOOR_WALKABLE(-1, AllowedWalkingType.FEET),
         OUTDOOR_WALKABLE(-14112955, AllowedWalkingType.FEET),

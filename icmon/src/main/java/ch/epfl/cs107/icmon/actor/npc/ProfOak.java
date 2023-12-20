@@ -14,7 +14,7 @@ public class ProfOak extends NPCActor {
      * @param area     (Area): Owner area. Not null
      */
     public ProfOak(Area area) {
-        super(area, Orientation.DOWN, new DiscreteCoordinates(11,7), "actors/prof-oak");
+        super(area, Orientation.DOWN, new DiscreteCoordinates(7,7), "actors/prof-oak");
     }
 
     /**

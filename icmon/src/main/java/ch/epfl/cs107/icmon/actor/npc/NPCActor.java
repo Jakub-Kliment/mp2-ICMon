@@ -11,7 +11,7 @@ import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.List;
 
-public class NPCActor extends ICMonActor {
+public abstract class NPCActor extends ICMonActor {
     private final Sprite sprite;
 
     /**

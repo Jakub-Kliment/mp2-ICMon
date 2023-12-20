@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.area.maps;
 
+import ch.epfl.cs107.icmon.actor.Display;
 import ch.epfl.cs107.icmon.actor.Door;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.engine.actor.Background;
@@ -28,6 +29,11 @@ public class Town extends ICMonArea {
         registerActor(new Door(this, new DiscreteCoordinates(20,16), "arena", new DiscreteCoordinates(4,2)));
         registerActor(new Door(this, new DiscreteCoordinates(7,27), "house", new DiscreteCoordinates(2,2)));
         registerActor(new Door(this, new DiscreteCoordinates(25,20), "shop", new DiscreteCoordinates(3,2)));
+        registerActor(new Display(this, new DiscreteCoordinates(8, 23), "town_sign_sacha"));
+        registerActor(new Display(this, new DiscreteCoordinates(17, 22), "town_sign_lab"));
+        registerActor(new Display(this, new DiscreteCoordinates(17, 16), "town_sign_arena"));
+
+
     }
 
     /**

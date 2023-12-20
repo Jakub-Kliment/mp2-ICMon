@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon;
 
+import ch.epfl.cs107.icmon.actor.Display;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;

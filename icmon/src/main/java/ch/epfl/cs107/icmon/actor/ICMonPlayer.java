@@ -366,5 +366,19 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         public void interactWith(Garry garry, boolean isCellInteraction) {
             gameState.acceptInteraction(garry, isCellInteraction);
         }
+
+        @Override
+        public void interactWith(Display display, boolean isCellInteraction) {
+            if (!isCellInteraction){
+                openDialog(display.getDialog());
+            }
+        }
+
+        @Override
+        public void interactWith(Desk desk, boolean isCellInteraction) {
+            if (!isCellInteraction){
+                gameState.acceptInteraction(desk.getActor(), isCellInteraction);
+            }
+        }
     }
 }
