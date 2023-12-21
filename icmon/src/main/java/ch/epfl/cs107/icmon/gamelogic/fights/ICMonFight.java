@@ -2,6 +2,7 @@ package ch.epfl.cs107.icmon.gamelogic.fights;
 
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.actor.pokemon.actions.Attack;
+import ch.epfl.cs107.icmon.actor.pokemon.actions.CriticalAttack;
 import ch.epfl.cs107.icmon.actor.pokemon.actions.RunAway;
 import ch.epfl.cs107.icmon.graphics.ICMonFightActionSelectionGraphics;
 import ch.epfl.cs107.icmon.graphics.ICMonFightArenaGraphics;
@@ -92,19 +93,14 @@ public class ICMonFight extends PauseMenu {
 
             case ACTION_EXECUTION -> {
                 if (fightAction instanceof Attack) {
-                    fightAction.makeAction(player, opponent);
+                    attackAction();
 
-                    if (!opponent.isAlive()) {
-                        message = "The player has won the fight";
-                        winner = true;
-                        state = State.CONCLUSION;
-                    } else {
-                        state = State.COUNTER;
-                    }
                 } else if (fightAction instanceof RunAway) {
                     message = "The player has left the fight";
                     winner = false;
                     state = State.CONCLUSION;
+                } else if (fightAction instanceof CriticalAttack) {
+                    attackAction();
                 }
             }
 
@@ -134,6 +130,17 @@ public class ICMonFight extends PauseMenu {
         }
     }
 
+    public void attackAction() {
+        fightAction.makeAction(player, opponent);
+
+        if (!opponent.isAlive()) {
+            message = "The player has won the fight";
+            winner = true;
+            state = State.CONCLUSION;
+        } else {
+            state = State.COUNTER;
+        }
+    }
     /**
      * Set the graphic message of the arena
      *

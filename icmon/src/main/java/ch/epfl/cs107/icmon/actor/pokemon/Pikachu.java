@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon.actor.pokemon;
 
 import ch.epfl.cs107.icmon.actor.pokemon.actions.Attack;
+import ch.epfl.cs107.icmon.actor.pokemon.actions.CriticalAttack;
 import ch.epfl.cs107.icmon.actor.pokemon.actions.RunAway;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -16,7 +17,7 @@ public class Pikachu extends Pokemon {
      */
     public Pikachu(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, "pikachu", 2, 10);
-        addFightActions(new Attack(), new RunAway());
+        addFightActions(new Attack(), new RunAway(), new CriticalAttack());
     }
 }
 
