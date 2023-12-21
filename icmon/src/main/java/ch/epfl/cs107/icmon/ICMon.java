@@ -3,7 +3,6 @@ package ch.epfl.cs107.icmon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.Fruit;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
-import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.*;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
@@ -31,25 +30,25 @@ public class ICMon extends AreaGame {
     /** The player of the game */
     private ICMonPlayer player;
 
-    /** The list of the current event of ICMon */
+    /** The list of current events of ICMon */
     private List<ICMonEvent> eventList;
 
-    /** The list of the event that are start */
+    /** The list of events that are start */
     private List<ICMonEvent> startedEvent;
 
-    /** The list of the event that are completed */
+    /** The list of events that are completed */
     private List<ICMonEvent> completedEvent;
 
-    /** The game state of ICMon*/
+    /** The game state of ICMon */
     private ICMonGameState gameState;
 
-    /** The list of the area of ICMon */
+    /** The list of the areas of ICMon */
     private List<Area> areaList;
     private boolean hasFruitStarted = false;
 
     /**
      * Create the area of the game
-     * Add the different area to ICMon
+     * Add the different areas to ICMon
      */
     private void createAreas() {
         areaList = new ArrayList<>();
@@ -66,14 +65,14 @@ public class ICMon extends AreaGame {
     }
 
     /**
-     * Create the game by lunching the different element of the game such as
+     * Create the game by lunching the different elements of the game such as
      * the arena
      * the player
      * the event
      *
      * @param window (Window): the window to display
      * @param fileSystem (FileSystem): the file system to use
-     * @return (boolean): true if the game is initialize, false otherwise
+     * @return (boolean): true if the game is initialized, false otherwise
      */
     public boolean begin(Window window, FileSystem fileSystem) {
         if (super.begin(window, fileSystem)) {
@@ -138,6 +137,7 @@ public class ICMon extends AreaGame {
             event.update(deltaTime);
         }
 
+        // If the area town is initialized, then start added events
         if (areaList.get(0).isStarted()) {
             randomEvent();
             if (!hasFruitStarted) {
@@ -146,6 +146,7 @@ public class ICMon extends AreaGame {
             }
         }
     }
+
     /**
      * Getter for the title of the game
      *
@@ -155,9 +156,7 @@ public class ICMon extends AreaGame {
         return "ICMon";
     }
 
-    /**
-     * End the game
-     */
+    /** End the game */
     public void end() {}
 
     /**
@@ -180,17 +179,25 @@ public class ICMon extends AreaGame {
 
         icMonChainedEvent.start();
     }
-    // A enlever (bug quand les coordonees sont not canEnter)!!!!!!!!!!!
+
+    // À enlever (bug quand les coordonnées sont not canEnter)!!!!!!!!!!!
+
+    /**
+     * Randomly spawns ball into the area town based on calculated probabilities
+     * If the ball is spawned on a cell that is not walkable, it is automatically
+     * not registered by functions implemented in game-engine
+     */
     private void randomEvent() {
         Random rand = new Random();
         int upperbound = 500;
         int random_number = rand.nextInt(upperbound);
 
+        // Chance to spawn a ball is one out of 500
         if (random_number == 0) {
-            System.out.println(random_number);
             int randomCoordinateX = rand.nextInt(31);
             int randomCoordinateY = rand.nextInt(33);
 
+            // Spawns a ball to a random position on the map
             ICBall randomBall = new ICBall(areaList.get(0), new DiscreteCoordinates(randomCoordinateX, randomCoordinateY));
             CollectItemEvent randomEvent = new CollectItemEvent(randomBall, player);
             randomEvent.onStart(new RegisterinAreaAction(areaList.get(0), randomBall));
@@ -198,8 +205,14 @@ public class ICMon extends AreaGame {
         }
 
     }
+    /**
+     * Spawns a piece of fruit that can be eaten (picked up) by the player
+     * This fruit allows your player to heal all their pokemons to full health
+     */
     private void fruitEvent() {
+        // When the area town is initialized
         if (areaList.get(0).isStarted()) {
+            // Spawns a fruit that can be collected and creates an event
             Fruit fruit = new Fruit(areaList.get(0), new DiscreteCoordinates(17, 13));
             CollectItemEvent heal = new CollectItemEvent(fruit, player);
             heal.onStart(new RegisterinAreaAction(areaList.get(0), fruit));
@@ -207,7 +220,7 @@ public class ICMon extends AreaGame {
         }
     }
     /**
-     * Add an area to the game and the list of the different area
+     * Add an area to the game and to the list of different areas
      *
      * @param area (Area): the area to add
      */
@@ -216,11 +229,10 @@ public class ICMon extends AreaGame {
         areaList.add(area);
     }
 
-    /**
-     * Game state of ICMon
-     */
+    /** Game state of ICMon */
     public class ICMonGameState {
-        /** Message send by the different part of the game to treat */
+
+        /** Message sent by the different part of the game to be treated */
         private GamePlayMessage message = null;
 
         /**
@@ -229,7 +241,7 @@ public class ICMon extends AreaGame {
         private ICMonGameState() {}
 
         /**
-         * Delegate the interaction between interactor and interactable to the different current event
+         * Delegate the interaction between interactor and interactable to different current events
          *
          * @param interactable (Interactable): the interactable who interact
          * @param isCellInteraction (boolean): true if the interaction is a cell interaction, false otherwise
@@ -241,7 +253,7 @@ public class ICMon extends AreaGame {
         }
 
         /**
-         * Allowed to send a message to the game
+         * Allows to send a message to the game
          *
          * @param message (GamePlayMessage): the message to send
          */
@@ -258,11 +270,15 @@ public class ICMon extends AreaGame {
          * @param message (GamePlayMessage): the message to treat
          */
         public void treatMessage(GamePlayMessage message) {
+            // Loads message
             ICMonEvent event = ((SuspendWithEventMessage)message).getEvent();
+
             if (event.isMenuPause()) {
+                // Starts the events of pausing the game
                 event.onStart(new SetPauseAction(this, (event).getMenu()));
                 event.onComplete(new ResumeMenu(this));
 
+                // Suspends all current events
                 for(ICMonEvent anEvent : eventList) {
                     event.onStart(new SuspendedEventAction(anEvent));
                     event.onComplete(new ResumeEventAction(anEvent));
