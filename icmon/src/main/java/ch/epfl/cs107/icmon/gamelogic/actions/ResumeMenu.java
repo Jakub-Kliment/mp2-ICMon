@@ -2,7 +2,7 @@ package ch.epfl.cs107.icmon.gamelogic.actions;
 
 import ch.epfl.cs107.icmon.ICMon;
 
-public class ResumeMenu implements Action{
+public class ResumeMenu implements Action {
 
     /** The game state of the game */
     private final ICMon.ICMonGameState gameState;

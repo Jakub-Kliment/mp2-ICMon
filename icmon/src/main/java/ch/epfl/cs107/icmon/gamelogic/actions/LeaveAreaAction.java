@@ -2,7 +2,7 @@ package ch.epfl.cs107.icmon.gamelogic.actions;
 
 import ch.epfl.cs107.icmon.actor.ICMonActor;
 
-public class LeaveAreaAction implements Action{
+public class LeaveAreaAction implements Action {
 
     /** The actor who leave the area */
     private final ICMonActor actor;

@@ -7,14 +7,14 @@ import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class CollectItemEvent extends ICMonEvent {
 
-    /** The item which is collect */
+    /** The item which is to collect */
     private final ICMonItem item;
 
     /**
      * Default CollectItemEvent constructor
      *
      * @param item (ICMonItem): the item to collect
-     * @param player (ICMonPlayer): the player who collect the item
+     * @param player (ICMonPlayer): the player who collects the item
      */
     public CollectItemEvent(ICMonItem item, ICMonPlayer player) {
         super(player);

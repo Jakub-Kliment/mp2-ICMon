@@ -3,7 +3,7 @@ package ch.epfl.cs107.icmon.gamelogic.actions;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.engine.actor.Actor;
 
-public class RegisterinAreaAction implements Action{
+public class RegisterinAreaAction implements Action {
 
     /** The area to register the actor to */
     private final Area area;
@@ -17,7 +17,7 @@ public class RegisterinAreaAction implements Action{
      * @param area (Area): the area to register the actor to
      * @param actor (Actor): the actor to register
      */
-    public RegisterinAreaAction(Area area, Actor actor){
+    public RegisterinAreaAction(Area area, Actor actor) {
         this.area = area;
         this.actor = actor;
     }

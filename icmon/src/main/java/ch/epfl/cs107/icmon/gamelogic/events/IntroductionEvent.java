@@ -15,7 +15,7 @@ public class IntroductionEvent extends ICMonEvent{
     public IntroductionEvent(ICMonPlayer player) {
         super(player);
         onStart(new OpenDialogAction(player, "welcome_to_icmon"));
-        new LogAction("Welcom to ICMon!");
+        new LogAction("Welcome to ICMon!");
     }
 
     /**

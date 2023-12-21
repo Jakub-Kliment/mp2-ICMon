@@ -7,7 +7,7 @@ import ch.epfl.cs107.icmon.gamelogic.actions.AfterPokemonSelectionFightAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.PokemonSelectionMenu;
 import ch.epfl.cs107.play.engine.PauseMenu;
 
-public class PokemonSelectionEvent extends ICMonEvent{
+public class PokemonSelectionEvent extends ICMonEvent {
 
     /** The selection menu */
     private final PokemonSelectionMenu selectionMenu;

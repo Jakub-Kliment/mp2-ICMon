@@ -17,7 +17,7 @@ public class OpenDialogAction implements Action {
      * @param player (ICMonPlayer): the player to open the dialog to
      * @param dialogString (String): the dialog to open
      */
-    public OpenDialogAction(ICMonPlayer player, String dialogString){
+    public OpenDialogAction(ICMonPlayer player, String dialogString) {
         this.player = player;
         this.dialogString = dialogString;
     }

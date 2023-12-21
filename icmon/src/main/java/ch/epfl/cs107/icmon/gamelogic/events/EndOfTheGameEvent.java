@@ -4,12 +4,12 @@ import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
-public class EndOfTheGameEvent extends ICMonEvent{
+public class EndOfTheGameEvent extends ICMonEvent {
 
-/**
+    /**
      * Default EndOfTheGameEvent constructor
      *
-     * @param player (ICMonPlayer): the player who interact in the event
+     * @param player (ICMonPlayer): the player who interacts in the event
      */
     public EndOfTheGameEvent(ICMonPlayer player) {
         super(player);
@@ -27,7 +27,7 @@ public class EndOfTheGameEvent extends ICMonEvent{
     }
 
     /**
-     * Update the event, does nothing cause the event never end
+     * Update the event, does nothing because the event is a dialog
      */
     @Override
     public void update(float deltaTime) {}

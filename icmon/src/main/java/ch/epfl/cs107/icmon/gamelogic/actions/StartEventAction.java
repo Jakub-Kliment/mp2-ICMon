@@ -2,7 +2,7 @@ package ch.epfl.cs107.icmon.gamelogic.actions;
 
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 
-public class StartEventAction implements Action{
+public class StartEventAction implements Action {
 
     /** The event to start */
     private final ICMonEvent event;

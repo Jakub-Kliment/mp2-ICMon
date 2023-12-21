@@ -3,7 +3,7 @@ package ch.epfl.cs107.icmon.gamelogic.actions;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 
-public class UnregisterEventAction implements Action{
+public class UnregisterEventAction implements Action {
 
     /** The event manager of the game */
     private final ICMon.ICMonEventManager eventManager;

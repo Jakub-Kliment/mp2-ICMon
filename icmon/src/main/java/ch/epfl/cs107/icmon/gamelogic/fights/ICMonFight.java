@@ -129,7 +129,9 @@ public class ICMonFight extends PauseMenu {
 
         }
     }
-
+    /**
+     * Function for Actions of type attack to deal damage to the player
+     */
     public void attackAction() {
         fightAction.makeAction(player, opponent);
 
@@ -141,6 +143,7 @@ public class ICMonFight extends PauseMenu {
             state = State.COUNTER;
         }
     }
+
     /**
      * Set the graphic message of the arena
      *
@@ -196,6 +199,7 @@ public class ICMonFight extends PauseMenu {
         COUNTER,
         CONCLUSION,
         ACTION_SELECTION,
-        ACTION_EXECUTION;
+        ACTION_EXECUTION
+        ;
     }
 }

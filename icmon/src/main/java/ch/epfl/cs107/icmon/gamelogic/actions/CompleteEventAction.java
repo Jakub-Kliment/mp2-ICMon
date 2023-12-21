@@ -2,7 +2,8 @@ package ch.epfl.cs107.icmon.gamelogic.actions;
 
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 
-public class CompleteEventAction implements Action{
+public class CompleteEventAction implements Action {
+
     /** The event to complete */
     private final ICMonEvent event;
 

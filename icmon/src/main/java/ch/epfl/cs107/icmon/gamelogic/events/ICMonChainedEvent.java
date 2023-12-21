@@ -23,6 +23,7 @@ public class ICMonChainedEvent extends ICMonEvent {
         List<ICMonEvent> eventList = new ArrayList<ICMonEvent>();
         eventList.add(initial);
         Collections.addAll(eventList, chain);
+
         onStart(new StartEventAction(eventList.get(0)));
 
         for(int i = 0; i < eventList.size() - 1; i++) {

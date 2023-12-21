@@ -3,7 +3,8 @@ package ch.epfl.cs107.icmon.gamelogic.actions;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 
-public class AddPokemonAction implements Action{
+public class AddPokemonAction implements Action {
+
     /** The player to add the pokemon to */
     private final ICMonPlayer player;
 

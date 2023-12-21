@@ -3,7 +3,7 @@ package ch.epfl.cs107.icmon.gamelogic.actions;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.play.engine.PauseMenu;
 
-public class SetPauseAction implements Action{
+public class SetPauseAction implements Action {
 
     /** The game state of the game */
     private final ICMon.ICMonGameState gameState;

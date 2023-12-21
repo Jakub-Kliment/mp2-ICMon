@@ -8,7 +8,7 @@ import ch.epfl.cs107.icmon.gamelogic.actions.AddPokemonAction;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 import ch.epfl.cs107.play.math.Orientation;
 
-public class FirstInteractionWithProfOakEvent extends ICMonEvent{
+public class FirstInteractionWithProfOakEvent extends ICMonEvent {
 
     /**
      * Default FirstInteractionWithProfOakEvent constructor

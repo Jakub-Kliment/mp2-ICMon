@@ -14,9 +14,16 @@ public class FirstInteractionWithGarryEvent extends ICMonEvent {
         super(player);
     }
 
+    /**
+     * Update the event, does nothing
+     */
     @Override
     public void update(float deltaTime) {}
 
+    /**
+     * Handle the interaction with the Garry during the event
+     * Enter into a fight with Garry
+     */
     @Override
     public void interactWith(Garry garry, boolean isCellInteraction) {
         player.fight(garry);

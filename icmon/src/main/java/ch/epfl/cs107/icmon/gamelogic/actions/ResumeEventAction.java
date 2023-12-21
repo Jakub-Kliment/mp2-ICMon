@@ -2,7 +2,7 @@ package ch.epfl.cs107.icmon.gamelogic.actions;
 
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 
-public class ResumeEventAction implements Action{
+public class ResumeEventAction implements Action {
 
     /** The event to resume */
     private final ICMonEvent event;

@@ -45,8 +45,9 @@ public class PokemonFightEvent extends ICMonEvent {
      */
     @Override
     public void update(float deltaTime) {
-        if(menu.isOver()){
-            if(menu.playerWin()){
+        if(menu.isOver()) {
+            // When you win the fight against Garry, he disappears
+            if(menu.playerWin()) {
                 onComplete(new LeaveAreaAction((ICMonActor)opponent));
             }
             complete();
