@@ -89,10 +89,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                 dialog.update(deltaTime);
             }
         } else {
-            moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
-            moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
-            moveIfPressed(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
-            moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
+            moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP), keyboard.get(Keyboard.W));
+            moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN), keyboard.get(Keyboard.S));
+            moveIfPressed(Orientation.LEFT, keyboard.get(Keyboard.LEFT), keyboard.get(Keyboard.A));
+            moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT), keyboard.get(Keyboard.D));
 
             if (isDisplacementOccurs()) {
                 animation.update(deltaTime);
@@ -120,9 +120,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
      *
      * @param orientation : the orientation of the player
      * @param b : the button pressed
+     * @param c : the button pressed
      */
-    private void moveIfPressed(Orientation orientation, Button b) {
-        if (b.isDown()) {
+    private void moveIfPressed(Orientation orientation, Button b, Button c) {
+        if (b.isDown() || c.isDown()) {
             if (!isDisplacementOccurs()) {
                 animation.orientate(orientation);
                 orientate(orientation);
