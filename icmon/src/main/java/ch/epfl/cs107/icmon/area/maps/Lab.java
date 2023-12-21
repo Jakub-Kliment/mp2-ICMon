@@ -22,9 +22,7 @@ public class Lab extends ICMonArea {
         return "lab";
     }
 
-    /**
-     * Create the area and register the actors
-     */
+    /** Create the area and register the actors */
     @Override
     protected void createArea() {
         registerActor(new Background(this));

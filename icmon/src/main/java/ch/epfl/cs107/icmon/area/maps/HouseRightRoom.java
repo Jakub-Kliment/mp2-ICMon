@@ -7,11 +7,18 @@ import ch.epfl.cs107.play.engine.actor.Background;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class HouseRightRoom extends ICMonArea {
+
+    /**
+     * Getter for the title of the area
+     *
+     * @return (String) : The title of the area
+     */
     @Override
     public String getTitle() {
         return "house_right_room";
     }
 
+    /** Create the area and register the actors */
     @Override
     protected void createArea() {
         registerActor(new Background(this));
@@ -19,6 +26,11 @@ public class HouseRightRoom extends ICMonArea {
         registerActor(new Display(this, new DiscreteCoordinates(4,7), "tv_news"));
     }
 
+    /**
+     * Getter for the spawn position of the player
+     *
+     * @return (DiscreteCoordinates): the spawn position of the player
+     */
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
         return null;

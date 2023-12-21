@@ -15,13 +15,15 @@ public class ICMonBehavior extends AreaBehavior {
      * Default ICMonBehavior constructor
      *
      * @param window (Window): Graphic context, not null
-     * @param name (String): Name of the behavior image, not null
+     * @param name   (String): Name of the behavior image, not null
      */
     public ICMonBehavior(Window window, String name) {
         super(window, name);
         areaGraph = new AreaGraph();
         int height = getHeight();
         int width = getWidth();
+
+        // Load behavior of the map
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 areaGraph.addNode(new DiscreteCoordinates(x,y), x>0, y<height-1, x<width-1, y>0);
@@ -38,7 +40,8 @@ public class ICMonBehavior extends AreaBehavior {
         NONE,
         SURF,
         FEET,
-        ALL;
+        ALL
+        ;
     }
 
     /**
@@ -55,20 +58,16 @@ public class ICMonBehavior extends AreaBehavior {
         WATER(-16776961, AllowedWalkingType.SURF),
         GRASS(-16743680, AllowedWalkingType.FEET)
         ;
-        /**
-         * The walking type of the cell
-         */
+        /** The walking type of the cell */
         private final AllowedWalkingType walkingType;
 
-        /**
-         * The type of the cell
-         */
+        /** The type of the cell*/
         private final int type;
 
         /**
          * Default ICMonCellType constructor
          *
-         * @param type (int): The type of the cell
+         * @param type        (int): The type of the cell
          * @param walkingType (AllowedWalkingType): The walking type of the cell
          */
         ICMonCellType(int type, AllowedWalkingType walkingType) {
@@ -102,9 +101,7 @@ public class ICMonBehavior extends AreaBehavior {
         /** The type of the cell */
         private final ICMonCellType type;
 
-        /**
-         * True if the cell is occupied
-         */
+        /** True if the cell is occupied */
         private boolean taken;
 
         /**
@@ -119,21 +116,13 @@ public class ICMonBehavior extends AreaBehavior {
             this.type = type;
         }
 
-        /**
-         * Allowed the cell to be cell interacted  with
-         *
-         * @return (boolean) : True if the cell can be cell interacted with
-         */
+        /**@return (boolean) : true, so the cell can be cell interacted with*/
         @Override
         public boolean isCellInteractable() {
             return true;
         }
 
-/**
-         * Allowed the cell to be view interacted with
-         *
-         * @return (boolean) : True if the cell can be view interacted with
-         */
+        /**@return (boolean) : false, so the cell cannot be view interacted with*/
         @Override
         public boolean isViewInteractable() {
             return false;
@@ -160,6 +149,7 @@ public class ICMonBehavior extends AreaBehavior {
         protected boolean canLeave(Interactable entity) {
             if (entity != null) {
                 if (entity.takeCellSpace()) {
+                    // Cell is liberated so it can be now entered
                     taken = false;
                 }
                 return true;
@@ -171,7 +161,6 @@ public class ICMonBehavior extends AreaBehavior {
         /**
          * Looks whether the player can enter onto a cell
          *
-         *
          * @param entity (Interactable) : The entity that wants to enter the cell
          * @return (boolean) : True if entity can enter the cell
          */
@@ -181,6 +170,7 @@ public class ICMonBehavior extends AreaBehavior {
                 return false;
             } else {
                 if (entity.takeCellSpace()) {
+                    // Changes the cell to taken so it now cannot be entered
                     taken = true;
                 }
                 return true;

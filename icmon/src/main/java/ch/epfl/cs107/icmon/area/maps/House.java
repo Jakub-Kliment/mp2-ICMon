@@ -20,15 +20,14 @@ public class House extends ICMonArea {
         return "house";
     }
 
-    /**
-     * Create the area and register the actors
-     */
+    /** Create the area and register the actors */
     @Override
     protected void createArea() {
         registerActor(new Background(this));
         registerActor(new Foreground(this));
-        registerActor(new Door(this, new DiscreteCoordinates(3,1), "town", new DiscreteCoordinates(7, 26), new DiscreteCoordinates(4,1)));
+
         registerActor(new Garry(this, new DiscreteCoordinates(1,3)));
+        registerActor(new Door(this, new DiscreteCoordinates(3,1), "town", new DiscreteCoordinates(7, 26), new DiscreteCoordinates(4,1)));
         registerActor(new Display(this, new DiscreteCoordinates(2, 7), "tv_news"));
     }
 

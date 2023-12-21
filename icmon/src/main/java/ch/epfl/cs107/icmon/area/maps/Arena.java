@@ -2,6 +2,9 @@ package ch.epfl.cs107.icmon.area.maps;
 
 import ch.epfl.cs107.icmon.actor.Display;
 import ch.epfl.cs107.icmon.actor.Door;
+import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
+import ch.epfl.cs107.icmon.actor.pokemon.Latios;
+import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
 import ch.epfl.cs107.icmon.actor.pokemon.Pikachu;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.engine.actor.Background;
@@ -28,7 +31,12 @@ public class Arena extends ICMonArea {
     protected void createArea() {
         registerActor(new Background(this));
         registerActor(new Foreground((this)));
-        registerActor(new Pikachu(this, Orientation.DOWN, new DiscreteCoordinates(6, 6)));
+        // All pokemons can be fought
+        registerActor(new Bulbizarre(this, Orientation.DOWN, new DiscreteCoordinates(1, 4)));
+        registerActor(new Latios(this, Orientation.DOWN, new DiscreteCoordinates(2, 6)));
+        registerActor(new Nidoqueen(this, Orientation.DOWN, new DiscreteCoordinates(6, 6)));
+        registerActor(new Pikachu(this, Orientation.DOWN, new DiscreteCoordinates(7, 4)));
+
         registerActor(new Door(this, new DiscreteCoordinates(4,1), "town", new DiscreteCoordinates(20, 15), new DiscreteCoordinates(5, 1)));
         registerActor(new Display(this, new DiscreteCoordinates(1, 7), "arena_door"));
         registerActor(new Display(this, new DiscreteCoordinates(7, 7), "arena_door"));

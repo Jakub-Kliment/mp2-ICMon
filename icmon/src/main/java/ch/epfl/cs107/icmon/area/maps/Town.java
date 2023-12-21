@@ -20,13 +20,12 @@ public class Town extends ICMonArea {
         return new DiscreteCoordinates(5, 5);
     }
 
-    /**
-     * Create the area and register the actors
-     */
+    /** Create the area and register the actors */
     @Override
     protected void createArea() {
         registerActor(new Background(this));
         registerActor(new Foreground(this));
+
         registerActor(new Door(this, new DiscreteCoordinates(15,24), "lab", new DiscreteCoordinates(6,2)));
         registerActor(new Door(this, new DiscreteCoordinates(20,16), "arena", new DiscreteCoordinates(4,2)));
         registerActor(new Door(this, new DiscreteCoordinates(7,27), "house", new DiscreteCoordinates(3,2)));
@@ -36,6 +35,7 @@ public class Town extends ICMonArea {
         registerActor(new Display(this, new DiscreteCoordinates(8, 23), "town_sign_sacha"));
         registerActor(new Display(this, new DiscreteCoordinates(17, 22), "town_sign_lab"));
         registerActor(new Display(this, new DiscreteCoordinates(17, 16), "town_sign_arena"));
+
         registerActor(new WalkingNPC(this, Orientation.RIGHT, new DiscreteCoordinates(10,12)));
     }
 

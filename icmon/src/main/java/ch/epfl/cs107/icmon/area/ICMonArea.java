@@ -19,6 +19,7 @@ abstract public class ICMonArea extends Area {
      * @return (DiscreteCoordinates): the spawn position of the player
      */
     public abstract DiscreteCoordinates getPlayerSpawnPosition();
+
     private AreaGraph areaGraph;
 
     /**
@@ -46,6 +47,7 @@ abstract public class ICMonArea extends Area {
     public final float getCameraScaleFactor() {
         return ICMon.CAMERA_SCALE_FACTOR;
     }
+
     public AreaGraph getAreaGraph(){
         return areaGraph;
     }

@@ -21,9 +21,7 @@ public class Shop extends ICMonArea {
         return "shop";
     }
 
-    /**
-     * Create the area and register the actors
-     */
+    /** Create the area and register the actor */
     @Override
     protected void createArea() {
         registerActor(new Background(this));
