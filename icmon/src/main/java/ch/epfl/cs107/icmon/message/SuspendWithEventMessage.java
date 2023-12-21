@@ -2,15 +2,15 @@ package ch.epfl.cs107.icmon.message;
 
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 
-public class SuspendWithEventMessage extends GamePlayMessage{
+public class SuspendWithEventMessage extends GamePlayMessage {
 
-    /** The event wich suspend the game */
+    /** The event which suspends the game */
     private final ICMonEvent event;
 
     /**
      * Default SuspendWithEventMessage constructor
      *
-     * @param event (ICMonEvent): the event wich suspend the game
+     * @param event (ICMonEvent): the event which suspends the game
      */
     public SuspendWithEventMessage(ICMonEvent event){
         this.event = event;
@@ -26,7 +26,7 @@ public class SuspendWithEventMessage extends GamePlayMessage{
     /**
      * Getter for the event
      *
-     * @return (ICMonEvent): the event wich suspend the game
+     * @return (ICMonEvent): the event which suspends the game
      */
     public ICMonEvent getEvent() {
         return event;

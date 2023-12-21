@@ -3,7 +3,7 @@ package ch.epfl.cs107.icmon.message;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.Door;
 
-public class PassDoorMessage extends GamePlayMessage{
+public class PassDoorMessage extends GamePlayMessage {
 
     /** The game state of the game */
     private final ICMon.ICMonGameState gameState;
