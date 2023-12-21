@@ -4,6 +4,7 @@ import ch.epfl.cs107.icmon.actor.Desk;
 import ch.epfl.cs107.icmon.actor.Display;
 import ch.epfl.cs107.icmon.actor.Door;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
+import ch.epfl.cs107.icmon.actor.items.Fruit;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
@@ -88,4 +89,6 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
     default void interactWith(Display display, boolean isCellInteraction) {}
 
     default void interactWith(Desk desk, boolean isCellInteraction) {}
+
+    default void interactWith(Fruit fruit, boolean isCellInteraction) {}
 }

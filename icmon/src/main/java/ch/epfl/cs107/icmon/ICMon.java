@@ -1,7 +1,9 @@
 package ch.epfl.cs107.icmon;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
+import ch.epfl.cs107.icmon.actor.items.Fruit;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.*;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
@@ -43,6 +45,7 @@ public class ICMon extends AreaGame {
 
     /** The list of the area of ICMon */
     private List<Area> areaList;
+    private boolean hasFruitStarted = false;
 
     /**
      * Create the area of the game
@@ -111,6 +114,7 @@ public class ICMon extends AreaGame {
         Keyboard keyboard = getCurrentArea().getKeyboard();
 
         if (keyboard.get(Keyboard.R).isPressed()) {
+            hasFruitStarted = false;
             begin(getWindow(), getFileSystem());
         }
 
@@ -131,8 +135,13 @@ public class ICMon extends AreaGame {
             event.update(deltaTime);
         }
 
-        if (areaList.get(0).isStarted())
+        if (areaList.get(0).isStarted()) {
             randomEvent();
+            if (!hasFruitStarted) {
+                fruitEvent();
+                hasFruitStarted = true;
+            }
+        }
     }
     /**
      * Getter for the title of the game
@@ -168,7 +177,8 @@ public class ICMon extends AreaGame {
 
         icMonChainedEvent.start();
     }
-    public void randomEvent() {
+    // A enlever (bug quand les coordonees sont not canEnter)!!!!!!!!!!!
+    private void randomEvent() {
         Random rand = new Random();
         int upperbound = 500;
         int random_number = rand.nextInt(upperbound);
@@ -184,6 +194,14 @@ public class ICMon extends AreaGame {
             randomEvent.start();
         }
 
+    }
+    private void fruitEvent() {
+        if (areaList.get(0).isStarted()) {
+            Fruit fruit = new Fruit(areaList.get(0), new DiscreteCoordinates(7, 23));
+            CollectItemEvent heal = new CollectItemEvent(fruit, player);
+            heal.onStart(new RegisterinAreaAction(areaList.get(0), fruit));
+            heal.start();
+        }
     }
     /**
      * Add an area to the game and the list of the different area

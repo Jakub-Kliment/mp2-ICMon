@@ -176,4 +176,8 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
             }
         }
     }
+
+    public void heal() {
+        hp = hpMax;
+    }
 }

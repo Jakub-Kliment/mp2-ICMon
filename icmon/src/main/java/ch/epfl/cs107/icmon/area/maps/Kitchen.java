@@ -16,7 +16,7 @@ public class Kitchen extends ICMonArea {
     @Override
     protected void createArea() {
         registerActor(new Background(this));
-        registerActor(new Door(this, new DiscreteCoordinates(11,1), "town", new DiscreteCoordinates(13, 11), new DiscreteCoordinates(10,1)));
+        registerActor(new Door(this, new DiscreteCoordinates(9,1), "town", new DiscreteCoordinates(10, 12), new DiscreteCoordinates(8,1)));
     }
 
     @Override

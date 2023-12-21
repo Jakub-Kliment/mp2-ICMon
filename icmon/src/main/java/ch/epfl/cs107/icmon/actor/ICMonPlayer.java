@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon.actor;
 
 import ch.epfl.cs107.icmon.ICMon;
+import ch.epfl.cs107.icmon.actor.items.Fruit;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
@@ -8,6 +9,7 @@ import ch.epfl.cs107.icmon.actor.npc.ProfOak;
 import ch.epfl.cs107.icmon.actor.pokemon.Pikachu;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
+import ch.epfl.cs107.icmon.gamelogic.actions.HealPokemonsAction;
 import ch.epfl.cs107.icmon.gamelogic.events.PokemonSelectionEvent;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.icmon.message.PassDoorMessage;
@@ -382,6 +384,15 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         public void interactWith(Desk desk, boolean isCellInteraction) {
             if (!isCellInteraction){
                 gameState.acceptInteraction(desk.getActor(), isCellInteraction);
+            }
+        }
+
+        @Override
+        public void interactWith(Fruit fruit, boolean isCellInteraction) {
+            if (!isCellInteraction) {
+                HealPokemonsAction heal = new HealPokemonsAction(pokemonList);
+                heal.perform();
+                fruit.collect();
             }
         }
     }
