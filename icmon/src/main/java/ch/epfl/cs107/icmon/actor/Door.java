@@ -34,7 +34,6 @@ public class Door extends AreaEntity {
         super(area, Orientation.UP, position);
         this.coordinates = coordinates;
         this.areaName = areaName;
-
         occupiedCoordinates = new ArrayList<>();
         occupiedCoordinates.add(position);
     }
@@ -52,7 +51,6 @@ public class Door extends AreaEntity {
         super(area, Orientation.UP, position);
         this.areaName = areaName;
         this.coordinates = coordinates;
-
         this.occupiedCoordinates = new ArrayList<>();
         this.occupiedCoordinates.add(position);
         Collections.addAll(this.occupiedCoordinates, occupiedCoordinates);

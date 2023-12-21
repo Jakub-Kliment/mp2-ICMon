@@ -59,7 +59,10 @@ public class ICMon extends AreaGame {
         addAreaToGame(new Arena());
         addAreaToGame(new House());
         addAreaToGame(new Shop());
-        addAreaToGame(new Kitchen());
+        addAreaToGame(new HouseLeftKitchen());
+        addAreaToGame(new HouseLeftRoom());
+        addAreaToGame(new HouseRightKitchen());
+        addAreaToGame(new HouseRightRoom());
     }
 
     /**

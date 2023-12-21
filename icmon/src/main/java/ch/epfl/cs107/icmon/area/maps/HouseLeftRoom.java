@@ -1,0 +1,27 @@
+package ch.epfl.cs107.icmon.area.maps;
+
+import ch.epfl.cs107.icmon.actor.Display;
+import ch.epfl.cs107.icmon.actor.Door;
+import ch.epfl.cs107.icmon.area.ICMonArea;
+import ch.epfl.cs107.play.engine.actor.Background;
+import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.Orientation;
+
+public class HouseLeftRoom extends ICMonArea {
+    @Override
+    public String getTitle() {
+        return "house_left_room";
+    }
+
+    @Override
+    protected void createArea() {
+        registerActor(new Background(this));
+        registerActor(new Door(this, new DiscreteCoordinates(1,1), "house_left_kitchen", new DiscreteCoordinates(8,6), new DiscreteCoordinates(2,1)));
+        registerActor(new Display(this, new DiscreteCoordinates(4,7), "tv_news"));
+    }
+
+    @Override
+    public DiscreteCoordinates getPlayerSpawnPosition() {
+        return null;
+    }
+}

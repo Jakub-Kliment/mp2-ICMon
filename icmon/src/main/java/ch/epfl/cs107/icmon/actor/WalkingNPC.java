@@ -4,17 +4,14 @@ import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.areagame.AreaGraph;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
-import ch.epfl.cs107.play.engine.actor.Animation;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Canvas;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Queue;
 
-public class walkingNPC extends ICMonActor{
+public class WalkingNPC extends ICMonActor{
 
     /** Duration of the animation of the sprite*/
     private final int ANIMATION_DURATION = 10;
@@ -37,7 +34,7 @@ public class walkingNPC extends ICMonActor{
      * @param orientation (Orientation): Initial orientation of the entity. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
-    public walkingNPC(Area area, Orientation orientation, DiscreteCoordinates position) {
+    public WalkingNPC(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
         areaGraph = ((ICMonArea)area).getAreaGraph();
         animation = new OrientedAnimation("actors/PNJ", ANIMATION_DURATION  / 2, orientation, this);
@@ -55,7 +52,7 @@ public class walkingNPC extends ICMonActor{
             Orientation nextOrientation = actualQueue.poll();
             animation.orientate(nextOrientation);
             orientate(nextOrientation);
-            System.out.println(move(MOVE_DURATION));
+            move(MOVE_DURATION);
         }
         if (isDisplacementOccurs()) {
             animation.update(deltaTime);
