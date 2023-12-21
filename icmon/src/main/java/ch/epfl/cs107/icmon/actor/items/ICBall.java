@@ -10,12 +10,13 @@ public class ICBall extends ICMonItem {
      * Default ICBall constructor
      *
      * @param area     (Area): Owner area. Not null
-     * @param position (Coordinate): Initial position of the entity. Not null
+     * @param position (DiscreteCoordinates): Initial position of the entity. Not null
      */
     public ICBall(Area area, DiscreteCoordinates position) {
         super(area, position, "items/icball");
     }
 
+    /**@return (boolean): true, ball is able to have view interactions*/
     @Override
     public boolean isViewInteractable() {
         return true;
@@ -24,8 +25,8 @@ public class ICBall extends ICMonItem {
     /**
      * Delegate interactions to the interaction handler
      *
-     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
-     * @param isCellInteraction : @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     * @param v                 (AreaInteractionVisitor): the interactor that wants to interact with this interactable
+     * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {

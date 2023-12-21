@@ -9,9 +9,9 @@ import ch.epfl.cs107.play.math.Orientation;
 public class ProfOak extends NPCActor {
     /**
      * Default ICShopAssistant constructor`
-     * The position is fixed cause there is only one ProfOak in the game
+     * The position is fixed because there is only one ProfOak in the game
      *
-     * @param area     (Area): Owner area. Not null
+     * @param area (Area): Owner area. Not null
      */
     public ProfOak(Area area) {
         super(area, Orientation.DOWN, new DiscreteCoordinates(7,7), "actors/prof-oak");
@@ -20,8 +20,8 @@ public class ProfOak extends NPCActor {
     /**
      * Delegate interactions to the interaction handler
      *
-     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
-     * @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     * @param v                 (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {

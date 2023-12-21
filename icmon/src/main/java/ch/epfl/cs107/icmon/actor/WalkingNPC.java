@@ -72,11 +72,6 @@ public class WalkingNPC extends ICMonActor{
     }
 
     @Override
-    public boolean isViewInteractable() {
-        return false;
-    }
-
-    @Override
     public boolean isCellInteractable() {
         return false;
     }

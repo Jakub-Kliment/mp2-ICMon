@@ -4,9 +4,9 @@ import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 
 public interface ICMonFightableActor {
     /**
-     * Return the Pokemon that will fight, allow polymorphism
+     * Return the Pokemon that will fight, allows polymorphism
      *
-     * @return (Pokemon) : The Pokemon that is choosen to fight
+     * @return (Pokemon) : The Pokemon that is chosen to fight
      */
     Pokemon choosenPokemon();
 }

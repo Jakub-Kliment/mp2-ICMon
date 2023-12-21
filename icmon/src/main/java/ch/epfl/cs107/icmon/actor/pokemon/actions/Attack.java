@@ -4,21 +4,18 @@ import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 
 public class Attack implements ICMonFightAction {
-    /**
-     * The name of the action
-     *
-     * @return (String) : The name of the action
-     */
+
+    /**@return (String) : The name of the action*/
     @Override
     public String name() {
         return "Attack";
     }
 
     /**
-     * The target is attacked by the attacker
+     * Assures the attack action
      *
-     * @param attacker The pokemon that makes the action
-     * @param target The pokemon that receives the action
+     * @param attacker (Pokemon): The pokemon that attacks
+     * @param target   (Pokemon): The pokemon that is attacked
      */
     @Override
     public void makeAction(Pokemon attacker, Pokemon target) {

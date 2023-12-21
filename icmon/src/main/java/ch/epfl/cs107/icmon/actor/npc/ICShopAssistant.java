@@ -11,8 +11,9 @@ public class ICShopAssistant extends NPCActor {
     /**
      * Default ICShopAssistant constructor
      *
-     * @param area     (Area): Owner area. Not null
-     * @param position (Coordinate): Initial position of the entity. Not null
+     * @param area        (Area): Owner area. Not null
+     * @param orientation (Orientation): Orientation of this Actor
+     * @param position    (DiscreteCoordinates): Initial position of the entity. Not null
      */
     public ICShopAssistant(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, "actors/assistant");
@@ -21,8 +22,8 @@ public class ICShopAssistant extends NPCActor {
     /**
      * Delegate interactions to the interaction handler
      *
-     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
-     * @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     * @param v                 (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {

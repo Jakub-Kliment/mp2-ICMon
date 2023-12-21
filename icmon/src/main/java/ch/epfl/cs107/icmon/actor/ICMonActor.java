@@ -15,9 +15,9 @@ abstract public class ICMonActor extends MovableAreaEntity {
     /**
      * Default ICMonActor constructor
      *
-     * @param area (Area): Owner area. Not null
+     * @param area        (Area): Owner area. Not null
      * @param orientation (Orientation): Initial orientation of the entity. Not null
-     * @param position (Coordinate): Initial position of the entity. Not null
+     * @param position    (DiscreteCoordinates): Initial position of the entity. Not null
      */
     public ICMonActor(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
@@ -37,8 +37,8 @@ abstract public class ICMonActor extends MovableAreaEntity {
     /**
      * Enters the area at the position given
      *
-     * @param area (Area): Owner area. Not null
-     * @param position (Coordinate): Initial position of the entity. Not null
+     * @param area      (Area): Owner area. Not null
+     * @param position  (Coordinate): Initial position of the entity. Not null
      */
     public void enterArea(Area area, DiscreteCoordinates position) {
         area.registerActor(this);
@@ -54,25 +54,28 @@ abstract public class ICMonActor extends MovableAreaEntity {
     }
 
     /**
-     * Getter for the cells occupied by the pokémon
+     * Getter for the cells occupied by the pokemon
      *
-     * @return (List<DiscreteCoordinates>) : The list of the cells occupied by the pokémon
+     * @return (List<DiscreteCoordinates>) : The list of the cells occupied by the pokemon
      */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
 
+    /**@return (boolean) : indicates whether the Interactable takes space on current cell*/
     @Override
     public boolean takeCellSpace() {
         return false;
     }
 
+    /**@return (boolean): indicates whether this is able to have cell interactions*/
     @Override
     public boolean isCellInteractable() {
         return true;
     }
 
+    /**@return (boolean): indicates whether it is able to have interactions on distance*/
     @Override
     public boolean isViewInteractable() {
         return false;

@@ -22,11 +22,22 @@ import java.util.List;
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */
 public abstract class Pokemon extends ICMonActor implements ICMonFightableActor {
+    /**List of FightSActions of Pokemon*/
     private final List<ICMonFightAction> fightActions;
+
+    /**Sprite of Pokemon*/
     private final Sprite pokemon;
+
+    /**Pokemon's name*/
     private final String name;
+
+    /**Pokemon's maximal amount of health points*/
     private final float hpMax;
+
+    /**Pokemon's damage*/
     private final int damage;
+
+    /**Pokemon's actual amount of health points*/
     private float hp;
 
     /**
@@ -35,9 +46,9 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
      * @param area        (Area): Owner area. Not null
      * @param orientation (Orientation): Initial orientation of the entity. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
-     * @param name        (String) : Name of the pokémon. Not null
-     * @param damage      (int) : Dégâts infligés par le pokémon. Not null
-     * @param hpMax       (float) : Nombre de pv maximum du pokémon
+     * @param name        (String) : Name of the pokemon. Not null
+     * @param damage      (int) : Damage dealt by the pokemon. Not null
+     * @param hpMax       (float) : Maximal number of hit points of pokemon
      */
     public Pokemon(Area area, Orientation orientation, DiscreteCoordinates position, String name, int damage, float hpMax) {
         super(area, orientation, position);
@@ -73,33 +84,35 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
     }
     /**
-    * Allows access to the property of the pokémon
+    * Allows access to the property of the pokemon
     *
-    * @return (PokemonProperties) : The property of the pokémon
+    * @return (PokemonProperties) : The property of the pokemon
     */
     public PokemonProperties properties() { return new PokemonProperties(); }
 
     /**
-     * Getter for the cells occupied by the pokémon
+     * Getter for the cells occupied by the pokemon
      *
-     * @return (List<DiscreteCoordinates>) : The list of the cells occupied by the pokémon
+     * @return (List<DiscreteCoordinates>) : The list of the cells occupied by the pokemon
      */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return super.getCurrentCells();
     }
 
-
+    /**@return (boolean): true, so this is able to have cell interactions*/
     @Override
     public boolean isViewInteractable() {
         return true;
     }
 
+    /**@return (boolean): false, so this is not able to have cell interactions*/
     @Override
     public boolean isCellInteractable() {
         return false;
     }
 
+    /**@return (boolean): true, so this is able to have cell interactions*/
     @Override
     public boolean takeCellSpace() {
         return true;
@@ -108,8 +121,8 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     /**
      * Delegate interactions to the interaction handler
      *
-     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
-     * @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     * @param v                 (AreaInteractionVisitor): the interactor that wants to interact with this interactable
+     * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
@@ -177,6 +190,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         }
     }
 
+    /**Heal pokemon: restore health to maximal amount*/
     public void heal() {
         hp = hpMax;
     }

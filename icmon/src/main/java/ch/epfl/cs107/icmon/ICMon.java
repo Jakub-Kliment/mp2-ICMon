@@ -200,7 +200,7 @@ public class ICMon extends AreaGame {
     }
     private void fruitEvent() {
         if (areaList.get(0).isStarted()) {
-            Fruit fruit = new Fruit(areaList.get(0), new DiscreteCoordinates(7, 23));
+            Fruit fruit = new Fruit(areaList.get(0), new DiscreteCoordinates(17, 13));
             CollectItemEvent heal = new CollectItemEvent(fruit, player);
             heal.onStart(new RegisterinAreaAction(areaList.get(0), fruit));
             heal.start();

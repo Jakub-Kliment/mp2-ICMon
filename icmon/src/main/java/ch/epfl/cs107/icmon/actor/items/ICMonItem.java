@@ -13,14 +13,14 @@ import java.util.List;
 
 abstract public class ICMonItem extends CollectableAreaEntity {
 
-    /** The sprite of the item */
+    /**The sprite of the item */
     private final Sprite sprite;
 
     /**
      * Default ICMonItem constructor
      *
-     * @param area     (Area): Owner area. Not null
-     * @param position (Coordinate): Initial position of the entity. Not null
+     * @param area       (Area): Owner area. Not null
+     * @param position   (DiscreteCoordinates): Initial position of the entity. Not null
      * @param spriteName (String) : Name of the sprite. Not null
      */
     public ICMonItem(Area area, DiscreteCoordinates position, String spriteName) {
@@ -38,11 +38,13 @@ abstract public class ICMonItem extends CollectableAreaEntity {
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
 
+    /**@return (boolean) : indicates whether the Interactable takes space on current cell*/
     @Override
     public boolean takeCellSpace() {
         return true;
     }
 
+    /**@return (boolean): true, so this is able to have cell interactions*/
     @Override
     public boolean isCellInteractable() {
         return true;

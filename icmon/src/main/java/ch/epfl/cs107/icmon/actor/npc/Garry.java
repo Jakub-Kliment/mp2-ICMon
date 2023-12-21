@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Garry extends NPCActor implements ICMonFightableActor {
-    /** The list of pokemons of Garry */
+    /**The list of pokemons of Garry */
     private final List<Pokemon> pokemonList;
 
     /**
@@ -30,7 +30,7 @@ public class Garry extends NPCActor implements ICMonFightableActor {
     }
 
     /**
-     * Garry will use is only pokemon
+     * Garry will use his only pokemon
      *
      * @return (Pokemon) : The pokemon Garry will use in the fight
      */
@@ -42,8 +42,8 @@ public class Garry extends NPCActor implements ICMonFightableActor {
     /**
      * Delegate interactions to the interaction handler
      *
-     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
-     * @param isCellInteraction : @param isCellInteraction : true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     * @param v                 (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
