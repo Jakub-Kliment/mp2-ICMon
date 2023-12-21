@@ -7,6 +7,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
 public class ProfOak extends NPCActor {
+
     /**
      * Default ICShopAssistant constructor`
      * The position is fixed because there is only one ProfOak in the game
@@ -20,7 +21,7 @@ public class ProfOak extends NPCActor {
     /**
      * Delegate interactions to the interaction handler
      *
-     * @param v                 (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     @Override

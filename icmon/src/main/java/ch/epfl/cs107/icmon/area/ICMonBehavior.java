@@ -37,11 +37,10 @@ public class ICMonBehavior extends AreaBehavior {
      * Enumerate the different walking type allowed on a cell
      */
     public enum AllowedWalkingType {
-        NONE,
-        SURF,
+        ALL,
         FEET,
-        ALL
-        ;
+        NONE,
+        SURF
     }
 
     /**
@@ -170,7 +169,7 @@ public class ICMonBehavior extends AreaBehavior {
                 return false;
             } else {
                 if (entity.takeCellSpace()) {
-                    // Changes the cell to taken so it now cannot be entered
+                    // Changes the cell to taken, so it now cannot be entered
                     taken = true;
                 }
                 return true;

@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class CriticalAttack implements ICMonFightAction {
 
-    /**@return (String) : The name of the action*/
+    /**@return (String) : The name of the action */
     @Override
     public String name() {
         return "CriticalAttack";
@@ -15,7 +15,7 @@ public class CriticalAttack implements ICMonFightAction {
 
     /**
      * Assures the critical attack action:
-     * The attacker does twice the damage of his attack to the target
+     * The attacker does twice the damage (of his attack) to the target
      * but has a random 50% chance of getting hit back by the target
      *
      * @param attacker (Pokemon): The pokemon that attacks

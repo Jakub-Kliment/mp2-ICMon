@@ -13,7 +13,7 @@ import java.util.List;
 
 public abstract class NPCActor extends ICMonActor {
 
-    /**Sprite of the NPCActor*/
+    /** Sprite of the NPCActor */
     private final Sprite sprite;
 
     /**

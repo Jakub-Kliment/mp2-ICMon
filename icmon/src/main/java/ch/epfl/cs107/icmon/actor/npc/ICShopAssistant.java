@@ -22,7 +22,7 @@ public class ICShopAssistant extends NPCActor {
     /**
      * Delegate interactions to the interaction handler
      *
-     * @param v                 (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     @Override

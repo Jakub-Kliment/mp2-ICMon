@@ -2,7 +2,6 @@ package ch.epfl.cs107.icmon.actor.pokemon;
 
 import ch.epfl.cs107.icmon.actor.pokemon.actions.Attack;
 import ch.epfl.cs107.icmon.actor.pokemon.actions.CriticalAttack;
-import ch.epfl.cs107.icmon.actor.pokemon.actions.RunAway;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;

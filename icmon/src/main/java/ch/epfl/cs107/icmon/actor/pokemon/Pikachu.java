@@ -8,6 +8,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
 public class Pikachu extends Pokemon {
+
     /**
      * Default Pokemon constructor
      * Pikachu is a Pokemon that can attack, strike a critical attack or run away

@@ -9,7 +9,7 @@ public class ICBall extends ICMonItem {
     /**
      * Default ICBall constructor
      *
-     * @param area     (Area): Owner area. Not null
+     * @param area (Area): Owner area. Not null
      * @param position (DiscreteCoordinates): Initial position of the entity. Not null
      */
     public ICBall(Area area, DiscreteCoordinates position) {

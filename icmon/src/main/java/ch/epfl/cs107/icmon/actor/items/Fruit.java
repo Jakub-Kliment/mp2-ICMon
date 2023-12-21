@@ -10,8 +10,8 @@ public class Fruit extends ICMonItem {
     /**
      * Default Fruit constructor
      *
-     * @param area       (Area): Owner area. Not null
-     * @param position   (DiscreteCoordinates): Initial position of the entity. Not null
+     * @param area (Area): Owner area. Not null
+     * @param position (DiscreteCoordinates): Initial position of the entity. Not null
      */
     public Fruit(Area area, DiscreteCoordinates position) {
         super(area, position, "items/fruit");
@@ -26,7 +26,7 @@ public class Fruit extends ICMonItem {
     /**
      * Delegate interactions to the interaction handler
      *
-     * @param v                 (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
+     * @param v (AreaInteractionVisitor) : the interactor that wants to interact with this interactable
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     @Override

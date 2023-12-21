@@ -61,6 +61,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             new OrientedAnimation("actors/player", ANIMATION_DURATION/2, Orientation.DOWN, this),
             new OrientedAnimation("actors/player_water", ANIMATION_DURATION/2, Orientation.DOWN, this)
     };
+
     /**
      * Default ICMonPlayer constructor
      *

@@ -13,7 +13,7 @@ import java.util.List;
 
 abstract public class ICMonItem extends CollectableAreaEntity {
 
-    /**The sprite of the item */
+    /** The sprite of the item */
     private final Sprite sprite;
 
     /**

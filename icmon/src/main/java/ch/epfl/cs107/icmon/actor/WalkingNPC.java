@@ -39,15 +39,16 @@ public class WalkingNPC extends ICMonActor{
         areaGraph = ((ICMonArea)area).getAreaGraph();
         animation = new OrientedAnimation("actors/PNJ", ANIMATION_DURATION  / 2, orientation, this);
         listIndex = 0;
-        actualQueue = areaGraph.shortestPath(coorList[listIndex], coorList[(listIndex+1)%5]);
+        actualQueue = areaGraph.shortestPath(coorList[listIndex], coorList[(listIndex + 1) % 5]);
     }
 
     @Override
     public void update(float deltaTime) {
-        if (actualQueue.isEmpty()){
-            listIndex = (listIndex+1)%5;
+        if (actualQueue.isEmpty()) {
+            listIndex = (listIndex + 1) % 5;
             actualQueue = areaGraph.shortestPath(coorList[listIndex], coorList[(listIndex+1)%5]);
         }
+
         if (!isDisplacementOccurs()) {
             Orientation nextOrientation = actualQueue.poll();
             animation.orientate(nextOrientation);
@@ -63,19 +64,30 @@ public class WalkingNPC extends ICMonActor{
         super.update(deltaTime);
     }
 
+    /**
+     * AcceptInteraction is void because the WalkingNPC does not accept interactions
+     */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {}
 
+
+    /**@return (boolean) : true, so the Interactable takes space on current cell */
     @Override
     public boolean takeCellSpace() {
         return true;
     }
 
+    /**@return (boolean): false, so it is not able to have cell interactions*/
     @Override
     public boolean isCellInteractable() {
         return false;
     }
 
+    /**
+     * Draws the WalkingNPC to the map
+     *
+     * @param canvas (Canvas): Canvas onto which the WalkingNPC is drawn. Not null
+     */
     @Override
     public void draw(Canvas canvas) {
         animation.draw(canvas);

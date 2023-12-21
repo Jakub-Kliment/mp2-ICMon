@@ -200,6 +200,5 @@ public class ICMonFight extends PauseMenu {
         CONCLUSION,
         ACTION_SELECTION,
         ACTION_EXECUTION
-        ;
     }
 }
