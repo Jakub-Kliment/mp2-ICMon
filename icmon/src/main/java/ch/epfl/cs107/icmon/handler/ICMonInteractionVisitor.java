@@ -11,84 +11,95 @@ import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
-import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 
 public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
 
     /**
-     * handle the interaction between an interactor and the ball, overrite by the different handler
+     * Handle the interaction between an interactor and the ball, overwrite by the different handlers
      *
-     * @param ball (ICBall): the ball that interact with the interactor
+     * @param ball (ICBall): the ball that interacts with the interactor
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     default void interactWith(ICBall ball, boolean isCellInteraction) {}
 
     /**
-     * handle the interaction between an interactor and the cell, overrite by the different handler
+     * Handle the interaction between an interactor and the cell, overwrite by the different handlers
      *
-     * @param cell (ICMonBehavior.ICMonCell): the cell that interact with the interactor
+     * @param cell (ICMonBehavior.ICMonCell): the cell that interacts with the interactor
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     default void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {}
 
     /**
-     * handle the interaction between an interactor and the shop assistant, overrite by the different handler
+     * Handle the interaction between an interactor and the shop assistant, overwrite by the different handler
      *
-     * @param assistant (ICShopAssistant): the shop assistant that interact with the interactor
+     * @param assistant (ICShopAssistant): the shop assistant that interacts with the interactor
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     default void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {}
 
     /**
-     * handle the interaction between an intercator and the door, overrite by the different handler
+     * Handle the interaction between an interactor and the door, overwrite by the different handlers
      *
-     * @param door (Door): the door that interact with the interactor
+     * @param door (Door): the door that interacts with the interactor
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     default void interactWith(Door door, boolean isCellInteraction) {}
 
     /**
-     * handle the interaction between an interactor and the pokemon, overrite by the different handler
+     * Handle the interaction between an interactor and the pokemon, overwrite by the different handlers
      *
-     * @param pokemon (Pokemon): the pokemon that interact with the interactor
+     * @param pokemon (Pokemon): the pokemon that interacts with the interactor
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     default void interactWith(Pokemon pokemon, boolean isCellInteraction) {}
 
     /**
-     * handle the interaction between an interactor and the prof oak, overrite by the different handler
+     * Handle the interaction between an interactor and Prof Oak, overwrite by the different handlers
      *
-     * @param profOak (ProfOak): the prof oak that interact with the interactor
+     * @param profOak (ProfOak): Prof Oak that interacts with the interactor
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     default void interactWith(ProfOak profOak, boolean isCellInteraction) {}
 
     /**
-     * handle the interaction between an interactor and the garry, overrite by the different handler
+     * Handle the interaction between an interactor and Garry, overwrite by the different handlers
      *
-     * @param garry (Garry): the garry that interact with the player
+     * @param garry (Garry): Garry that interact with the player
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     default void interactWith(Garry garry, boolean isCellInteraction) {}
 
     /**
-     * handle the interaction between an interactor and the player, overrite by the different handler
+     * Handle the interaction between an interactor and the player, overwrite by the different handlers
      *
-         * @param player (ICMonPlayer): the player that interact with the interactor
+     * @param player (ICMonPlayer): the player that interacts with the interactor
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     default void interactWith(ICMonPlayer player, boolean isCellInteraction) {}
 
     /**
-     * handle the interaction between an interactor and the display, overrite by the different handler
+     * Handle the interaction between an interactor and the display, overwrite by the different handlers
      *
-     * @param display (Display): the display that interact with the interactor
+     * @param display (Display): the display that interacts with the interactor
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     default void interactWith(Display display, boolean isCellInteraction) {}
 
+    /**
+     * Handle the interaction between an interactor and the desk, overwrite by the different handlers
+     *
+     * @param desk (Desk): the desk that interacts with the interactor
+     * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     */
     default void interactWith(Desk desk, boolean isCellInteraction) {}
 
+    /**
+     * Handle the interaction between an interactor and the fruit, overwrite by the different handlers
+     *
+     * @param fruit (Fruit): the fruit that interacts with the interactor
+     * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     */
     default void interactWith(Fruit fruit, boolean isCellInteraction) {}
 }
