@@ -1,6 +1,5 @@
 package ch.epfl.cs107.icmon;
 
-import ch.epfl.cs107.icmon.actor.Display;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
@@ -20,6 +19,7 @@ import ch.epfl.cs107.play.window.Window;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ICMon extends AreaGame {
 
@@ -105,6 +105,8 @@ public class ICMon extends AreaGame {
      * @param deltaTime elapsed time since last update, in seconds, non-negative!!!!!!!!!!!!!!!
      */
     public void update(float deltaTime) {
+        super.update(deltaTime);
+
         Keyboard keyboard = getCurrentArea().getKeyboard();
 
         if (keyboard.get(Keyboard.R).isPressed()) {
@@ -127,7 +129,9 @@ public class ICMon extends AreaGame {
         for (ICMonEvent event : eventList) {
             event.update(deltaTime);
         }
-        super.update(deltaTime);
+
+        if (areaList.get(0).isStarted())
+            randomEvent();
     }
     /**
      * Getter for the title of the game
@@ -163,7 +167,23 @@ public class ICMon extends AreaGame {
 
         icMonChainedEvent.start();
     }
+    public void randomEvent() {
+        Random rand = new Random();
+        int upperbound = 500;
+        int random_number = rand.nextInt(upperbound);
 
+        if (random_number == 0) {
+            System.out.println(random_number);
+            int randomCoordinateX = rand.nextInt(31);
+            int randomCoordinateY = rand.nextInt(33);
+
+            ICBall randomBall = new ICBall(areaList.get(0), new DiscreteCoordinates(randomCoordinateX, randomCoordinateY));
+            CollectItemEvent randomEvent = new CollectItemEvent(randomBall, player);
+            randomEvent.onStart(new RegisterinAreaAction(areaList.get(0), randomBall));
+            randomEvent.start();
+        }
+
+    }
     /**
      * Add an area to the game and the list of the different area
      *
