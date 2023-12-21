@@ -5,6 +5,7 @@ import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
+import ch.epfl.cs107.icmon.actor.pokemon.Pikachu;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.events.PokemonSelectionEvent;
@@ -72,6 +73,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
         pokemonList = new ArrayList<>();
+        pokemonList.add(new Pikachu(area, Orientation.DOWN, position));
     }
 
     /**
