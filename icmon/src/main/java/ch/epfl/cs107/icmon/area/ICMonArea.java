@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon.area;
 
 import ch.epfl.cs107.icmon.ICMon;
+import ch.epfl.cs107.play.areagame.AreaGraph;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -18,6 +19,7 @@ abstract public class ICMonArea extends Area {
      * @return (DiscreteCoordinates): the spawn position of the player
      */
     public abstract DiscreteCoordinates getPlayerSpawnPosition();
+    private AreaGraph areaGraph;
 
     /**
      * Link the area to the window and the file system
@@ -26,7 +28,9 @@ abstract public class ICMonArea extends Area {
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
         if (super.begin(window, fileSystem)) {
-            setBehavior(new ICMonBehavior(window, getTitle()));
+            ICMonBehavior behavior = new ICMonBehavior(window, getTitle());
+            areaGraph = behavior.getAreaGraph();
+            setBehavior(behavior);
             createArea();
             return true;
         }
@@ -41,5 +45,8 @@ abstract public class ICMonArea extends Area {
     @Override
     public final float getCameraScaleFactor() {
         return ICMon.CAMERA_SCALE_FACTOR;
+    }
+    public AreaGraph getAreaGraph(){
+        return areaGraph;
     }
 }

@@ -37,11 +37,9 @@ public class Play {
         // Use Swing display
 		final Window window = new SwingWindow(game.getTitle(), fileSystem, WINDOW_WIDTH, WINDOW_HEIGHT);
 		window.registerFonts(ResourcePath.FONTS);
-		
 		Recorder recorder = new Recorder(window);
 		RecordReplayer replayer = new RecordReplayer(window);
 		try {
-
 			if (game.begin(window, fileSystem)) {
 				//recorder.start();
 				//replayer.start("zelda.xml");

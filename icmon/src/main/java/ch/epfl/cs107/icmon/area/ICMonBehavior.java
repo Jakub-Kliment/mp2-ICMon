@@ -1,12 +1,15 @@
 package ch.epfl.cs107.icmon.area;
 
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
+import ch.epfl.cs107.play.areagame.AreaGraph;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
 public class ICMonBehavior extends AreaBehavior {
+    private final AreaGraph areaGraph;
 
     /**
      * Default ICMonBehavior constructor
@@ -16,10 +19,12 @@ public class ICMonBehavior extends AreaBehavior {
      */
     public ICMonBehavior(Window window, String name) {
         super(window, name);
+        areaGraph = new AreaGraph();
         int height = getHeight();
         int width = getWidth();
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
+                areaGraph.addNode(new DiscreteCoordinates(x,y), x>0, y<height-1, x<width-1, y>0);
                 ICMonCellType color = ICMonCellType.toType(getRGB(height - 1 - y, x));
                 setCell(x, y, new ICMonCell(x, y, color));
             }
@@ -83,6 +88,10 @@ public class ICMonBehavior extends AreaBehavior {
             }
             return NULL;
         }
+    }
+
+    public AreaGraph getAreaGraph() {
+        return areaGraph;
     }
 
     /**

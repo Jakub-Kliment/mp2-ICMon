@@ -34,7 +34,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private final int ANIMATION_DURATION = 8;
 
     /** Duration of the movement of the sprite*/
-    private final static int MOVE_DURATION = 2;
+    private final static int MOVE_DURATION = 4;
 
     /** Handler for the interactions with the player */
     private final ICMonPlayerInteractionHandler handler;
@@ -98,6 +98,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                 animation.update(deltaTime);
             } else {
                 animation.reset();
+                resetMotion();
             }
         }
         super.update(deltaTime);
