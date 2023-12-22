@@ -124,7 +124,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             }
         }
         // Shows the amount of ICBalls
-        ballNumberGraphics.setText("ICMonBall : " + ballNumber);
+        ballNumberGraphics.setText("ICBall : " + ballNumber);
         super.update(deltaTime);
     }
 
