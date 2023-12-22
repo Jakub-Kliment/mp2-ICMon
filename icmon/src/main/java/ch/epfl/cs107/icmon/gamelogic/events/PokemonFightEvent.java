@@ -42,6 +42,7 @@ public class PokemonFightEvent extends ICMonEvent {
     /**
      * Update the event
      * Complete the event when the fight is over and retire the opponent if the player win
+     * If the palyer win and the opponent was a pokemon, the player try to had the pokemon
      *
      */
     @Override
@@ -50,7 +51,7 @@ public class PokemonFightEvent extends ICMonEvent {
             // When you win the fight against the opponent, he disappears
             if(menu.playerWin()) {
                 if(opponent instanceof Pokemon)
-                    onComplete(new AddPokemonAction(player, (Pokemon)opponent));
+                    onComplete(new AddPokemonAction(player, (Pokemon)opponent, true));
                 onComplete(new LeaveAreaAction((ICMonActor)opponent));
             }
             complete();

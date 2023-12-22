@@ -256,13 +256,17 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
      *
      * @param pokemon : the pokemon to add
      */
-    public void addPokemon(Pokemon pokemon){
+    public void addPokemon(Pokemon pokemon, boolean dialog){
         if (ballNumber> 0){
             pokemonList.add(pokemon);
-            openDialog(new Dialog("collect_pokemon"));
+            if(dialog){
+                openDialog(new Dialog("collect_pokemon"));
+            }
             ballNumber--;
         } else {
-            openDialog(new Dialog("collect_pokemon_fail"));
+            if (dialog){
+                openDialog(new Dialog("collect_pokemon_fail"));
+            }
         }
     }
 

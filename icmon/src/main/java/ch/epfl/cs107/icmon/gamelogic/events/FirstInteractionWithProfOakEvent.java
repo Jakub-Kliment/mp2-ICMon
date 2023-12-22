@@ -35,9 +35,10 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent {
     @Override
     public void interactWith(ProfOak profOak, boolean isCellInteraction) {
         if (!isCellInteraction) {
-            onComplete(new AddPokemonAction(player, new Pikachu(player.getCurrentArea(), Orientation.DOWN, player.getCurrentCells().get(0))));
-            onComplete(new AddBallAction(player));
             player.openDialog(new Dialog("first_interaction_with_prof_oak"));
+            onComplete(new AddBallAction(player));
+            onComplete(new AddBallAction(player));
+            onComplete(new AddPokemonAction(player, new Pikachu(player.getCurrentArea(), Orientation.DOWN, player.getCurrentCells().get(0)), false));
             complete();
         }
     }

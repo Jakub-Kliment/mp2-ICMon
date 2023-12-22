@@ -11,15 +11,20 @@ public class AddPokemonAction implements Action {
     /** The pokemon to add */
     private final Pokemon pokemon;
 
+    /** Boolean to know if you need to diplay a dialog*/
+    private final boolean dialog;
+
     /**
      * Default AddPokemonAction constructor
      *
      * @param player (ICMonPlayer): the player to add the pokemon to
      * @param pokemon (Pokemon): the pokemon to add
+     * @param dialog  (boolean): true if the dialog need to be display, false otherwise
      */
-    public AddPokemonAction(ICMonPlayer player, Pokemon pokemon){
+    public AddPokemonAction(ICMonPlayer player, Pokemon pokemon, boolean dialog){
         this.player = player;
         this.pokemon = pokemon;
+        this.dialog = dialog;
     }
 
     /**
@@ -27,6 +32,6 @@ public class AddPokemonAction implements Action {
      */
     @Override
     public void perform() {
-        player.addPokemon(pokemon);
+        player.addPokemon(pokemon, dialog);
     }
 }

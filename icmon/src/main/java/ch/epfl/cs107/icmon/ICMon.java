@@ -191,7 +191,7 @@ public class ICMon extends AreaGame {
         int upperbound = 10000;
         int random_number = rand.nextInt(upperbound);
         // Chance to spawn a ball is one out of 250 approximately
-        if (random_number <= 40) {
+        if (random_number <= 30) {
             // Spawns a ball to a random position on the map
             ballEvent(areaList.get(0), getTownRandomCoordinates()).start();
         }
@@ -203,21 +203,21 @@ public class ICMon extends AreaGame {
         }
 
         // Chance to spawn a Bulbizarre is one out of 1000 approximately
-        if (random_number > 60 && random_number <= 70) {
+        if (random_number > 60 && random_number <= 75) {
             // Spawns a fruit to a random position on the map
             Bulbizarre bulbizarre = new Bulbizarre(areaList.get(0), Orientation.DOWN, getTownRandomCoordinates());
             areaList.get(0).registerActor(bulbizarre);
         }
 
         // Chance to spawn a Nidoqueen is one out of 2000 approximately
-        if (random_number > 90 && random_number <= 95) {
+        if (random_number > 90 && random_number <= 100) {
             // Spawns a Nidoqueen to a random position on the map
             Nidoqueen nidoqueen = new Nidoqueen(areaList.get(0), Orientation.DOWN, getTownRandomCoordinates());
             areaList.get(0).registerActor(nidoqueen);
         }
 
         //Chance to spawn a Latios is one out of 5000
-        if (random_number > 100 && random_number <= 102) {
+        if (random_number > 100 && random_number <= 105) {
             // Spawns a Latios to a random position on the map
             Latios latios = new Latios(areaList.get(0), Orientation.DOWN, getTownRandomCoordinates());
             areaList.get(0).registerActor(latios);
