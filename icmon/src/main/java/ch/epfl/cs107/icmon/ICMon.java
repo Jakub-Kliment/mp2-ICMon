@@ -108,7 +108,7 @@ public class ICMon extends AreaGame {
      * Update the game
      * Check the message and update the event list
      *
-     * @param deltaTime elapsed time since last update, in seconds, non-negative!!!!!!!!!!!!!!!
+     * @param deltaTime elapsed time since last update, in seconds, non-negative
      */
     public void update(float deltaTime) {
         super.update(deltaTime);

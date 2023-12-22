@@ -174,7 +174,6 @@ public class ICMonFight extends PauseMenu {
     }
 
     /**
-     * End the fight !!!!!!!!!!!!!!!! -> enlever et mettre dans la conception
      * Set the boolean over to true
      */
     public void end() {

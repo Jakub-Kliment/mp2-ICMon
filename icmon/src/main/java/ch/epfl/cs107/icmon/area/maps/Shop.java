@@ -2,6 +2,7 @@ package ch.epfl.cs107.icmon.area.maps;
 
 import ch.epfl.cs107.icmon.actor.Desk;
 import ch.epfl.cs107.icmon.actor.Door;
+import ch.epfl.cs107.icmon.actor.WalkingNPC;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.engine.actor.Background;
@@ -30,6 +31,8 @@ public class Shop extends ICMonArea {
         ICShopAssistant assistant = new ICShopAssistant(this, Orientation.DOWN, new DiscreteCoordinates(1,5));
         registerActor(assistant);
         registerActor(new Desk(this, Orientation.DOWN, new DiscreteCoordinates(1, 4), assistant));
+        DiscreteCoordinates[] listCoordonne = {new DiscreteCoordinates(8,1), new DiscreteCoordinates(8,6), new DiscreteCoordinates(5,6), new DiscreteCoordinates(5,2)};
+        registerActor(new WalkingNPC(this, "actors/NPC_blue", Orientation.UP, listCoordonne));
 
     }
 

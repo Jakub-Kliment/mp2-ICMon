@@ -9,6 +9,7 @@ import ch.epfl.cs107.play.engine.actor.Draggable;
 import ch.epfl.cs107.play.engine.actor.Droppable;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
+import ch.epfl.cs107.play.engine.actor.Entity;
 import ch.epfl.cs107.play.io.ResourcePath;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Image;

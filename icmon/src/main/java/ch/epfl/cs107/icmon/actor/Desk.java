@@ -48,6 +48,12 @@ public class Desk extends ICMonActor {
         return false;
     }
 
+    /**@return (boolean) : false, so the door does not take space on current cell*/
+    @Override
+    public boolean takeCellSpace() {
+        return true;
+    }
+
     /**
      * This function is empty because the desk is already drawn within the map
      *
