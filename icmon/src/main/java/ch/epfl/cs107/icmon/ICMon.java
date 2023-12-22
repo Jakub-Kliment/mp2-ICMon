@@ -1,8 +1,11 @@
 package ch.epfl.cs107.icmon;
 
+import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.Fruit;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
+import ch.epfl.cs107.icmon.actor.pokemon.Latios;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.*;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
@@ -15,6 +18,7 @@ import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 
@@ -189,11 +193,10 @@ public class ICMon extends AreaGame {
      */
     private void randomEvent() {
         Random rand = new Random();
-        int upperbound = 500;
+        int upperbound = 10000;
         int random_number = rand.nextInt(upperbound);
-
-        // Chance to spawn a ball is one out of 500
-        if (random_number == 0) {
+        // Chance to spawn a ball is one out of 500 approximately
+        if (random_number <= 40) {
             int randomCoordinateX = rand.nextInt(31);
             int randomCoordinateY = rand.nextInt(33);
 
@@ -202,6 +205,48 @@ public class ICMon extends AreaGame {
             CollectItemEvent randomEvent = new CollectItemEvent(randomBall, player);
             randomEvent.onStart(new RegisterinAreaAction(areaList.get(0), randomBall));
             randomEvent.start();
+        }
+
+        //Chance to spawn a fruit is one out of 1000 approximately
+        if (random_number > 40 && random_number <= 60) {
+            int randomCoordinateX = rand.nextInt(31);
+            int randomCoordinateY = rand.nextInt(33);
+
+            // Spawns a fruit to a random position on the map
+            Fruit fruit = new Fruit(areaList.get(0), new DiscreteCoordinates(randomCoordinateX, randomCoordinateY));
+            CollectItemEvent randomEvent = new CollectItemEvent(fruit, player);
+            randomEvent.onStart(new RegisterinAreaAction(areaList.get(0), fruit));
+            randomEvent.start();
+        }
+
+        //Chance to spawn a Bulbizarre is one out of 750 approximately
+        if (random_number > 60 && random_number <= 86) {
+            int randomCoordinateX = rand.nextInt(31);
+            int randomCoordinateY = rand.nextInt(33);
+
+            // Spawns a fruit to a random position on the map
+            Bulbizarre bulbizarre = new Bulbizarre(areaList.get(0), Orientation.DOWN, new DiscreteCoordinates(randomCoordinateX, randomCoordinateY));
+            areaList.get(0).registerActor(bulbizarre);
+        }
+
+        //Chance to spawn a Nidoqueen is one out of 2500 approximately
+        if (random_number > 90 && random_number <= 98) {
+            int randomCoordinateX = rand.nextInt(31);
+            int randomCoordinateY = rand.nextInt(33);
+
+            // Spawns a Nidoqueen to a random position on the map
+            Bulbizarre bulbizarre = new Bulbizarre(areaList.get(0),Orientation.UP, new DiscreteCoordinates(randomCoordinateX, randomCoordinateY));
+            areaList.get(0).registerActor(bulbizarre);
+        }
+
+        //Chance to spawn a Latios is one out of 5000
+        if (random_number > 100 && random_number <= 104) {
+            int randomCoordinateX = rand.nextInt(31);
+            int randomCoordinateY = rand.nextInt(33);
+
+            // Spawns a Latios to a random position on the map
+            Latios latios = new Latios(areaList.get(0),Orientation.UP, new DiscreteCoordinates(randomCoordinateX, randomCoordinateY));
+            areaList.get(0).registerActor(latios);
         }
 
     }

@@ -4,6 +4,8 @@ import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
 import ch.epfl.cs107.icmon.actor.pokemon.Latios;
+import ch.epfl.cs107.icmon.actor.pokemon.Pikachu;
+import ch.epfl.cs107.icmon.gamelogic.actions.AddBallAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.AddPokemonAction;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 import ch.epfl.cs107.play.math.Orientation;
@@ -33,7 +35,8 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent {
     @Override
     public void interactWith(ProfOak profOak, boolean isCellInteraction) {
         if (!isCellInteraction) {
-            onComplete(new AddPokemonAction(player, new Latios(player.getCurrentArea(), Orientation.DOWN, player.getCurrentCells().get(0))));
+            onComplete(new AddPokemonAction(player, new Pikachu(player.getCurrentArea(), Orientation.DOWN, player.getCurrentCells().get(0))));
+            onComplete(new AddBallAction(player));
             player.openDialog(new Dialog("first_interaction_with_prof_oak"));
             complete();
         }

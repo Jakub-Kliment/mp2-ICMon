@@ -20,12 +20,15 @@ import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
+import ch.epfl.cs107.play.engine.actor.TextGraphics;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
+import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,6 +59,12 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     /** Dialog of the player */
     private Dialog dialog;
 
+    /** Number of pokeball of the player */
+    private int ballNumber;
+
+    /** Graphics for the number of pokeball */
+    private TextGraphics ballNumberGraphics;
+
     /** List of the animations of the player */
     private final OrientedAnimation[] animations = {
             new OrientedAnimation("actors/player", ANIMATION_DURATION/2, Orientation.DOWN, this),
@@ -79,7 +88,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
         pokemonList = new ArrayList<>();
-        pokemonList.add(new Pikachu(area, Orientation.DOWN, position));
+        ballNumberGraphics = new TextGraphics("ICMonBall : "+ballNumber, 0.8f, Color.WHITE);
+        ballNumberGraphics.setParent(this);
+        ballNumberGraphics.setAnchor(new Vector(-5f, -5f));
+        ballNumber = 0;
     }
 
     /**
@@ -110,6 +122,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                 resetMotion();
             }
         }
+        ballNumberGraphics.setText("ICMonBall : "+ballNumber);
         super.update(deltaTime);
     }
 
@@ -149,6 +162,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     @Override
     public void draw(Canvas canvas) {
         animation.draw(canvas);
+        ballNumberGraphics.draw(canvas);
         // Cannot move while in dialog
         if (dialog != null && !dialog.isCompleted()){
             dialog.draw(canvas);
@@ -241,7 +255,13 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
      * @param pokemon : the pokemon to add
      */
     public void addPokemon(Pokemon pokemon){
-        pokemonList.add(pokemon);
+        if (ballNumber> 0){
+            pokemonList.add(pokemon);
+            openDialog(new Dialog("collect_pokemon"));
+            ballNumber--;
+        } else {
+            openDialog(new Dialog("collect_pokemon_fail"));
+        }
     }
 
     /**
@@ -279,6 +299,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     public Area getCurrentArea(){
         return super.getOwnerArea();
     }
+    public void addBall(){
+        ballNumber++;
+    }
 
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
 
@@ -313,6 +336,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
             if (!isCellInteraction) {
+                ballNumber++;
                 ball.collect();
             }
         }
@@ -426,6 +450,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                 HealPokemonsAction heal = new HealPokemonsAction(pokemonList);
                 heal.perform();
                 fruit.collect();
+                openDialog(new Dialog("berry_interaction"));
             }
         }
     }

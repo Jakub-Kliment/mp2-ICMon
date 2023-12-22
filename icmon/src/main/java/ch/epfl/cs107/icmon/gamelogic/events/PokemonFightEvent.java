@@ -4,6 +4,7 @@ import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.ICMonFightableActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
+import ch.epfl.cs107.icmon.gamelogic.actions.AddPokemonAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 
@@ -46,8 +47,10 @@ public class PokemonFightEvent extends ICMonEvent {
     @Override
     public void update(float deltaTime) {
         if(menu.isOver()) {
-            // When you win the fight against Garry, he disappears
+            // When you win the fight against the opponent, he disappears
             if(menu.playerWin()) {
+                if(opponent instanceof Pokemon)
+                    onComplete(new AddPokemonAction(player, (Pokemon)opponent));
                 onComplete(new LeaveAreaAction((ICMonActor)opponent));
             }
             complete();
