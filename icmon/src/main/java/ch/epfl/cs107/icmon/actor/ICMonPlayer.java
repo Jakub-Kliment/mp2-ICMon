@@ -6,7 +6,6 @@ import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
-import ch.epfl.cs107.icmon.actor.pokemon.Pikachu;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.actions.HealPokemonsAction;
@@ -63,7 +62,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private int ballNumber;
 
     /** Graphics for the number of pokeball */
-    private TextGraphics ballNumberGraphics;
+    private final TextGraphics ballNumberGraphics;
 
     /** List of the animations of the player */
     private final OrientedAnimation[] animations = {
@@ -457,6 +456,20 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                 heal.perform();
                 fruit.collect();
                 openDialog(new Dialog("berry_interaction"));
+            }
+        }
+
+        /**
+         * Manage interactions between the player and a walking NPC
+         * Delegate the interaction to the game state
+         *
+         * @param npc : the walking NPC with which the player interacts
+         * @param isCellInteraction : false cause the interaction is a view interaction
+         */
+        @Override
+        public void interactWith(WalkingNPC npc, boolean isCellInteraction) {
+            if (!isCellInteraction) {
+                gameState.acceptInteraction(npc, isCellInteraction);
             }
         }
     }

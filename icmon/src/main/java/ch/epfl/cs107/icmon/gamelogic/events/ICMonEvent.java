@@ -25,7 +25,7 @@ public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
     private final ArrayList<Action> resumedAction;
 
     /** The player of the game */
-    protected ICMonPlayer player;
+    protected final ICMonPlayer player;
 
     /** True if the event has been started */
     private boolean started;

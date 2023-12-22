@@ -1,6 +1,5 @@
 package ch.epfl.cs107.icmon;
 
-import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.Fruit;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
@@ -173,14 +172,12 @@ public class ICMon extends AreaGame {
                 player,
                 new IntroductionEvent(player),
                 new FirstInteractionWithProfOakEvent(player),
-                ballEvent(areaList.get(0), new DiscreteCoordinates(6,6)),
+                new CapturePokemon(player),
                 new FirstInteractionWithGarryEvent(player),
                 new EndOfTheGameEvent(player));
 
         icMonChainedEvent.start();
     }
-
-    // À enlever (bug quand les coordonnées sont not canEnter)!!!!!!!!!!!
 
     /**
      * Randomly spawns ball into the area town based on calculated probabilities

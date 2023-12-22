@@ -1,9 +1,6 @@
 package ch.epfl.cs107.icmon.handler;
 
-import ch.epfl.cs107.icmon.actor.Desk;
-import ch.epfl.cs107.icmon.actor.Display;
-import ch.epfl.cs107.icmon.actor.Door;
-import ch.epfl.cs107.icmon.actor.ICMonPlayer;
+import ch.epfl.cs107.icmon.actor.*;
 import ch.epfl.cs107.icmon.actor.items.Fruit;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.Garry;
@@ -102,4 +99,12 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
      * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
      */
     default void interactWith(Fruit fruit, boolean isCellInteraction) {}
+
+    /**
+     * Handle the interaction between an interactor and the WalkingNPC, overwrite by the different handlers
+     *
+     * @param npc (Interactable): the WalkingNPC that interacts with the interactor
+     * @param isCellInteraction (boolean): true if the interaction is a cellInteraction, false if the interaction is a viewInteraction
+     */
+    default void interactWith(WalkingNPC npc, boolean isCellInteraction) {}
 }

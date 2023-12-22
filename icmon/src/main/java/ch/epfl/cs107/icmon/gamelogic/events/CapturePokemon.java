@@ -5,43 +5,40 @@ import ch.epfl.cs107.icmon.actor.WalkingNPC;
 import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
-import ch.epfl.cs107.icmon.actor.pokemon.Pikachu;
-import ch.epfl.cs107.icmon.gamelogic.actions.AddBallAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.AddPokemonAction;
 import ch.epfl.cs107.play.engine.actor.Dialog;
-import ch.epfl.cs107.play.math.Orientation;
 
-public class FirstInteractionWithProfOakEvent extends ICMonEvent {
+public class CapturePokemon extends ICMonEvent{
 
+    /** Boolean to know if it is the first update of the started event */
+    private boolean firstUpdate;
+
+    /** Number of pokemon before the event */
+    private int nbPokemon;
     /**
-     * Default FirstInteractionWithProfOakEvent constructor
+     * Default ICMonEvent constructor
+     * Add 2 actions to the event: one to register the event when it is started and one to unregister it when it is completed
      *
-     * @param player (ICMonPlayer): the player who interact in the event
+     * @param player (ICMonPlayer): the player of the game
      */
-    public FirstInteractionWithProfOakEvent(ICMonPlayer player) {
+    public CapturePokemon(ICMonPlayer player) {
         super(player);
+        nbPokemon = 0;
+        firstUpdate = true;
     }
 
     /**
-     * Update the event, does nothing
-     */
-    @Override
-    public void update(float deltaTime) {}
-
-    /**
-     * Handle the interaction with the ProfOak during the event
-     * Show a dialog when the player interact with the ProfOak and Complete the event by adding a Pikachu to the player pokemon list
+     * Update the event
+     * Complete the event when the player capture a pokemon
      *
-     * @param profOak (ProfOak): the profOak who interact in the event
-     * @param isCellInteraction (boolean): true if the interaction is a cell interaction, false otherwise
+     * @param deltaTime (float): the time between two updates
      */
     @Override
-    public void interactWith(ProfOak profOak, boolean isCellInteraction) {
-        if (!isCellInteraction) {
-            player.openDialog(new Dialog("first_interaction_with_prof_oak"));
-            onComplete(new AddBallAction(player));
-            onComplete(new AddBallAction(player));
-            onComplete(new AddPokemonAction(player, new Pikachu(player.getCurrentArea(), Orientation.DOWN, player.getCurrentCells().get(0)), false));
+    public void update(float deltaTime) {
+        if (isStarted() && firstUpdate){
+            firstUpdate = false;
+            nbPokemon = player.getPokemonList().size();
+        }
+        if (nbPokemon < player.getPokemonList().size()) {
             complete();
         }
     }
@@ -55,9 +52,19 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent {
      */
     @Override
     public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
-        if (!isCellInteraction){
-            player.openDialog(new Dialog("first_interaction_with_oak_event_icshopassistant"));
-        }
+        player.openDialog(new Dialog("assistant_capture"));
+    }
+
+    /**
+     * Handle the interaction with the Prof. Oak during the event
+     * Show a dialog when the player interact with the Prof. Oak
+     *
+     * @param profOak (ProfOak): the profOak who interact in the event
+     * @param isCellInteraction (boolean): true if the interaction is a cell interaction, false otherwise
+     */
+    @Override
+    public void interactWith(ProfOak profOak, boolean isCellInteraction) {
+        player.openDialog(new Dialog("oak_capture"));
     }
 
     /**
@@ -69,7 +76,7 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent {
      */
     @Override
     public void interactWith(WalkingNPC npc, boolean isCellInteraction) {
-        player.openDialog(new Dialog("npc_first_interaction"));
+        player.openDialog(new Dialog("npc_capture"));
     }
 
     /**

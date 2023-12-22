@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon.actor;
 
 import ch.epfl.cs107.icmon.area.ICMonArea;
+import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.AreaGraph;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
@@ -9,8 +10,6 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Canvas;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Queue;
 
 public class WalkingNPC extends ICMonActor{
@@ -90,7 +89,9 @@ public class WalkingNPC extends ICMonActor{
      * AcceptInteraction is void because the WalkingNPC does not accept interactions
      */
     @Override
-    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {}
+    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
+    }
 
 
     /**@return (boolean) : true, so the Interactable takes space on current cell */
@@ -103,6 +104,12 @@ public class WalkingNPC extends ICMonActor{
     @Override
     public boolean isCellInteractable() {
         return false;
+    }
+
+    /**@return (boolean): true, so it is able to have view interactions*/
+    @Override
+    public boolean isViewInteractable() {
+        return true;
     }
 
     /**

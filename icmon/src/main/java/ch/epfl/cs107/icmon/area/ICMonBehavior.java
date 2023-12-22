@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.area;
 
+import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.AreaGraph;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
@@ -165,7 +166,7 @@ public class ICMonBehavior extends AreaBehavior {
          */
         @Override
         protected boolean canEnter(Interactable entity) {
-            if ((type.walkingType == AllowedWalkingType.NONE) || taken || (entity == null)) {
+            if ((type.walkingType == AllowedWalkingType.NONE) || taken || (entity == null) || (entity instanceof Pokemon && type.walkingType != AllowedWalkingType.FEET)){
                 return false;
             } else {
                 if (entity.takeCellSpace()) {
