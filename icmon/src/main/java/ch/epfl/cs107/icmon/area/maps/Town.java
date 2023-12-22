@@ -35,8 +35,8 @@ public class Town extends ICMonArea {
         registerActor(new Display(this, new DiscreteCoordinates(8, 23), "town_sign_sacha"));
         registerActor(new Display(this, new DiscreteCoordinates(17, 22), "town_sign_lab"));
         registerActor(new Display(this, new DiscreteCoordinates(17, 16), "town_sign_arena"));
-
-        registerActor(new WalkingNPC(this, Orientation.RIGHT, new DiscreteCoordinates(10,12)));
+        DiscreteCoordinates[] coordinates = {new DiscreteCoordinates(10, 12), new DiscreteCoordinates(15, 12), new DiscreteCoordinates(15, 20), new DiscreteCoordinates(15, 7), new DiscreteCoordinates(15, 12)};
+        registerActor(new WalkingNPC(this, "actors/NPC_red", Orientation.RIGHT, coordinates));
     }
 
     /**

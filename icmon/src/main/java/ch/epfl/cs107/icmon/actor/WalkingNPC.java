@@ -9,6 +9,8 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Canvas;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 public class WalkingNPC extends ICMonActor{
@@ -22,38 +24,57 @@ public class WalkingNPC extends ICMonActor{
     /** Animation of the player */
     private final OrientedAnimation animation;
 
-    private final DiscreteCoordinates[] coorList = {new DiscreteCoordinates(10, 12), new DiscreteCoordinates(15, 12), new DiscreteCoordinates(15, 20), new DiscreteCoordinates(15, 7), new DiscreteCoordinates(15, 12)};
+    /** List of coordinates follow by the npc */
+    private final DiscreteCoordinates[] coordinatesList;
+
+    /** Stage of the npc deplacement */
     private int listIndex;
+
+    /** Graph of the area */
     private final AreaGraph areaGraph;
+
+    /** Queue of the orientation that the npc will take to follow the current path */
     private Queue<Orientation> actualQueue;
+
+    /** Countdown before the next npc path */
+    private double countdown;
+
+    /** Boolean to know if the last move occurred */
+    private boolean moveMade;
 
     /**
      * Default ICMonActor constructor
      *
-     * @param area        (Area): Owner area. Not null
-     * @param orientation (Orientation): Initial orientation of the entity. Not null
-     * @param position    (Coordinate): Initial position of the entity. Not null
+     * @param area             (Area): Owner area. Not null
+     * @param orientation      (Orientation): Initial orientation of the entity. Not null
+     * @param coordinatesList  (DiscreteCoordinates[]): List of coordinates of the path to follow
      */
-    public WalkingNPC(Area area, Orientation orientation, DiscreteCoordinates position) {
-        super(area, orientation, position);
+    public WalkingNPC(Area area, String nom, Orientation orientation, DiscreteCoordinates[] coordinatesList) {
+        super(area, orientation, coordinatesList[0]);
         areaGraph = ((ICMonArea)area).getAreaGraph();
-        animation = new OrientedAnimation("actors/PNJ", ANIMATION_DURATION  / 2, orientation, this);
+        animation = new OrientedAnimation(nom, ANIMATION_DURATION  / 2, orientation, this);
+        this.coordinatesList = coordinatesList;
         listIndex = 0;
-        actualQueue = areaGraph.shortestPath(coorList[listIndex], coorList[(listIndex + 1) % 5]);
+        countdown = 0;
+        moveMade = true;
+        actualQueue = areaGraph.shortestPath(coordinatesList[listIndex], coordinatesList[(listIndex + 1) % coordinatesList.length]);
     }
 
     @Override
     public void update(float deltaTime) {
         if (actualQueue.isEmpty()) {
-            listIndex = (listIndex + 1) % 5;
-            actualQueue = areaGraph.shortestPath(coorList[listIndex], coorList[(listIndex+1)%5]);
+            listIndex = (listIndex + 1) % coordinatesList.length;
+            actualQueue = areaGraph.shortestPath(coordinatesList[listIndex], coordinatesList[(listIndex + 1) % coordinatesList.length]);
+            countdown = 2;
         }
 
-        if (!isDisplacementOccurs()) {
-            Orientation nextOrientation = actualQueue.poll();
-            animation.orientate(nextOrientation);
-            orientate(nextOrientation);
-            move(MOVE_DURATION);
+        if (!isDisplacementOccurs() && countdown < 0) {
+            if (moveMade){
+                Orientation nextOrientation = actualQueue.poll();
+                animation.orientate(nextOrientation);
+                orientate(nextOrientation);
+            }
+            moveMade = move(MOVE_DURATION);
         }
         if (isDisplacementOccurs()) {
             animation.update(deltaTime);
@@ -61,6 +82,7 @@ public class WalkingNPC extends ICMonActor{
             animation.reset();
             resetMotion();
         }
+        countdown -= deltaTime;
         super.update(deltaTime);
     }
 
