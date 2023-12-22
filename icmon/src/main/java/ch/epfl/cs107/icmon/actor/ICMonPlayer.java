@@ -88,7 +88,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         animation = new OrientedAnimation(spriteName, ANIMATION_DURATION/2, Orientation.DOWN, this);
         handler = new ICMonPlayerInteractionHandler();
         pokemonList = new ArrayList<>();
-        ballNumberGraphics = new TextGraphics("ICMonBall : "+ballNumber, 0.8f, Color.WHITE);
+
+        ballNumberGraphics = new TextGraphics("ICBall : " + ballNumber, 0.8f, Color.WHITE);
         ballNumberGraphics.setParent(this);
         ballNumberGraphics.setAnchor(new Vector(-5f, -5f));
         ballNumber = 0;
@@ -122,7 +123,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                 resetMotion();
             }
         }
-        ballNumberGraphics.setText("ICMonBall : "+ballNumber);
+        // Shows the amount of ICBalls
+        ballNumberGraphics.setText("ICMonBall : " + ballNumber);
         super.update(deltaTime);
     }
 

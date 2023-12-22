@@ -6,6 +6,7 @@ import ch.epfl.cs107.icmon.actor.items.Fruit;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
 import ch.epfl.cs107.icmon.actor.pokemon.Latios;
+import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.*;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
@@ -50,6 +51,7 @@ public class ICMon extends AreaGame {
     private List<Area> areaList;
     private boolean hasFruitStarted = false;
 
+    public final static Random rand = new Random();
     /**
      * Create the area of the game
      * Add the different areas to ICMon
@@ -167,17 +169,11 @@ public class ICMon extends AreaGame {
      * Create events and the whole plot of the game
      */
     private void event() {
-        ICBall ball = new ICBall(areaList.get(0), new DiscreteCoordinates(6,6));
-        CollectItemEvent collectBall = new CollectItemEvent(ball, player);
-        collectBall.onStart(new RegisterinAreaAction(areaList.get(0), ball));
-
-        FirstInteractionWithProfOakEvent oakEvent = new FirstInteractionWithProfOakEvent(player);
-
-        ICMonChainedEvent icMonChainedEvent = new ICMonChainedEvent(
+      ICMonChainedEvent icMonChainedEvent = new ICMonChainedEvent(
                 player,
                 new IntroductionEvent(player),
-                oakEvent,
-                collectBall,
+                new FirstInteractionWithProfOakEvent(player),
+                ballEvent(areaList.get(0), new DiscreteCoordinates(6,6)),
                 new FirstInteractionWithGarryEvent(player),
                 new EndOfTheGameEvent(player));
 
@@ -192,77 +188,70 @@ public class ICMon extends AreaGame {
      * not registered by functions implemented in game-engine
      */
     private void randomEvent() {
-        Random rand = new Random();
         int upperbound = 10000;
         int random_number = rand.nextInt(upperbound);
-        // Chance to spawn a ball is one out of 500 approximately
+        // Chance to spawn a ball is one out of 250 approximately
         if (random_number <= 40) {
-            int randomCoordinateX = rand.nextInt(31);
-            int randomCoordinateY = rand.nextInt(33);
-
             // Spawns a ball to a random position on the map
-            ICBall randomBall = new ICBall(areaList.get(0), new DiscreteCoordinates(randomCoordinateX, randomCoordinateY));
-            CollectItemEvent randomEvent = new CollectItemEvent(randomBall, player);
-            randomEvent.onStart(new RegisterinAreaAction(areaList.get(0), randomBall));
-            randomEvent.start();
+            ballEvent(areaList.get(0), getTownRandomCoordinates()).start();
         }
 
-        //Chance to spawn a fruit is one out of 1000 approximately
+        // Chance to spawn a fruit is one out of 500 approximately
         if (random_number > 40 && random_number <= 60) {
-            int randomCoordinateX = rand.nextInt(31);
-            int randomCoordinateY = rand.nextInt(33);
-
             // Spawns a fruit to a random position on the map
-            Fruit fruit = new Fruit(areaList.get(0), new DiscreteCoordinates(randomCoordinateX, randomCoordinateY));
-            CollectItemEvent randomEvent = new CollectItemEvent(fruit, player);
-            randomEvent.onStart(new RegisterinAreaAction(areaList.get(0), fruit));
-            randomEvent.start();
+            fruitEvent();
         }
 
-        //Chance to spawn a Bulbizarre is one out of 750 approximately
-        if (random_number > 60 && random_number <= 86) {
-            int randomCoordinateX = rand.nextInt(31);
-            int randomCoordinateY = rand.nextInt(33);
-
+        // Chance to spawn a Bulbizarre is one out of 1000 approximately
+        if (random_number > 60 && random_number <= 70) {
             // Spawns a fruit to a random position on the map
-            Bulbizarre bulbizarre = new Bulbizarre(areaList.get(0), Orientation.DOWN, new DiscreteCoordinates(randomCoordinateX, randomCoordinateY));
+            Bulbizarre bulbizarre = new Bulbizarre(areaList.get(0), Orientation.DOWN, getTownRandomCoordinates());
             areaList.get(0).registerActor(bulbizarre);
         }
 
-        //Chance to spawn a Nidoqueen is one out of 2500 approximately
-        if (random_number > 90 && random_number <= 98) {
-            int randomCoordinateX = rand.nextInt(31);
-            int randomCoordinateY = rand.nextInt(33);
-
+        // Chance to spawn a Nidoqueen is one out of 2000 approximately
+        if (random_number > 90 && random_number <= 95) {
             // Spawns a Nidoqueen to a random position on the map
-            Bulbizarre bulbizarre = new Bulbizarre(areaList.get(0),Orientation.UP, new DiscreteCoordinates(randomCoordinateX, randomCoordinateY));
-            areaList.get(0).registerActor(bulbizarre);
+            Nidoqueen nidoqueen = new Nidoqueen(areaList.get(0), Orientation.DOWN, getTownRandomCoordinates());
+            areaList.get(0).registerActor(nidoqueen);
         }
 
         //Chance to spawn a Latios is one out of 5000
-        if (random_number > 100 && random_number <= 104) {
-            int randomCoordinateX = rand.nextInt(31);
-            int randomCoordinateY = rand.nextInt(33);
-
+        if (random_number > 100 && random_number <= 102) {
             // Spawns a Latios to a random position on the map
-            Latios latios = new Latios(areaList.get(0),Orientation.UP, new DiscreteCoordinates(randomCoordinateX, randomCoordinateY));
+            Latios latios = new Latios(areaList.get(0), Orientation.DOWN, getTownRandomCoordinates());
             areaList.get(0).registerActor(latios);
         }
+    }
 
+    /** @return (DiscreteCoordinates): random coordinates in town */
+    private DiscreteCoordinates getTownRandomCoordinates() {
+        int coordinateX = rand.nextInt(31);
+        int coordinateY = rand.nextInt(33);
+        return new DiscreteCoordinates(coordinateX, coordinateY);
+    }
+
+    /**
+     * Creates an event of collecting a ball but does not start it
+     *
+     * @return (CollectItemEvent): event of collecting a ball
+     */
+    private CollectItemEvent ballEvent(Area area, DiscreteCoordinates coords) {
+        ICBall randomBall = new ICBall(area, coords);
+        CollectItemEvent randomEvent = new CollectItemEvent(randomBall, player);
+        randomEvent.onStart(new RegisterinAreaAction(area, randomBall));
+        return randomEvent;
     }
     /**
      * Spawns a piece of fruit that can be eaten (picked up) by the player
      * This fruit allows your player to heal all their pokemons to full health
      */
     private void fruitEvent() {
-        // When the area town is initialized
-        if (areaList.get(0).isStarted()) {
-            // Spawns a fruit that can be collected and creates an event
-            Fruit fruit = new Fruit(areaList.get(0), new DiscreteCoordinates(17, 13));
-            CollectItemEvent heal = new CollectItemEvent(fruit, player);
-            heal.onStart(new RegisterinAreaAction(areaList.get(0), fruit));
-            heal.start();
-        }
+        // Spawns a fruit that can be collected and creates an event
+        Fruit fruit = new Fruit(areaList.get(0), getTownRandomCoordinates());
+        CollectItemEvent heal = new CollectItemEvent(fruit, player);
+        heal.onStart(new RegisterinAreaAction(areaList.get(0), fruit));
+        heal.start();
     }
     /**
      * Add an area to the game and to the list of different areas
